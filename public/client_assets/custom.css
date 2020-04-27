@@ -1,0 +1,21 @@
+
+.button-sq,
+button,
+input[type="button"],
+input[type="submit"] {
+    background: #FF5C5C;
+}
+
+.ths .menu-default.burger-sidemenu-styles,
+.ths .menu-default.burger-sidemenu-styles > ul {
+    background: #2a2a2a;
+}
+
+.checked
+{
+    color: red;
+}
+.unchecked
+{
+    color: black;
+}
