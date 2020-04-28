@@ -119,6 +119,8 @@ Route::get('/home', 'ClientController@view');
 Route::get('/index', 'ClientController@view');
 Route::get('/', 'ClientController@view');
 Route::get('about', 'ClientController@about');
+Route::get('contact', 'ClientController@contact');
+Route::post('contact', 'ClientController@postContact');
 
 //Route::get('profile', 'UserController@viewProfileClient');
 //Route::post('profile/{id}', 'UserController@postProfileClient');

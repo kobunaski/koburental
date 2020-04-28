@@ -37,7 +37,7 @@
                                                     <div class="image-wrapper">
                                                         <div class="image-inner">
                                                             <img class="image-sq slick-img"
-                                                                 src="client_assets/assets/images/cars/property_item_cars_04.jpg"
+                                                                 src="client_assets/assets/images/cars/about.jpeg"
                                                                  alt="" data-gallery="gallery" data-caption="Car 01">
                                                         </div>
                                                     </div>

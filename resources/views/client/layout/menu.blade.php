@@ -53,8 +53,21 @@
                 </li>
             @endif
 
-            <li><a href="vehicle" class="item">
+            <li>
+                <a href="vehicle" class="item">
                     <span>View all cars</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="about" class="item">
+                    <span>About us</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="contact" class="item">
+                    <span>Contact us</span>
                 </a>
             </li>
 
