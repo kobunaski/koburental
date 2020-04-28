@@ -8,37 +8,45 @@
             <div class="hero-search-full-page low-sq next-sq">
                 <!-- Hero Search Vertical Default -->
                 <div class="h-search-v narrow-sq animate-sq shadow-sq">
-                    <form action="listing_page.html" class="hero-search-form">
-
+                    <form action="vehicle/search" method="GET" class="hero-search-form">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                         <div class="search-item">
                             <i class="icon icon-pickup-location"></i>
                             <div class="fltp">
-                                <input type="text" value="" required>
-                                <label class="placeholder" data-big-placeholder="Pickup location"
-                                       data-little-placeholder="Pickup location"></label>
+                                <select name="pickup_location" size="13" class="dropdown" required>
+                                    <option value="0" selected>&nbsp;</option>
+                                    @foreach($PickupLocation as $item)
+                                        <option value="{{$item -> id}}">{{$item -> name}}</option>
+                                    @endforeach
+                                </select>
+                                <label class="placeholder">Pickup Location</label>
                             </div>
                         </div>
 
                         <div class="search-item">
                             <i class="icon icon-return-location"></i>
                             <div class="fltp">
-                                <input type="text" value="" required>
-                                <label class="placeholder" data-big-placeholder="Return location"
-                                       data-little-placeholder="Return location"></label>
+                                <select name="return_location" size="13" class="dropdown" required>
+                                    <option value="0" selected>&nbsp;</option>
+                                    @foreach($PickupLocation as $item)
+                                        <option value="{{$item -> id}}">{{$item -> name}}</option>
+                                    @endforeach
+                                </select>
+                                <label class="placeholder">Return Location</label>
                             </div>
                         </div>
 
-                        <div class="search-item">
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" id="checkbox11">
-                                <label for="checkbox11">Return car to pickup location</label>
-                            </div>
-                        </div>
+                        {{--<div class="search-item">--}}
+                            {{--<div class="checkbox-wrapper">--}}
+                                {{--<input type="checkbox" id="checkbox11">--}}
+                                {{--<label for="checkbox11">Return car to pickup location</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="search-item">
                             <i class="icon icon-pickup-date"></i>
                             <div class="fltp calendar-sq" id="rangestart">
-                                <input type="text" class="filter" value="" required placeholder="enter date">
+                                <input type="text" name="pickup_date" class="filter" value="" placeholder="enter date">
                                 <label class="placeholder" data-big-placeholder="Pickup date"
                                        data-little-placeholder="Pickup date"></label>
                             </div>
@@ -47,7 +55,7 @@
                         <div class="search-item">
                             <i class="icon icon-return-date"></i>
                             <div class="fltp calendar-sq" id="rangeend">
-                                <input type="text" class="filter" value="" required placeholder="enter date">
+                                <input type="text" name="return_date"  class="filter" value="" placeholder="enter date">
                                 <label class="placeholder" data-big-placeholder="Return date"
                                        data-little-placeholder="Return date"></label>
                             </div>
@@ -55,7 +63,7 @@
 
                         <div class="search-item">
 
-                            <button class="button-sq">
+                            <button type="submit" class="button-sq">
                                 <i class="icon icon-search"></i>
                                 <span>Find a car</span>
                             </button>
@@ -78,14 +86,20 @@
                                 ultricies convallis. In venenatis eu erat et facilisis.</p>
                         </div>
                         <div class="caption-outside">
-                            <a class="button-sq link-sq" href="property_page.html">
+                            <a class="button-sq link-sq" href="vehicle">
                                 <i class="icon big icon-slim-arrow-right"></i>
-                                <span>read more</span>
+                                <span>View cars</span>
                             </a>
                         </div>
 
-                        <div class="video-wrapper">
-                            {{--<iframe src="https://www.youtube.com/embed/BDCU5OFXZ2c?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&start=15&mute=1" allowfullscreen></iframe>--}}
+                        {{--<div class="video-wrapper">--}}
+                        {{--<iframe src="https://www.youtube.com/embed/BDCU5OFXZ2c?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&start=15&mute=1" allowfullscreen></iframe>--}}
+                        {{--</div>--}}
+
+                        <div class="image-wrapper">
+                            <div class="image-inner">
+                                <img class="image-sq" src="client_assets/assets/images/hero/hero_big_04.jpeg" alt="">
+                            </div>
                         </div>
                     </div>
 

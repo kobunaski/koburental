@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Feedback;
+use App\PickupLocation;
 use App\User;
 use App\Vehicle;
 use App\VehicleDetail;
@@ -17,7 +18,8 @@ class ClientController extends Controller
         $Vehicle = Vehicle::orderBy('view_count', 'desc')->take(6)->get();
         $Feedback = Feedback::all();
         $VehicleDetail = VehicleDetail::all();
-        return view('client.home.index', ['Feedback' => $Feedback, 'User' => $User, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail]);
+        $PickupLocation = PickupLocation::all();
+        return view('client.home.index', ['PickupLocation' => $PickupLocation, 'Feedback' => $Feedback, 'User' => $User, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail]);
     }
 
     public function about(){

@@ -138,6 +138,8 @@ Route::group(['prefix' => 'vehicle'], function (){
     Route::post('/feedback/{id}', 'FeedbackController@addFeedback');
 
     Route::get('/feedback/delete/{id}', 'FeedbackController@deleteFeedback');
+
+    Route::get('search', 'VehicleController@searchResult');
 });
 
 Route::group(['prefix' => 'login'], function (){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Booking;
 use App\Feedback;
 use App\Manufacture;
 use App\PickupLocation;
@@ -43,22 +44,22 @@ class VehicleController extends Controller
         $Manufacture = Manufacture::all();
         $PickupLocation = PickupLocation::all();
         $Feedback = Feedback::all();
-        foreach ($Feedback as $item){
-            if ($id == $item -> id_vehicle){
-                $rating[] = $item -> rating;
+        foreach ($Feedback as $item) {
+            if ($id == $item->id_vehicle) {
+                $rating[] = $item->rating;
             }
         }
-        if (isset($rating)){
-            $average_rating = number_format(array_sum($rating)/count($rating), 1);
+        if (isset($rating)) {
+            $average_rating = number_format(array_sum($rating) / count($rating), 1);
         } else {
             $average_rating = 0;
         }
 
-        $Vehicle -> view_count = ($Vehicle -> view_count + 1);
+        $Vehicle->view_count = ($Vehicle->view_count + 1);
 
-        $Vehicle -> save();
+        $Vehicle->save();
 
-        return view('client.vehicle.viewdetail', ['average_rating' => $average_rating, 'User' => $User, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation, 'Feedback' => $Feedback ]);
+        return view('client.vehicle.viewdetail', ['average_rating' => $average_rating, 'User' => $User, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation, 'Feedback' => $Feedback]);
     }
 
     public function getAdd()
@@ -90,11 +91,11 @@ class VehicleController extends Controller
         $Vehicle->id_pickup_location = $request->id_pickup_location;
         $Vehicle->daily_price = $request->daily_price;
 
-        if ($request -> hasFile('image')){
-            $file = $request -> file('image');
-            $image = $file -> getClientOriginalName();
-            $file -> move('upload/image/vehicle_image', $image);
-            $Vehicle -> image = $image;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/vehicle_image', $image);
+            $Vehicle->image = $image;
         }
 
         $Vehicle->save();
@@ -132,16 +133,73 @@ class VehicleController extends Controller
         $Vehicle->id_pickup_location = $request->id_pickup_location;
         $Vehicle->daily_price = $request->daily_price;
 
-        if ($request -> hasFile('image')){
-            $file = $request -> file('image');
-            $image = $file -> getClientOriginalName();
-            $file -> move('upload/image/vehicle_image', $image);
-            $Vehicle -> image = $image;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/vehicle_image', $image);
+            $Vehicle->image = $image;
         }
 
         $Vehicle->save();
 
         return redirect('admin/vehicle/view')->with('alert', 'Model Edit Successful');
+    }
+
+    public function searchResult(Request $request)
+    {
+        $available_vehicle = array();
+
+        $id_pickup_location = $request->pickup_location;
+
+        $pickup_date = $request->pickup_date;
+        $time = strtotime($pickup_date);
+        $new_pickup_date = date('Y-m-d', $time);
+
+        $return_date = $request->return_date;
+        $time2 = strtotime($return_date);
+        $new_return_date = date('Y-m-d', $time2);
+
+        $VehicleAll = Vehicle::all();
+        $Booking = Booking::all();
+
+        foreach ($Booking as $item) {
+            if ($new_pickup_date >= $item->pickup_day && $new_pickup_date <= $item->drop_day) {
+                $array_vehicle_pickup[] = $item->id_vehicle;
+            } else if ($new_return_date >= $item->pickup_day && $new_return_date <= $item->drop_day) {
+                $array_vehicle_return[] = $item->id_vehicle;
+            }
+        }
+
+        if (isset($array_vehicle_pickup)) {
+            $array_vehicle_pickup_unique = array_unique($array_vehicle_pickup);
+            foreach ($array_vehicle_pickup_unique as $item) {
+                $available_vehicle[$item] = $item;
+            }
+        }
+
+        if (isset($array_vehicle_return)) {
+            $array_vehicle_return_unique = array_unique($array_vehicle_return);
+            sort($array_vehicle_return_unique);
+            foreach ($array_vehicle_return_unique as $item) {
+                $available_vehicle[$item] = $item;
+            }
+        }
+
+        foreach ($VehicleAll as $item){
+            if (isset($available_vehicle[$item -> id])){
+
+            } else {
+                $array_available_vehicle[] = $item -> id;
+            }
+        }
+
+        $Vehicle = Vehicle::orderBy('name', 'asc')->paginate(6);
+        $VehicleType = VehicleType::all();
+        $Manufacture = Manufacture::all();
+        $PickupLocation = PickupLocation::all();
+        $Feedback = Feedback::all();
+        $VehicleDetail = VehicleDetail::all();
+        return view('client.vehicle.search_result', ['return_date'=> $return_date, 'pickup_date'=> $pickup_date, 'array_available_vehicle' => $array_available_vehicle, 'id_pickup_location' => $id_pickup_location, 'Feedback' => $Feedback, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation]);
     }
 
     public function getDelete($id)
