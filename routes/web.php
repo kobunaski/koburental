@@ -118,6 +118,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminValidation'], function 
 Route::get('/home', 'ClientController@view');
 Route::get('/index', 'ClientController@view');
 Route::get('/', 'ClientController@view');
+Route::get('about', 'ClientController@about');
 
 //Route::get('profile', 'UserController@viewProfileClient');
 //Route::post('profile/{id}', 'UserController@postProfileClient');

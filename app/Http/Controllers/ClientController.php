@@ -19,6 +19,10 @@ class ClientController extends Controller
         return view('client.home.index', ['Feedback' => $Feedback, 'User' => $User, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail]);
     }
 
+    public function about(){
+        return view('client.about.about');
+    }
+
     public function errorMiddleware(){
         return view('client.error.errorpermission');
     }
