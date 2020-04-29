@@ -8,7 +8,7 @@
             <div class="hero-search-full-page low-sq next-sq">
                 <!-- Hero Search Vertical Default -->
                 <div class="h-search-v narrow-sq animate-sq shadow-sq">
-                    <form action="vehicle/search" method="GET" class="hero-search-form">
+                    <form action="vehicle/search" method="GET" class="hero-search-form" autocomplete="off">
                         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                         <div class="search-item">
                             <i class="icon icon-pickup-location"></i>

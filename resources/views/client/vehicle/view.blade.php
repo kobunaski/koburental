@@ -70,217 +70,166 @@
 
                                 <ul class="submenu megamenu">
                                     <li class="item">
-                                        <div class="content">
+                                        <form action="vehicle/search" method="GET">
 
+                                            <div class="content">
+                                                <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                                                <input type="hidden" name="filter" value="1"/>
 
-                                            <div class="price-range-slider mobile-big">
-                                                <a href="#" class="price-range-trigger" id="price-range-trigger"></a>
+                                                <div class="price-range-slider mobile-big">
+                                                    <a href="#" class="price-range-trigger"
+                                                       id="price-range-trigger"></a>
 
-                                                <span
-                                                    class="price-range-placeholder hidden-desktop hidden-large-desktop">
+                                                    <span
+                                                        class="price-range-placeholder hidden-desktop hidden-large-desktop">
 												   <span>Price </span><span>Range</span>
 											   </span>
 
-                                                <div id="price-range-slider" class="price-range-slider-base"></div>
-                                            </div>
-
-                                            <div class="div-c inline-2">
-                                                <div class="divided-column">
-                                                    <label>Doors</label>
-                                                    <select name="dropdown" class="dropdown item">
-                                                        <option value="0">3</option>
-                                                        <option value="1">4</option>
-                                                        <option value="2">5</option>
-                                                    </select>
+                                                    <div id="price-range-slider" class="price-range-slider-base"></div>
                                                 </div>
 
-                                                <div class="divided-column">
-                                                    <label>Fuel</label>
-                                                    <select name="dropdown" class="dropdown item">
-                                                        <option value="0">Diesel</option>
-                                                        <option value="1">Gas</option>
-                                                        <option value="1">GPL</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="div-c inline-3">
-
-                                                <div class="divided-column">
-                                                    <label>Instant Booking</label>
-                                                    <input type="checkbox" id="extra01">
-                                                    <label for="extra01">Instant Booking</label>
-                                                </div>
-                                                <div class="divided-column">
-                                                    <label>Super Host</label>
-                                                    <input type="checkbox" id="extra02">
-                                                    <label for="extra02">Super Host</label>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="div-c inline-3 one-label">
-                                                <label>Car's features</label>
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox1">
-                                                    <label for="checkbox1">A/C</label>
-                                                </div>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox2">
-                                                    <label for="checkbox2">Bluetooth</label>
-                                                </div>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox3">
-                                                    <label for="checkbox3">Heated Seats</label>
-                                                </div>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox4">
-                                                    <label for="checkbox4">Automatic gearbox</label>
-                                                </div>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox5">
-                                                    <label for="checkbox5">4 x 4</label>
-                                                </div>
-
-
-                                            </div>
-
-                                            <hr>
-
-                                            <div class="ui accordion more-sq">
-                                                <div class="title">
-                                                    <a class="accordion-trigger more-trigger" data-more="More"
-                                                       data-less="Less">
-                                                        <i class="icon icon-arrow-down-122"></i>
-                                                    </a>
-
-                                                    <div class="div-c inline-3 one-label">
-                                                        <label>Host Language</label>
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang1">
-                                                            <label for="lang1">Afrikanns</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang2">
-                                                            <label for="lang2">Albanian</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang3">
-                                                            <label for="lang3">Arabic</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang4">
-                                                            <label for="lang4">Armenian</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang5">
-                                                            <label for="lang5">Basque</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang6">
-                                                            <label for="lang6">Bengali</label>
-                                                        </div>
-
+                                                <div class="div-c inline-2">
+                                                    <div class="divided-column">
+                                                        <label>Seats</label>
+                                                        <select name="seat" class="dropdown item">
+                                                            <option value="0">Choose</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="7">7</option>
+                                                        </select>
                                                     </div>
 
-                                                </div>
-                                                <div class="content">
-                                                    <div class="div-c inline-3">
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang7">
-                                                            <label for="lang7">Bulgarian</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang8">
-                                                            <label for="lang8">Catalan</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang9">
-                                                            <label for="lang9">Cambodian</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang10">
-                                                            <label for="lang10">Chinese (Mandarin)</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang11">
-                                                            <label for="lang11">Croation</label>
-                                                        </div>
-
-                                                        <div class="divided-column">
-                                                            <input type="checkbox" id="lang12">
-                                                            <label for="lang12">Czech</label>
-                                                        </div>
+                                                    <div class="divided-column">
+                                                        <label>Fuel</label>
+                                                        <select name="fuel" class="dropdown item">
+                                                            <option value="0">Choose</option>
+                                                            @if(isset($fuel) == 1)
+                                                                <option value="1" selected>Gasoline</option>
+                                                                <option value="2">Diesel</option>
+                                                            @elseif(isset($fuel) == 2)
+                                                                <option value="1">Gasoline</option>
+                                                                <option value="2" selected>Diesel</option>
+                                                            @else
+                                                                <option value="1">Gasoline</option>
+                                                                <option value="2">Diesel</option>
+                                                            @endif
+                                                        </select>
                                                     </div>
+
+
                                                 </div>
-                                            </div>
 
-                                            <hr>
+                                                <hr>
 
-                                            <div class="div-c inline-3 one-label">
-                                                <label>Car Rules</label>
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="rules01">
-                                                    <label for="rules01">Pets allowed</label>
+                                                {{--<div class="div-c inline-3">--}}
+                                                {{--<div class="divided-column">--}}
+                                                {{--<label>Instant Booking</label>--}}
+                                                {{--<input type="checkbox" id="extra01">--}}
+                                                {{--<label for="extra01">Instant Booking</label>--}}
+                                                {{--</div>--}}
+                                                {{--<div class="divided-column">--}}
+                                                {{--<label>Super Host</label>--}}
+                                                {{--<input type="checkbox" id="extra02">--}}
+                                                {{--<label for="extra02">Super Host</label>--}}
+                                                {{--</div>--}}
+                                                {{--</div>--}}
+
+                                                <hr>
+
+                                                <div class="div-c inline-3 one-label">
+                                                    <label>Car's features</label>
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" value="1"
+                                                               @if(isset($air_con) == 1)
+                                                               checked
+                                                               @endif
+                                                               name="air_con" id="checkbox1">
+                                                        <label for="checkbox1">A/C</label>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" value="1"
+                                                               @if(isset($bluetooth) == 1)
+                                                               checked
+                                                               @endif
+                                                               name="bluetooth"
+                                                               id="checkbox2">
+                                                        <label for="checkbox2">Bluetooth</label>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="checkbox3">
+                                                        <label for="checkbox3">Heated Seats</label>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" value="1"
+                                                               @if(isset($gearbox) == 1)
+                                                               checked
+                                                               @endif
+                                                               name="gearbox" id="checkbox4">
+                                                        <label for="checkbox4">Automatic gearbox</label>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" value="1" name="4x4" id="checkbox5">
+                                                        <label for="checkbox5">4 x 4</label>
+                                                    </div>
+
+
                                                 </div>
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="rules02">
-                                                    <label for="rules02">Smoking allowed</label>
-                                                </div>
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="rules03">
-                                                    <label for="rules03">Suitable for trips</label>
-                                                </div>
-                                            </div>
 
+                                                <hr>
 
-                                        </div>
-
-                                        <div class="footer">
-                                            <div class="div-c inline-2">
-                                                <div class="divided-column">
-                                                    <div class="applied-filters">
-                                                        <div class="filters-icon-container">
-                                                            <i class="icon icon-filter"></i>
-                                                        </div>
-                                                        <a class="remove-all">
-                                                            Remove All<i class="icon icon-close"></i>
-                                                        </a>
-                                                        <a class="">
-                                                            Applied Filter<i class="icon icon-close"></i>
-                                                        </a>
+                                                <div class="div-c inline-3 one-label">
+                                                    <label>Car Rules</label>
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="rules01">
+                                                        <label for="rules01">Pets allowed</label>
+                                                    </div>
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="rules02">
+                                                        <label for="rules02">Smoking allowed</label>
+                                                    </div>
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="rules03">
+                                                        <label for="rules03">Suitable for trips</label>
                                                     </div>
                                                 </div>
 
-                                                <div class="divided-column">
-                                                    <a href=""
-                                                       class="float-right-sq button-sq modal-button font-weight-bold-sq">Apply</a>
 
-                                                    <a class="float-right-sq button-sq cancel-sq hidden-tablet hidden-mobile"
-                                                       href="">Cancel</a>
-
-                                                </div>
                                             </div>
 
-                                        </div>
+                                            <div class="footer">
+                                                <div class="div-c inline-2">
+                                                    <div class="divided-column">
+                                                        <div class="applied-filters">
+                                                            <div class="filters-icon-container">
+                                                                <i class="icon icon-filter"></i>
+                                                            </div>
+                                                            <a class="remove-all" href="vehicle">
+                                                                Remove All<i class="icon icon-close"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <button type="submit"
+                                                                class="float-right-sq button-sq modal-button font-weight-bold-sq">
+                                                            Apply
+                                                        </button>
+
+                                                        <a class="float-right-sq button-sq cancel-sq hidden-tablet hidden-mobile"
+                                                           href="">Cancel</a>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </form>
                                     </li>
                                 </ul>
 
@@ -334,7 +283,7 @@
 
                                 <div class="icons-row">
                                     <div class="icons-column" style="background: #FF5C5C">
-                                        <i class="icon icon-heart" ></i>
+                                        <i class="icon icon-heart"></i>
                                         <?
                                         $rating = array();
                                         $average_rate = 0;
@@ -343,7 +292,7 @@
                                             @if($item2 -> id_vehicle == $item -> id)
                                                 <?
                                                 $rating[] = $item2->rating;
-                                                $average_rate = array_sum($rating)/count($rating);
+                                                $average_rate = array_sum($rating) / count($rating);
                                                 ?>
                                             @endif
                                         @endforeach
@@ -386,13 +335,13 @@
                                         @endif
                                     @endforeach
                                     {{--<div class="icons-column">--}}
-                                        {{--<i class="icon icon-ac"></i> A/C--}}
+                                    {{--<i class="icon icon-ac"></i> A/C--}}
                                     {{--</div>--}}
                                     {{--<div class="icons-column">--}}
-                                        {{--<i class="icon icon-gearbox"></i> A--}}
+                                    {{--<i class="icon icon-gearbox"></i> A--}}
                                     {{--</div>--}}
                                     {{--<div class="icons-column">--}}
-                                        {{--<i class="icon icon-user-circle"></i> x 4--}}
+                                    {{--<i class="icon icon-user-circle"></i> x 4--}}
                                     {{--</div>--}}
                                 </div>
                             </div>

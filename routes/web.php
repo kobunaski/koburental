@@ -117,7 +117,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminValidation'], function 
 
 Route::get('/home', 'ClientController@view');
 Route::get('/index', 'ClientController@view');
-Route::get('/', 'ClientController@view');
+Route::get('/', function(){
+    return redirect('home');
+});
+
 Route::get('about', 'ClientController@about');
 Route::get('contact', 'ClientController@contact');
 Route::post('contact', 'ClientController@postContact');
