@@ -300,8 +300,8 @@ class VehicleController extends Controller
                 $air_con = $request->air_con;
                 $bluetooth = $request->bluetooth;
                 $gearbox = $request->gearbox;
-                echo $start_price = filter_var($request->start_price, FILTER_SANITIZE_NUMBER_INT);
-                echo $end_price = filter_var($request->end_price, FILTER_SANITIZE_NUMBER_INT);
+                $start_price = filter_var($request->start_price, FILTER_SANITIZE_NUMBER_INT);
+                $end_price = filter_var($request->end_price, FILTER_SANITIZE_NUMBER_INT);
 
                 if ($seat != 0) {
                     foreach ($VehicleDetail as $item) {

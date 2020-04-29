@@ -13,7 +13,7 @@
 
                     <!-- Mega Menu-->
 
-                    <form action="vehicle/search" method="GET">
+                    <form action="vehicle/search" method="GET" autocomplete="off">
                         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                         <input type="hidden" name="filter" value="1"/>
                         <div
@@ -152,7 +152,7 @@
                                                         <label>Fuel</label>
                                                         <select name="fuel" class="dropdown item">
                                                             <option value="0">Choose</option>
-                                                            @if($fuel == 1)
+                                                            @if(isset($fuel) == 1)
                                                                 <option value="1" selected>Gasoline</option>
                                                                 <option value="2">Diesel</option>
                                                             @elseif($fuel == 2)

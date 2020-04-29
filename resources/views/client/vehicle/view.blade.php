@@ -12,7 +12,8 @@
                 <div class="header-item header-right flex-align-left flex-grow-true">
 
                     <!-- Mega Menu-->
-                    <form action="vehicle/search" method="GET">
+
+                    <form action="vehicle/search" method="GET" autocomplete="off">
                         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                         <input type="hidden" name="filter" value="1"/>
                         <div
@@ -50,19 +51,15 @@
                                 <li>
 
                                     <div class="fltp item" id="rangestart">
-                                        <input type="text" name="pickup_date" class="filter" value="{{isset($pickup_date)}}"
-                                               placeholder="Enter Date">
-                                        <label class="placeholder" data-big-placeholder="Check In Date"
-                                               data-little-placeholder="Check In"></label>
+                                        <input type="text" class="filter" name="pickup_date" value="" placeholder="Enter Date">
+                                        <label class="placeholder" data-big-placeholder="Check In Date" data-little-placeholder="Check In"></label>
                                     </div>
 
                                     <i class="icon icon-little-arrow item hidden-mobile hidden-tablet"></i>
 
                                     <div class="fltp item" id="rangeend">
-                                        <input type="text" name="return_date" class="filter" value="{{isset($pickup_date)}}"
-                                               placeholder="Enter Date">
-                                        <label class="placeholder" data-big-placeholder="Check Out Date"
-                                               data-little-placeholder="Check Out"></label>
+                                        <input type="text" class="filter" name="return_date" value="" placeholder="Enter Date">
+                                        <label class="placeholder"  data-big-placeholder="Check Out Date" data-little-placeholder="Check Out"></label>
                                     </div>
 
                                 </li>
@@ -94,22 +91,11 @@
                                                 <div class="div-c inline-2">
                                                     <div class="divided-column">
                                                         <label>Pickup Location</label>
-                                                        <select name="pickup_location" class="dropdown item" required>
-                                                            <option value="0">Choose location</option>
+                                                        <select name="pickup_location" class="dropdown item">
+                                                            <option value="">Choose location</option>
                                                             @foreach($PickupLocation as $item)
-                                                                @if(isset($id_pickup_location))
-                                                                    @if($id_pickup_location == $item -> id)
-                                                                        <option
-                                                                            value="{{$item -> id}}"
-                                                                            selected>{{$item -> name}}</option>
-                                                                    @else
-                                                                        <option
-                                                                            value="{{$item -> id}}">{{$item -> name}}</option>
-                                                                    @endif
-                                                                @else
-                                                                    <option
-                                                                        value="{{$item -> id}}">{{$item -> name}}</option>
-                                                                @endif
+                                                                <option
+                                                                    value="{{$item -> id}}">{{$item -> name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -124,6 +110,12 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
+
+
+                                                    <input type="hidden" name="start_price" id="start_price"
+                                                           value=""/>
+                                                    <input type="hidden" name="end_price" id="end_price"
+                                                           value=""/>
                                                 </div>
 
                                                 <hr>
@@ -145,16 +137,8 @@
                                                         <label>Fuel</label>
                                                         <select name="fuel" class="dropdown item">
                                                             <option value="0">Choose</option>
-                                                            @if(isset($fuel) == 1)
-                                                                <option value="1" selected>Gasoline</option>
-                                                                <option value="2">Diesel</option>
-                                                            @elseif(isset($fuel) == 2)
-                                                                <option value="1">Gasoline</option>
-                                                                <option value="2" selected>Diesel</option>
-                                                            @else
-                                                                <option value="1">Gasoline</option>
-                                                                <option value="2">Diesel</option>
-                                                            @endif
+                                                            <option value="1">Gasoline</option>
+                                                            <option value="2">Diesel</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -432,4 +416,35 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        var startSlider = document.getElementById('price-range-slider');
+
+        var valueSlider = [
+            document.getElementById('start_price'),
+            document.getElementById('end_price')
+        ];
+
+        noUiSlider.create(startSlider, {
+            start: [0, 500],
+            tooltips: true,
+            format: wNumb({
+                decimals: 0,
+                thousand: '.',
+                prefix: '$',
+            }),
+            connect: true,
+            range: {
+                'min': [0],
+                'max': [500]
+            },
+
+        });
+
+        startSlider.noUiSlider.on('update', function (values, index) {
+            valueSlider[index].value = values[index];
+        });
+    </script>
 @endsection
