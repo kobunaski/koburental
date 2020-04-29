@@ -12,69 +12,72 @@
                 <div class="header-item header-right flex-align-left flex-grow-true">
 
                     <!-- Mega Menu-->
-                    <div
-                        class="item menu-default burger-mobile-modal burger-tablet-modal dropdown-fullwidth flex-grow-true"
-                        data-burger="menu02">
+                    <form action="vehicle/search" method="GET">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                        <input type="hidden" name="filter" value="1"/>
+                        <div
+                            class="item menu-default burger-mobile-modal burger-tablet-modal dropdown-fullwidth flex-grow-true"
+                            data-burger="menu02">
 
-                        <a href="" class="modal-trigger close-sq hamburger hamburger-spin item"
-                           data-trigger-for="menu02">
+                            <a href="" class="modal-trigger close-sq hamburger hamburger-spin item"
+                               data-trigger-for="menu02">
                             <span class="hamburger-box">
                               <span class="hamburger-inner"></span>
                             </span>
-                        </a>
+                            </a>
 
-                        <ul class="main-menu">
+                            <ul class="main-menu">
 
-                            <li>
-                                <div class="fltp item">
-                                    <i class="icon icon-pickup-location"></i>
-                                    <input type="text" value="" required>
-                                    <label class="placeholder" data-big-placeholder="Pickup Location"
-                                           data-little-placeholder="Pickup Location"></label>
-                                </div>
-                            </li>
+                                {{--<li>--}}
+                                {{--<div class="fltp item">--}}
+                                {{--<i class="icon icon-pickup-location"></i>--}}
+                                {{--<input type="text"--}}
+                                {{--value=@foreach($PickupLocation as $item) @if($item -> id == $id_pickup_location) "{{$item -> name}}" @endif @endforeach>--}}
+                                {{--<label class="placeholder" data-big-placeholder="Pickup Location"--}}
+                                {{--data-little-placeholder="Pickup Location"></label>--}}
+                                {{--</div>--}}
+                                {{--</li>--}}
 
-                            <li>
-                                <div class="fltp item">
-                                    <i class="icon icon-return-location"></i>
-                                    <input type="text" value="" required>
-                                    <label class="placeholder" data-big-placeholder="Return Location"
-                                           data-little-placeholder="Return Location"></label>
-                                </div>
-                            </li>
+                                {{--<li>--}}
+                                {{--<div class="fltp item">--}}
+                                {{--<i class="icon icon-return-location"></i>--}}
+                                {{--<input type="text" value="">--}}
+                                {{--<label class="placeholder" data-big-placeholder="Return Location"--}}
+                                {{--data-little-placeholder="Return Location"></label>--}}
+                                {{--</div>--}}
+                                {{--</li>--}}
 
-                            <li>
+                                <li>
 
-                                <div class="fltp item" id="rangestart">
-                                    <input type="text" class="filter" value="" required placeholder="Enter Date">
-                                    <label class="placeholder" data-big-placeholder="Check In Date"
-                                           data-little-placeholder="Check In"></label>
-                                </div>
+                                    <div class="fltp item" id="rangestart">
+                                        <input type="text" name="pickup_date" class="filter" value="{{isset($pickup_date)}}"
+                                               placeholder="Enter Date">
+                                        <label class="placeholder" data-big-placeholder="Check In Date"
+                                               data-little-placeholder="Check In"></label>
+                                    </div>
 
-                                <i class="icon icon-little-arrow item hidden-mobile hidden-tablet"></i>
+                                    <i class="icon icon-little-arrow item hidden-mobile hidden-tablet"></i>
 
-                                <div class="fltp item" id="rangeend">
-                                    <input type="text" class="filter" value="" required placeholder="Enter Date">
-                                    <label class="placeholder" data-big-placeholder="Check Out Date"
-                                           data-little-placeholder="Check Out"></label>
-                                </div>
+                                    <div class="fltp item" id="rangeend">
+                                        <input type="text" name="return_date" class="filter" value="{{isset($pickup_date)}}"
+                                               placeholder="Enter Date">
+                                        <label class="placeholder" data-big-placeholder="Check Out Date"
+                                               data-little-placeholder="Check Out"></label>
+                                    </div>
 
-                            </li>
+                                </li>
 
-                            <li class="has-submenu has-megamenu open-inside-modal filters-dropdown overlay-dropdown">
+                                <li class="has-submenu has-megamenu open-inside-modal filters-dropdown overlay-dropdown">
 
-                                <a href="#" class="item hidden-tablet hidden-mobile">
-                                    <i class="icon icon-filter"></i>
-                                    <span class="hidden-tablet">Filters</span>
-                                </a>
+                                    <a href="#" class="item hidden-tablet hidden-mobile">
+                                        <i class="icon icon-filter"></i>
+                                        <span class="hidden-tablet">Filters</span>
+                                    </a>
 
-                                <ul class="submenu megamenu">
-                                    <li class="item">
-                                        <form action="vehicle/search" method="GET">
+                                    <ul class="submenu megamenu">
+                                        <li class="item">
 
                                             <div class="content">
-                                                <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                                                <input type="hidden" name="filter" value="1"/>
 
                                                 <div class="price-range-slider mobile-big">
                                                     <a href="#" class="price-range-trigger"
@@ -87,6 +90,43 @@
 
                                                     <div id="price-range-slider" class="price-range-slider-base"></div>
                                                 </div>
+
+                                                <div class="div-c inline-2">
+                                                    <div class="divided-column">
+                                                        <label>Pickup Location</label>
+                                                        <select name="pickup_location" class="dropdown item" required>
+                                                            <option value="0">Choose location</option>
+                                                            @foreach($PickupLocation as $item)
+                                                                @if(isset($id_pickup_location))
+                                                                    @if($id_pickup_location == $item -> id)
+                                                                        <option
+                                                                            value="{{$item -> id}}"
+                                                                            selected>{{$item -> name}}</option>
+                                                                    @else
+                                                                        <option
+                                                                            value="{{$item -> id}}">{{$item -> name}}</option>
+                                                                    @endif
+                                                                @else
+                                                                    <option
+                                                                        value="{{$item -> id}}">{{$item -> name}}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <label>Return Location</label>
+                                                        <select name="return_location" class="dropdown item" required>
+                                                            <option value="0" selected>Return location</option>
+                                                            @foreach($PickupLocation as $item)
+                                                                <option
+                                                                    value="{{$item -> id}}">{{$item -> name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <hr>
 
                                                 <div class="div-c inline-2">
                                                     <div class="divided-column">
@@ -117,8 +157,6 @@
                                                             @endif
                                                         </select>
                                                     </div>
-
-
                                                 </div>
 
                                                 <hr>
@@ -229,16 +267,16 @@
 
                                             </div>
 
-                                        </form>
-                                    </li>
-                                </ul>
+                                        </li>
+                                    </ul>
 
 
-                            </li>
+                                </li>
 
-                        </ul>
+                            </ul>
 
-                    </div>
+                        </div>
+                    </form>
 
                 </div>
             </div>

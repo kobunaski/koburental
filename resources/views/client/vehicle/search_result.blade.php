@@ -125,6 +125,12 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
+
+
+                                                    <input type="hidden" name="start_price" id="start_price"
+                                                           value="{{$start_price}}"/>
+                                                    <input type="hidden" name="end_price" id="end_price"
+                                                           value="{{$start_price}}"/>
                                                 </div>
 
                                                 <hr>
@@ -484,11 +490,14 @@
                     @endforeach
                 @endif
             @endforeach
+
+            @if($count == 0)
+                There are no vehicle according to your demands
+            @endif
+
             <div class="ui twelve wide mobile twelve wide tablet twelve wide computer column">
                 <div class="typo-section-sq thick-sq">
-                    {{--@if($count > 6)--}}
-                    {{--{{$Vehicle->links()}}--}}
-                    {{--@endif--}}
+
                 </div>
             </div>
 
@@ -530,4 +539,45 @@
             </div>
         </div>
     </div>
+
+
+@endsection
+
+@section('script')
+    <script>
+        var startSlider = document.getElementById('price-range-slider');
+
+        var valueSlider = [
+            document.getElementById('start_price'),
+            document.getElementById('end_price')
+        ];
+
+            @if(isset($start_price))
+        var start_price = {{$start_price}};
+        var end_price = {{$end_price}};
+            @else
+        var start_price = 0;
+        var end_price = 500;
+        @endif
+
+        noUiSlider.create(startSlider, {
+            start: [start_price, end_price],
+            tooltips: true,
+            format: wNumb({
+                decimals: 0,
+                thousand: '.',
+                prefix: '$',
+            }),
+            connect: true,
+            range: {
+                'min': [0],
+                'max': [500]
+            },
+
+        });
+
+        startSlider.noUiSlider.on('update', function (values, index) {
+            valueSlider[index].value = values[index];
+        });
+    </script>
 @endsection
