@@ -90,6 +90,7 @@ class VehicleController extends Controller
         $Vehicle->id_model = $request->id_model;
         $Vehicle->id_pickup_location = $request->id_pickup_location;
         $Vehicle->daily_price = $request->daily_price;
+        $Vehicle->view_count = 0;
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
