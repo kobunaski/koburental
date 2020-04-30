@@ -138,11 +138,11 @@ Route::group(['prefix' => 'profile'], function (){
 Route::group(['prefix' => 'vehicle'], function (){
     Route::get('/', 'VehicleController@viewClient');
     Route::get('/detail/{id}', 'VehicleController@viewDetailClient');
-    Route::post('/feedback/{id}', 'FeedbackController@addFeedback');
 
+    Route::post('/feedback/{id}', 'FeedbackController@addFeedback');
     Route::get('/feedback/delete/{id}', 'FeedbackController@deleteFeedback');
 
-    Route::get('search', 'VehicleController@searchResult');
+//    Route::get('search', 'VehicleController@searchResult');
 });
 
 Route::group(['prefix' => 'login'], function (){

@@ -42,7 +42,7 @@
                     </ul>
                 </li>
             @else
-                <li><a href="#" class="item modal-ui-trigger" data-trigger-for="modal02">
+                <li><a href="#" class="item modal-ui-trigger" data-trigger-for="modal02" id="modal02">
                         <span>Log In</span>
                     </a>
                 </li>

@@ -13,11 +13,18 @@
         <form action="login" method="POST" id="login">
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             <div class="div-c">
+
+                @if(count($errors) > 0)
+                    @foreach($errors->all() as $er)
+                        {{$er}}<br>
+                    @endforeach<br><br>
+                @endif
+
                 <div class="divided-column">
-                    <input type="text" placeholder="E-mail Address" name="email" >
+                    <input type="text" placeholder="E-mail Address" name="email">
                 </div>
                 <div class="divided-column">
-                    <input type="password" placeholder="Password" name="password" >
+                    <input type="password" placeholder="Password" name="password">
                 </div>
             </div>
 

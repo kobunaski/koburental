@@ -37,10 +37,10 @@
                         </div>
 
                         {{--<div class="search-item">--}}
-                            {{--<div class="checkbox-wrapper">--}}
-                                {{--<input type="checkbox" id="checkbox11">--}}
-                                {{--<label for="checkbox11">Return car to pickup location</label>--}}
-                            {{--</div>--}}
+                        {{--<div class="checkbox-wrapper">--}}
+                        {{--<input type="checkbox" id="checkbox11">--}}
+                        {{--<label for="checkbox11">Return car to pickup location</label>--}}
+                        {{--</div>--}}
                         {{--</div>--}}
 
                         <div class="search-item">
@@ -55,7 +55,7 @@
                         <div class="search-item">
                             <i class="icon icon-return-date"></i>
                             <div class="fltp calendar-sq" id="rangeend">
-                                <input type="text" name="return_date"  class="filter" value="" placeholder="enter date">
+                                <input type="text" name="return_date" class="filter" value="" placeholder="enter date">
                                 <label class="placeholder" data-big-placeholder="Return date"
                                        data-little-placeholder="Return date"></label>
                             </div>
@@ -286,3 +286,12 @@
         </div>
     </div>
 @endsection
+@if(count($errors) > 0)
+@section('script')
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $('#modal02').trigger('click');
+        });
+    </script>
+@endsection
+@endif
