@@ -497,7 +497,7 @@
 
             <div class="ui twelve wide mobile twelve wide tablet twelve wide computer column">
                 <div class="typo-section-sq thick-sq">
-
+{{--{{$Vehicle -> links()}}--}}
                 </div>
             </div>
 

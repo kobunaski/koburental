@@ -24,15 +24,63 @@ class VehicleController extends Controller
         return view('admin.vehicle.view', ['Vehicle' => $Vehicle, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation]);
     }
 
-    public function viewClient()
+    public function viewClient(Request $request)
     {
-        $Vehicle = Vehicle::orderBy('name', 'asc')->paginate(6);
+        $available_vehicle = $array_different = $array_available_vehicle = $array_available_vehicle_filter = $unavailable_vehicle = array();
+        $end_price = $start_price = $pickup_date = $return_date = $seat = $fuel = $air_con = $bluetooth = $gearbox = null;
+
+        $id_pickup_location = $request->pickup_location;
+        $filter = $request->filter;
+        $pickup_date = $request->pickup_date;
+        $return_date = $request->return_date;
+        $seat = $request->seat;
+        $fuel = $request->fuel;
+        $air_con = $request->air_con;
+        $bluetooth = $request->bluetooth;
+        $gearbox = $request->gearbox;
+        $start_price = filter_var($request->start_price, FILTER_SANITIZE_NUMBER_INT);
+        $end_price = filter_var($request->end_price, FILTER_SANITIZE_NUMBER_INT);
+
         $VehicleType = VehicleType::all();
         $Manufacture = Manufacture::all();
         $PickupLocation = PickupLocation::all();
         $Feedback = Feedback::all();
         $VehicleDetail = VehicleDetail::all();
-        return view('client.vehicle.view', ['Feedback' => $Feedback, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation]);
+        $VehicleAll = Vehicle::all();
+        $Booking = Booking::all();
+
+        if ($id_pickup_location == 0 && $filter == 0) {
+            $Vehicle = Vehicle::paginate(6);
+        } else if ($id_pickup_location != 0 && $filter == 0) {
+            if ($pickup_date == '') {
+                $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->paginate(6);
+            } else {
+                $array_available_vehicle = $this->time_limit($pickup_date, $return_date);
+                $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->whereIn('id', $array_available_vehicle)->paginate(6);
+            }
+        } else if ($id_pickup_location == 0 && $filter != 0) {
+
+            $array_different = $this->filtering($seat, $fuel, $air_con, $bluetooth, $start_price, $end_price);
+
+            if ($pickup_date == '') {
+                $Vehicle = Vehicle::whereIn('id', $array_different)->paginate(6);
+            } else {
+                $array_available_vehicle = $this->time_limit($pickup_date, $return_date);
+                $Vehicle = Vehicle::whereIn('id', $array_different)->whereIn('id', $array_available_vehicle)->paginate(6);
+            }
+        } else if ($id_pickup_location != 0 && $filter != 0) {
+
+            $array_different = $this->filtering($seat, $fuel, $air_con, $bluetooth, $start_price, $end_price);
+
+            if ($pickup_date == '') {
+                $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->whereIn('id', $array_different)->paginate(6);
+            } else {
+                $array_available_vehicle = $this->time_limit($pickup_date, $return_date);
+                $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->whereIn('id', $array_different)->whereIn('id', $array_available_vehicle)->paginate(6);
+            }
+        }
+
+        return view('client.vehicle.view', ['start_price' => $start_price, 'end_price' => $end_price, 'filter' => $filter, 'seat' => $seat, 'fuel' => $fuel, 'air_con' => $air_con, 'bluetooth' => $bluetooth, 'array_different' => $array_different, 'return_date' => $return_date, 'pickup_date' => $pickup_date, 'array_available_vehicle' => $array_available_vehicle, 'id_pickup_location' => $id_pickup_location, 'Feedback' => $Feedback, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation]);
     }
 
     public function viewDetailClient($id)
@@ -146,9 +194,10 @@ class VehicleController extends Controller
         return redirect('admin/vehicle/view')->with('alert', 'Model Edit Successful');
     }
 
-    public function searchResult(Request $request)
+    public function searchResult1(Request $request)
     {
         $available_vehicle = $array_different = $array_available_vehicle = $array_available_vehicle_filter = $unavailable_vehicle = array();
+        $end_price = $start_price = $pickup_date = $return_date = $seat = $fuel = $air_con = $bluetooth = $gearbox = null;
 
         $id_pickup_location = $request->pickup_location;
         $filter = $request->filter;
@@ -161,7 +210,6 @@ class VehicleController extends Controller
         $VehicleDetail = VehicleDetail::all();
         $VehicleAll = Vehicle::all();
         $Booking = Booking::all();
-        $end_price = $start_price = $pickup_date = $return_date = $seat = $fuel = $air_con = $bluetooth = $gearbox = null;
 
         if ($id_pickup_location != 0) {
             $pickup_date = $request->pickup_date;
@@ -269,7 +317,7 @@ class VehicleController extends Controller
                 }
 
                 foreach ($Vehicle as $item) {
-                    if ($item->daily_price >= $start_price && $item -> daily_price <= $end_price) {
+                    if ($item->daily_price >= $start_price && $item->daily_price <= $end_price) {
                         if (!isset($array_available_vehicle_filter[$item->id])) {
                             $array_available_vehicle_filter[$item->id] = $item->id;
                         }
@@ -298,7 +346,7 @@ class VehicleController extends Controller
             if (isset($filter)) {
                 $seat = $request->seat;
                 $fuel = $request->fuel;
-                $air_con = $request->air_con;
+                echo $air_con = $request->air_con;
                 $bluetooth = $request->bluetooth;
                 $gearbox = $request->gearbox;
                 $start_price = filter_var($request->start_price, FILTER_SANITIZE_NUMBER_INT);
@@ -361,7 +409,7 @@ class VehicleController extends Controller
                 }
 
                 foreach ($Vehicle as $item) {
-                    if ($item->daily_price >= $start_price && $item -> daily_price <= $end_price) {
+                    if ($item->daily_price >= $start_price && $item->daily_price <= $end_price) {
                         if (!isset($array_available_vehicle_filter[$item->id])) {
                             $array_available_vehicle_filter[$item->id] = $item->id;
                         }
@@ -371,6 +419,202 @@ class VehicleController extends Controller
                         }
                     }
                 }
+            }
+        }
+
+        if ($id_pickup_location != 0 && isset($filter)) {
+            $array = array_diff($array_available_vehicle_filter, $unavailable_vehicle);
+            $array_different = array_intersect($array_available_vehicle, $array);
+        } else if ($id_pickup_location != 0) {
+            $array_different = $array_available_vehicle;
+        } else if (isset($filter)) {
+            $array_different = array_diff($array_available_vehicle_filter, $unavailable_vehicle);
+        }
+
+        //return view('client.vehicle.search_result', ['start_price' => $start_price, 'end_price' => $end_price, 'filter' => $filter, 'seat' => $seat, 'fuel' => $fuel, 'air_con' => $air_con, 'bluetooth' => $bluetooth, 'array_different' => $array_different, 'return_date' => $return_date, 'pickup_date' => $pickup_date, 'array_available_vehicle' => $array_available_vehicle, 'id_pickup_location' => $id_pickup_location, 'Feedback' => $Feedback, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation]);
+    }
+
+    public function searchResult(Request $request)
+    {
+        $available_vehicle = $array_different = $array_available_vehicle = $array_available_vehicle_filter = $unavailable_vehicle = array();
+        $end_price = $start_price = $pickup_date = $return_date = $seat = $fuel = $air_con = $bluetooth = $gearbox = null;
+
+        $id_pickup_location = $request->pickup_location;
+        $filter = $request->filter;
+        $pickup_date = $request->pickup_date;
+        $return_date = $request->return_date;
+        $seat = $request->seat;
+        $fuel = $request->fuel;
+        $air_con = $request->air_con;
+        $bluetooth = $request->bluetooth;
+        $gearbox = $request->gearbox;
+        $start_price = filter_var($request->start_price, FILTER_SANITIZE_NUMBER_INT);
+        $end_price = filter_var($request->end_price, FILTER_SANITIZE_NUMBER_INT);
+
+        $VehicleType = VehicleType::all();
+        $Manufacture = Manufacture::all();
+        $PickupLocation = PickupLocation::all();
+        $Feedback = Feedback::all();
+        $VehicleDetail = VehicleDetail::all();
+        $VehicleAll = Vehicle::all();
+        $Booking = Booking::all();
+
+        if ($id_pickup_location == 0 && $filter == 0) {
+            $Vehicle = Vehicle::paginate(6);
+        } else if ($id_pickup_location != 0 && $filter == 0) {
+            if ($pickup_date == '') {
+                $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->paginate(6);
+            } else {
+                $array_available_vehicle = $this->time_limit($pickup_date, $return_date);
+                $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->whereIn('id', $array_available_vehicle)->paginate(6);
+            }
+        } else if ($id_pickup_location == 0 && $filter != 0) {
+
+            $array_different = $this->filtering($seat, $fuel, $air_con, $bluetooth, $start_price, $end_price);
+
+            if ($pickup_date == '') {
+                $Vehicle = Vehicle::whereIn('id', $array_different)->paginate(6);
+            } else {
+                $array_available_vehicle = $this->time_limit($pickup_date, $return_date);
+                $Vehicle = Vehicle::whereIn('id', $array_different)->whereIn('id', $array_available_vehicle)->paginate(6);
+            }
+        } else if ($id_pickup_location != 0 && $filter != 0) {
+
+            $array_different = $this->filtering($seat, $fuel, $air_con, $bluetooth, $start_price, $end_price);
+
+            if ($pickup_date == '') {
+                $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->whereIn('id', $array_different)->paginate(6);
+            } else {
+                $array_available_vehicle = $this->time_limit($pickup_date, $return_date);
+                $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->whereIn('id', $array_different)->whereIn('id', $array_available_vehicle)->paginate(6);
+            }
+        }
+
+        return view('client.vehicle.search_result1', ['start_price' => $start_price, 'end_price' => $end_price, 'filter' => $filter, 'seat' => $seat, 'fuel' => $fuel, 'air_con' => $air_con, 'bluetooth' => $bluetooth, 'array_different' => $array_different, 'return_date' => $return_date, 'pickup_date' => $pickup_date, 'array_available_vehicle' => $array_available_vehicle, 'id_pickup_location' => $id_pickup_location, 'Feedback' => $Feedback, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation]);
+    }
+
+    function time_limit($pickup_date, $return_date)
+    {
+        $Booking = Booking::all();
+        $VehicleAll = Vehicle::all();
+
+        $time = strtotime($pickup_date);
+        $new_pickup_date = date('Y-m-d', $time);
+
+        $time2 = strtotime($return_date);
+        $new_return_date = date('Y-m-d', $time2);
+
+        foreach ($Booking as $item) {
+            if ($new_pickup_date >= $item->pickup_day && $new_pickup_date <= $item->drop_day) {
+                $array_vehicle_pickup[] = $item->id_vehicle;
+            } else if ($new_return_date >= $item->pickup_day && $new_return_date <= $item->drop_day) {
+                $array_vehicle_return[] = $item->id_vehicle;
+            }
+        }
+
+        if (isset($array_vehicle_pickup)) {
+            $array_vehicle_pickup_unique = array_unique($array_vehicle_pickup);
+            foreach ($array_vehicle_pickup_unique as $item) {
+                $available_vehicle[$item] = $item;
+            }
+        }
+
+        if (isset($array_vehicle_return)) {
+            $array_vehicle_return_unique = array_unique($array_vehicle_return);
+            sort($array_vehicle_return_unique);
+            foreach ($array_vehicle_return_unique as $item) {
+                $available_vehicle[$item] = $item;
+            }
+        }
+
+        foreach ($VehicleAll as $item) {
+            if (isset($available_vehicle[$item->id])) {
+
+            } else {
+                $array_available_vehicle[] = $item->id;
+            }
+        }
+
+        return $array_available_vehicle;
+    }
+
+    function filtering($seat, $fuel, $air_con, $bluetooth, $start_price, $end_price)
+    {
+        $VehicleDetail = VehicleDetail::all();
+        $VehicleAll = Vehicle::all();
+        $array_available_vehicle_filter = $unavailable_vehicle = array();
+
+        if ($seat != 0) {
+            foreach ($VehicleDetail as $item) {
+                if ($item->seat == $seat) {
+                    if (!isset($array_available_vehicle_filter[$item->id_vehicle])) {
+                        $array_available_vehicle_filter[$item->id_vehicle] = $item->id_vehicle;
+                    }
+                } else {
+                    if (!isset($unavailable_vehicle[$item->id_vehicle])) {
+                        $unavailable_vehicle[$item->id_vehicle] = $item->id_vehicle;
+                    }
+                }
+            }
+        }
+
+        if ($fuel != 0) {
+            foreach ($VehicleDetail as $item) {
+                if ($item->fuel == $fuel) {
+                    if (!isset($array_available_vehicle_filter[$item->id_vehicle])) {
+                        $array_available_vehicle_filter[$item->id_vehicle] = $item->id_vehicle;
+                    }
+                } else {
+                    if (!isset($unavailable_vehicle[$item->id_vehicle])) {
+                        $unavailable_vehicle[$item->id_vehicle] = $item->id_vehicle;
+                    }
+                }
+            }
+        }
+
+        if (isset($air_con)) {
+            foreach ($VehicleDetail as $item) {
+                if ($item->air_con == $air_con) {
+                    if (!isset($array_available_vehicle_filter[$item->id_vehicle])) {
+                        $array_available_vehicle_filter[$item->id_vehicle] = $item->id_vehicle;
+                    }
+                } else {
+                    if (!isset($unavailable_vehicle[$item->id_vehicle])) {
+                        $unavailable_vehicle[$item->id_vehicle] = $item->id_vehicle;
+                    }
+                }
+            }
+        }
+
+        if (isset($bluetooth)) {
+            foreach ($VehicleDetail as $item) {
+                if ($item->bluetooth == $bluetooth) {
+                    if (!isset($array_available_vehicle_filter[$item->id_vehicle])) {
+                        $array_available_vehicle_filter[$item->id_vehicle] = $item->id_vehicle;
+                    }
+                } else {
+                    if (!isset($unavailable_vehicle[$item->id_vehicle])) {
+                        $unavailable_vehicle[$item->id_vehicle] = $item->id_vehicle;
+                    }
+                }
+            }
+        }
+
+        foreach ($VehicleAll as $item) {
+            if ($item->daily_price >= $start_price && $item->daily_price <= $end_price) {
+                if (!isset($array_available_vehicle_filter[$item->id])) {
+                    $array_available_vehicle_filter[$item->id] = $item->id;
+                }
+            } else {
+                if (!isset($unavailable_vehicle[$item->id])) {
+                    $unavailable_vehicle[$item->id] = $item->id;
+                }
+            }
+        }
+
+        $array_different = array_diff($array_available_vehicle_filter, $unavailable_vehicle);
+
+        return $array_different;
 
 //                if (isset($gearbox)) {
 //                    foreach ($VehicleDetail as $item) {
@@ -385,20 +629,6 @@ class VehicleController extends Controller
 //                        }
 //                    }
 //                }
-            }
-        }
-
-
-        if ($id_pickup_location != 0 && isset($filter)) {
-            $array = array_diff($array_available_vehicle_filter, $unavailable_vehicle);
-            $array_different = array_intersect($array_available_vehicle, $array);
-        } else if ($id_pickup_location != 0) {
-            $array_different = $array_available_vehicle;
-        } else if (isset($filter)) {
-            $array_different = array_diff($array_available_vehicle_filter, $unavailable_vehicle);
-        }
-
-        return view('client.vehicle.search_result', ['start_price' => $start_price, 'end_price' => $end_price, 'filter' => $filter, 'seat' => $seat, 'fuel' => $fuel, 'air_con' => $air_con, 'bluetooth' => $bluetooth, 'array_different' => $array_different, 'return_date' => $return_date, 'pickup_date' => $pickup_date, 'array_available_vehicle' => $array_available_vehicle, 'id_pickup_location' => $id_pickup_location, 'Feedback' => $Feedback, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation]);
     }
 
     public function getDelete($id)

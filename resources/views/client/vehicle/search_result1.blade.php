@@ -13,7 +13,7 @@
 
                     <!-- Mega Menu-->
 
-                    <form action="vehicle" method="GET" autocomplete="off">
+                    <form action="vehicle/search" method="GET" autocomplete="off">
                         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                         <input type="hidden" name="filter" value="1"/>
                         <div
