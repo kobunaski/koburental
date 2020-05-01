@@ -72,7 +72,11 @@ Default Header with a White Background & Dark text.
     </div>
 
     <!--FOOTER-->
-    @include('client/layout/footer')
+    @if(View::hasSection('footer'))
+        @yield('footer')
+    @else
+        @include('client/layout/footer')
+    @endif
 
 
 </div><!--end #page-wrapper-->

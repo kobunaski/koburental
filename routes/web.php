@@ -121,9 +121,11 @@ Route::get('/', function(){
     return redirect('home');
 });
 
+
 Route::get('about', 'ClientController@about');
 Route::get('contact', 'ClientController@contact');
 Route::post('contact', 'ClientController@postContact');
+Route::get('success', 'BookingController@getSuccess');
 
 //Route::get('profile', 'UserController@viewProfileClient');
 //Route::post('profile/{id}', 'UserController@postProfileClient');
@@ -142,7 +144,10 @@ Route::group(['prefix' => 'vehicle'], function (){
     Route::post('/feedback/{id}', 'FeedbackController@addFeedback');
     Route::get('/feedback/delete/{id}', 'FeedbackController@deleteFeedback');
 
-//    Route::get('search', 'VehicleController@searchResult');
+    Route::group(['prefix' => 'booking'], function (){
+        Route::get('{id}', 'BookingController@detailConfirm');
+        Route::post('{id}', 'BookingController@postConfirm');
+    });
 });
 
 Route::group(['prefix' => 'article'], function (){

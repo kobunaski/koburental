@@ -158,105 +158,106 @@
                                     <div class="ui twelve wide mobile six wide computer column">
 
                                         <div class="property-checkout-container main-infos">
+                                            <form action="vehicle/booking/{{$Vehicle -> id}}" method="GET" autocomplete="off">
+                                                <div class="div-c">
+                                                    <label>Pick up location</label>
+                                                    <input type="text" placeholder=" ">
+                                                </div>
 
-                                            <div class="div-c">
-                                                <label>Pick up location</label>
-                                                <input type="text" placeholder=" ">
-                                            </div>
+                                                @if(session('error'))
+                                                    <span style="color: #FF5C5C">{{session('error')}}</span>
+                                                @endif
 
-                                            <div class="div-c">
-                                                <label>Return location</label>
-                                                <input type="text" placeholder=" ">
-                                            </div>
-                                            <div class="div-c">
-                                                <input type="checkbox" id="checkbox1">
-                                                <label for="checkbox1">Return car to the same location</label>
-                                            </div>
+                                                <div class="div-c inline-2 inline-check-in">
 
+                                                    <div class="divided-column calendar-sq" id="rangestart">
+                                                        <label class="placeholder">Check in</label>
 
-                                            <div class="div-c inline-2 inline-check-in">
+                                                        <div class="relative-sq">
+                                                            <input type="text" name="pickup_date" class="filter" value="{{session('pickup_date_error') ? session('pickup_date_error') : ''}}" required
+                                                                   placeholder="date">
+                                                            <i class="icon icon-little-arrow filters-arrow"></i>
+                                                        </div>
 
-                                                <div class="divided-column calendar-sq" id="sticky-box-rangestart">
-                                                    <label class="placeholder">Check in</label>
+                                                    </div>
 
-                                                    <div class="relative-sq">
-                                                        <input type="text" class="filter" value="" required
+                                                    <div class="divided-column calendar-sq" id="rangeend">
+
+                                                        <label class="placeholder">Check Out</label>
+
+                                                        <input type="text" class="filter" name="return_date"  value="{{session('return_date_error') ? session('return_date_error') : ''}}" required
                                                                placeholder="date">
 
-                                                        <i class="icon icon-little-arrow filters-arrow"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="div-c extras-sq">
+
+                                                    <label class="placeholder">Rent Price</label>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="checkbox2" checked disabled>
+                                                        <label for="checkbox2">Daily Rent Price</label>
+
+                                                        <span class="value-sq"
+                                                              style="color: #FF5C5C">${{$Vehicle -> daily_price}}</span>
+                                                    </div>
+
+                                                    <label class="placeholder">Extras</label>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="checkbox2">
+                                                        <label for="checkbox2">Child Seat</label>
+
+                                                        <span class="value-sq">$10</span>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="checkbox3">
+                                                        <label for="checkbox3">Driver</label>
+
+                                                        <span class="value-sq">$13</span>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="checkbox4">
+                                                        <label for="checkbox4">Neque consequa es nterdum erat consequa
+                                                            es
+                                                            nterdum erat</label>
+
+                                                        <span class="value-sq">$10</span>
+                                                    </div>
+
+                                                    <div class="divided-column">
+                                                        <input type="checkbox" id="checkbox5">
+                                                        <label for="checkbox5">Phasellus sed neque consequa es nterdum
+                                                            erat</label>
+
+                                                        <span class="value-sq">$10</span>
                                                     </div>
 
                                                 </div>
 
-                                                <div class="divided-column calendar-sq" id="sticky-box-rangeend">
+                                                <div class="div-c total-sq">
+                                                    <div class="divided-column">
+                                                        <label class="placeholder">Total</label>
+                                                        <span class="value-sq">$200</span>
 
-                                                    <label class="placeholder">Check Out</label>
-
-                                                    <input type="text" class="filter" value="" required
-                                                           placeholder="date">
-
-                                                </div>
-                                            </div>
-
-
-                                            <div class="div-c extras-sq">
-
-                                                <label class="placeholder">Rent Price</label>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox2" checked disabled>
-                                                    <label for="checkbox2">Daily Rent Price</label>
-
-                                                    <span class="value-sq"
-                                                          style="color: #FF5C5C">${{$Vehicle -> daily_price}}</span>
+                                                    </div>
                                                 </div>
 
-                                                <label class="placeholder">Extras</label>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox2">
-                                                    <label for="checkbox2">Child Seat</label>
-
-                                                    <span class="value-sq">$10</span>
-                                                </div>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox3">
-                                                    <label for="checkbox3">Driver</label>
-
-                                                    <span class="value-sq">$13</span>
-                                                </div>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox4">
-                                                    <label for="checkbox4">Neque consequa es nterdum erat consequa es
-                                                        nterdum erat</label>
-
-                                                    <span class="value-sq">$10</span>
-                                                </div>
-
-                                                <div class="divided-column">
-                                                    <input type="checkbox" id="checkbox5">
-                                                    <label for="checkbox5">Phasellus sed neque consequa es nterdum
-                                                        erat</label>
-
-                                                    <span class="value-sq">$10</span>
-                                                </div>
-
-                                            </div>
-
-
-                                            <div class="div-c total-sq">
-                                                <div class="divided-column">
-                                                    <label class="placeholder">Total</label>
-                                                    <span class="value-sq">$200</span>
-
-                                                </div>
-                                            </div>
-
-                                            <a class="button-sq fullwidth-sq font-weight-bold-sq" href="">Instant
-                                                Booking</a>
-
+                                                @if(isset($user_login))
+                                                    <button type="submit"
+                                                            class="button-sq fullwidth-sq font-weight-bold-sq">Reserve your car
+                                                    </button>
+                                                @else
+                                                    <a href="#"
+                                                       class="button-sq fullwidth-sq font-weight-bold-sq modal-ui-trigger"
+                                                       data-trigger-for="modal02">
+                                                        <span>Login to reserve</span>
+                                                    </a>
+                                                @endif
+                                            </form>
                                         </div>
 
 
@@ -341,7 +342,8 @@
                                     <div class="review-meta">
                                         @foreach($User as $item2)
                                             @if($item2 -> id == $item -> id_user)
-                                                <a class="avatar-sq @if($item2->verify_email == 1) verified-sq @endif" href="vendor_details.html">
+                                                <a class="avatar-sq @if($item2->verify_email == 1) verified-sq @endif"
+                                                   href="vendor_details.html">
                                                     <img src="upload/image/user_image/{{$item2 -> image}}" alt="">
                                                 </a>
                                                 <a class="name-sq" href="vendor_details.html">{{$item2 -> name}}</a>
@@ -410,7 +412,8 @@
 
                             @if(isset($user_login))
                                 <div class="review-meta">
-                                    <div class="avatar-sq @if($user_login->verify_email == 1) verified-sq @endif my-avatar-sq">
+                                    <div
+                                        class="avatar-sq @if($user_login->verify_email == 1) verified-sq @endif my-avatar-sq">
                                         <img src="upload/image/user_image/{{$user_login -> image}}" alt="">
                                     </div>
                                     <p class="name-sq">Me</p>
@@ -423,6 +426,7 @@
                                         {{--oninput="document.getElementById('rangeValLabel').innerHTML = this.value;"--}}
                                         {{--step="1" name="rangeVal" id="rangeVal" value="5">--}}
                                         {{--<em id="rangeValLabel" class="icon icon-star-2"></em>--}}
+
 
                                         <input type="number" placeholder="Rate the vehicle from 1 to 10" min="1"
                                                max="10" name="rating">
@@ -441,7 +445,7 @@
                             @else
                                 <div class="reviews-row">
                                     Please &nbsp; <a href="#" class="item modal-ui-trigger" data-trigger-for="modal02"
-                                             style="color: #FF5C5C">login</a> &nbsp; to add comment
+                                                     style="color: #FF5C5C">login</a> &nbsp; to add comment
                                 </div>
                             @endif
                         </div>
@@ -681,4 +685,28 @@
         <br>
 
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $('#rangestart').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend'),
+            //inline: true,
+            className: {
+                prevIcon: "icon icon-arrow-left-122",
+                nextIcon: "icon icon-arrow-right-122"
+            }
+        });
+
+        $('#rangeend').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart'),
+            //inline: true,
+            className: {
+                prevIcon: "icon icon-arrow-left-122",
+                nextIcon: "icon icon-arrow-right-122"
+            }
+        });
+    </script>
 @endsection
