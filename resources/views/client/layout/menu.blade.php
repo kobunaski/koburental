@@ -60,6 +60,12 @@
             </li>
 
             <li>
+                <a href="article" class="item">
+                    <span>Articles</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="about" class="item">
                     <span>About us</span>
                 </a>

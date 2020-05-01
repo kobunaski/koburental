@@ -145,6 +145,10 @@ Route::group(['prefix' => 'vehicle'], function (){
 //    Route::get('search', 'VehicleController@searchResult');
 });
 
+Route::group(['prefix' => 'article'], function (){
+    Route::get('/', 'ArticleController@viewClient');
+});
+
 Route::group(['prefix' => 'login'], function (){
     Route::post('/', 'UserController@postLogin');
 });
