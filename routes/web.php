@@ -135,6 +135,12 @@ Route::group(['prefix' => 'profile'], function (){
 
     Route::get('/edit', 'UserController@getEditProfileClient');
     Route::post('/edit/{id}', 'UserController@postEditProfileClient');
+
+    Route::get('/view/order/all', 'BookingController@viewOrder');
+    Route::get('/view/order/pending', 'BookingController@viewOrderPending');
+    Route::get('/view/order/processing', 'BookingController@viewOrderProcessing');
+    Route::get('/view/order/completed', 'BookingController@viewOrderCompleted');
+    Route::get('/view/order/declined', 'BookingController@viewOrderDeclined');
 });
 
 Route::group(['prefix' => 'vehicle'], function (){
@@ -148,6 +154,11 @@ Route::group(['prefix' => 'vehicle'], function (){
         Route::get('{id}', 'BookingController@detailConfirm');
         Route::post('{id}', 'BookingController@postConfirm');
     });
+});
+
+Route::group(['prefix' => 'order'], function(){
+    Route::get('confirm/{id}', 'BookingController@confirmOrder');
+    Route::get('decline/{id}', 'BookingController@declineOrder');
 });
 
 Route::group(['prefix' => 'article'], function (){

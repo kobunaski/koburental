@@ -19,6 +19,9 @@
                         {{$er}}<br>
                     @endforeach<br><br>
                 @endif
+                @if(Session('alert'))
+                    {{Session('alert')}}
+                @endif
 
                 <div class="divided-column">
                     <input type="text" placeholder="E-mail Address" name="email">

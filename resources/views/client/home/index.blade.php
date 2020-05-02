@@ -286,12 +286,12 @@
         </div>
     </div>
 @endsection
-@if(count($errors) > 0)
 @section('script')
-    <script type="text/javascript">
-        $("document").ready(function () {
-            $('#modal02').trigger('click');
-        });
-    </script>
+    @if(count($errors) > 0 || Session('alert'))
+        <script type="text/javascript">
+            $("document").ready(function () {
+                $('#modal02').trigger('click');
+            });
+        </script>
+    @endif
 @endsection
-@endif

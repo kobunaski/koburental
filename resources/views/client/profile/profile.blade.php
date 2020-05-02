@@ -59,7 +59,7 @@
                                                         <i class="icon icon-location-pin-2"></i>
                                                         @if(isset($user_login -> address))
                                                             {{$user_login -> address}}
-                                                            @else
+                                                        @else
                                                             Not set
                                                         @endif
                                                     </div>
@@ -92,14 +92,18 @@
                                                 <div
                                                     class="twelve wide mobile six wide tablet eight wide computer eight wide widescreen eight wide large screen column"
                                                     id="products">
-                                                    <h3>Cars <sup>4</sup></h3>
+                                                    <h3>Recent orders pending <sup>4</sup></h3>
                                                 </div>
 
                                                 <div
                                                     class="twelve wide mobile six wide tablet four wide computer four wide widescreen four wide large screen column">
                                                     <ul class="dashboard-filter list-style-inline-sq list-default-sq">
-                                                        <li><a href="" class="active">Reviews</a></li>
-                                                        <li><a href="">Price</a></li>
+                                                        <li>
+                                                            <a href="" class="active">
+                                                                <i class="icon big icon-slim-arrow-right"></i>
+                                                                View more
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
 
@@ -111,347 +115,222 @@
                                     <div class="ui grid">
                                         <div class="row">
 
-                                            <div
-                                                class="twelve wide mobile six wide tablet six wide computer six wide widescreen six wide large screen column">
-                                                <div class="property-item caption-sq shadow-sq small-sq">
-                                                    <div class="property-item-inner">
+                                            @foreach($Booking as $item)
+                                                <div
+                                                    class="ui twelve wide mobile six wide tablet six wide computer four wide widescreen four wide large screen column">
+                                                    <div class="dashboard-order-boxes-sq">
+                                                        <span
+                                                            class="dashboard-label-sq">{{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d M Y, H:i')}}</span>
 
-                                                        <div class="price-tag-sq">16 &euro; <span>/ hour</span></div>
-                                                        <a class="add-wishlist modal-ui-trigger" href=""
-                                                           data-trigger-for="wishlist">
-                                                            <i class="icon icon-add-wishlist"></i>
-                                                        </a>
+                                                        <p class="dashboard-content-sq">
+                                                            <strong>
+                                                                @foreach($Vehicle as $item2)
+                                                                    @if($item2 -> id == $item -> id_vehicle)
+                                                                        {{$item2 -> name}}
+                                                                    @endif
+                                                                @endforeach
+                                                            </strong>
+                                                        </p>
 
-                                                        <a class="image-sq" href="property_page.html">
-                                                            <div class="image-wrapper">
-														<span class="image-inner">
-															<img src="assets/images/cars/property_item_cars_01.jpg"
-                                                                 alt="" class="">
-														</span>
-                                                            </div>
-                                                        </a>
+                                                        <span class="dashboard-label-sq">Reserved by</span>
+                                                        <div class="dashboard-content-sq">
 
-                                                        <div class="main-details">
-                                                            <div class="title-row">
-                                                                <a href="property_page.html" class="title-sq">VW Golf 7
-                                                                    1.6
-                                                                    TDI - DSG</a>
-                                                            </div>
-
-                                                            <div class="icons-row">
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-heart"></i> 8.7
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-ac"></i> A/C
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-gearbox"></i> A
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-user-circle"></i> x 4
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                class="twelve wide mobile six wide tablet six wide computer six wide widescreen six wide large screen column">
-                                                <div class="property-item caption-sq shadow-sq small-sq">
-                                                    <div class="property-item-inner">
-
-                                                        <div class="price-tag-sq">85 &euro; <span>/ hour</span></div>
-                                                        <a class="add-wishlist modal-ui-trigger" href=""
-                                                           data-trigger-for="wishlist">
-                                                            <i class="icon icon-add-wishlist"></i>
-                                                        </a>
-
-                                                        <a class="image-sq" href="property_page.html">
-                                                            <div class="image-wrapper">
-														<span class="image-inner">
-															<img src="assets/images/cars/property_item_cars_02.jpg"
-                                                                 alt="" class="">
-														</span>
-                                                            </div>
-                                                        </a>
-                                                        <div class="main-details">
-                                                            <div class="title-row">
-                                                                <a href="property_page.html" class="title-sq">Mercedes-Benz
-                                                                    C AMG</a>
-                                                            </div>
-
-                                                            <div class="icons-row">
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-heart"></i> 9.9
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-ac"></i> A/C
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-gearbox"></i> A
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-user-circle"></i> x 4
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                class="twelve wide mobile six wide tablet six wide computer six wide widescreen six wide large screen column">
-                                                <div class="property-item caption-sq shadow-sq small-sq">
-                                                    <div class="property-item-inner">
-
-                                                        <div class="price-tag-sq">32 &euro; <span>/ hour</span></div>
-                                                        <a class="add-wishlist modal-ui-trigger" href=""
-                                                           data-trigger-for="wishlist">
-                                                            <i class="icon icon-add-wishlist"></i>
-                                                        </a>
-
-                                                        <a class="image-sq" href="property_page.html">
-                                                            <div class="image-wrapper">
-														<span class="image-inner">
-															<img src="assets/images/cars/property_item_cars_03.jpg"
-                                                                 alt="" class="">
-														</span>
-                                                            </div>
-                                                        </a>
-
-                                                        <div class="main-details">
-                                                            <div class="title-row">
-                                                                <a href="property_page.html" class="title-sq">Audi A3
-                                                                    2.0
-                                                                    TDI</a>
-                                                            </div>
-
-                                                            <div class="icons-row">
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-heart"></i> 8.9
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-ac"></i> A/C
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-gearbox"></i> A
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-user-circle"></i> x 4
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                class="twelve wide mobile six wide tablet six wide computer six wide widescreen six wide large screen column">
-                                                <div class="property-item caption-sq shadow-sq small-sq">
-                                                    <div class="property-item-inner">
-
-                                                        <div class="price-tag-sq">45 &euro; <span>/ hour</span></div>
-                                                        <a class="add-wishlist modal-ui-trigger" href=""
-                                                           data-trigger-for="wishlist">
-                                                            <i class="icon icon-add-wishlist"></i>
-                                                        </a>
-
-                                                        <a class="image-sq" href="property_page.html">
-                                                            <div class="image-wrapper">
-														<span class="image-inner">
-															<img src="assets/images/cars/property_item_cars_04.jpg"
-                                                                 alt="" class="">
-														</span>
-                                                            </div>
-                                                        </a>
-
-                                                        <div class="main-details">
-                                                            <div class="title-row">
-                                                                <a href="property_page.html" class="title-sq">1971 Buick
-                                                                    Skylark GSX</a>
-                                                            </div>
-
-                                                            <div class="icons-row">
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-heart"></i> 8.5
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-ac"></i> A/C
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-gearbox"></i> M
-                                                                </div>
-                                                                <div class="icons-column">
-                                                                    <i class="icon icon-user-circle"></i> x 4
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="ui twelve wide computer column" id="reviews">
-                                                <div class="typo-header-sq">
-                                                    <h3>Reviews <sup>3</sup></h3>
-                                                </div>
-
-                                                <div class="reviews-header">
-                                                    <div class="rating-big">
-                                                        <div class="rating-badge">
-                                                            <span>9.2</span>
-                                                            <i class="icon icon-heart"></i>
-                                                        </div>
-                                                        <div class="rating-info">
-                                                            <p>More than <strong>95%</strong> of guests recommend this
-                                                                place
+                                                            <p class="flex-grow-true">
+                                                                @foreach($UserAll as $item2)
+                                                                    @if($item2 -> id == $item -> id_user)
+                                                                        {{$item2 -> name}}
+                                                                    @endif
+                                                                @endforeach
                                                             </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="rating-percentage">
-                                                        <div class="rating-column">
-                                                            <p class="rating-label"><strong>Accuracy</strong></p>
-                                                            <div class="basic-progressbar">
-                                                                <div class="inner" style="width:75%"></div>
+                                                            <div class="avatar-sq tiny-avatar-sq verified-sq">
+                                                                @foreach($UserAll as $item2)
+                                                                    @if($item2 -> id == $item -> id_user)
+                                                                        <img
+                                                                            src="upload/image/user_image/{{$item2->image}}"
+                                                                            alt="">
+                                                                    @endif
+                                                                @endforeach
                                                             </div>
+
                                                         </div>
 
-                                                        <div class="rating-column">
-                                                            <p class="rating-label"><strong>Communication</strong></p>
-                                                            <div class="basic-progressbar">
-                                                                <div class="inner" style="width:55%"></div>
+                                                        <span class="dashboard-label-sq">Total</span>
+                                                        <p class="dashboard-content-sq">
+                                                            <strong>&euro;
+                                                                @foreach($Vehicle as $item2)
+                                                                    @if($item2 -> id == $item -> id_vehicle)
+                                                                        {{number_format($item2 -> daily_price*(\Carbon\Carbon::parse($item -> return_date)->diffInDays(\Carbon\Carbon::parse($item -> pickup_date))), 2)}}
+                                                                    @endif
+                                                                @endforeach
+                                                            </strong></p>
+                                                        <span class="dashboard-label-sq">Status</span>
+                                                        @if($item -> status == 0)
+                                                            <p class="dashboard-content-sq dashboard-status-sq"
+                                                               style="color: 	#FFA500">
+                                                                <strong>
+                                                                    Pending
+                                                                </strong>
+                                                            </p>
+                                                        @elseif ($item -> status == 1)
+                                                            <p class="dashboard-content-sq dashboard-status-sq processing-sq">
+                                                                <strong>
+                                                                    Processing
+                                                                </strong>
+                                                            </p>
+                                                        @elseif ($item -> status == 2)
+                                                            <p class="dashboard-content-sq dashboard-status-sq"
+                                                               style="color: red">
+                                                                <strong>
+                                                                    Declined
+                                                                </strong>
+                                                            </p>
+                                                        @endif
+                                                        <a href=""
+                                                           class="button-sq see-through-sq fullwidth-sq modal-ui-trigger"
+                                                           data-trigger-for="uimodal{{$item->id}}">View <i
+                                                                class="icon icon-slim-arrow-right"></i></a>
+                                                        <div class="ui modal small" data-for="uimodal{{$item->id}}">
+
+                                                            <i class="icon icon-close close-modal"></i>
+
+                                                            <div class="header center">
+                                                                <br>
+                                                                <h4>Process order: {{$item -> id}}</h4>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="rating-column">
-                                                            <p class="rating-label"><strong>Location</strong></p>
-                                                            <div class="basic-progressbar">
-                                                                <div class="inner" style="width:25%"></div>
+                                                            <div class="content">
+                                                                <h4>Order Detail</h4>
+                                                                <h5>User information: </h5>
+                                                                @foreach($UserAll as $item2)
+                                                                    @if($item2 -> id == $item -> id_user)
+                                                                        <div class="div-c inline-2">
+                                                                            <div class="divided-column">
+                                                                                <label>User name</label>
+                                                                                <input type="text" disabled
+                                                                                       value="{{$item2 -> name}}">
+                                                                            </div>
+
+                                                                            <div class="divided-column">
+                                                                                <label>Email</label>
+                                                                                <input type="text" disabled
+                                                                                       value="{{$item2 -> email}}">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="div-c">
+                                                                            <label>Address</label>
+                                                                            <input type="text" disabled
+                                                                                   value="{{$item2 -> address}}">
+                                                                        </div>
+
+                                                                        <div class="div-c inline-2">
+                                                                            <div class="divided-column">
+                                                                                <label>Phone number</label>
+                                                                                <input type="text" disabled
+                                                                                       value="{{$item2 -> phone}}">
+                                                                            </div>
+
+                                                                            <div class="divided-column">
+                                                                                <label>Email</label>
+                                                                                <input type="text" disabled
+                                                                                       value="{{$item2 -> email}}">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <label>Driver License</label>
+                                                                        <img
+                                                                            src="upload/image/driver_license_image/{{$item -> driver_license}}"
+                                                                            class="image-sq" alt=""
+                                                                            style="width: 300px;height: auto">
+
+                                                                        <br><br>
+                                                                    @endif
+                                                                @endforeach
+
+                                                                <h5>Order information: </h5>
+                                                                @foreach($Vehicle as $item2)
+                                                                    @if($item2 -> id == $item -> id_vehicle)
+
+                                                                        <div class="div-c inline-2 inline-check-in">
+
+                                                                            <div class="divided-column calendar-sq"
+                                                                                 id="rangestart">
+                                                                                <label class="placeholder">Check
+                                                                                    in</label>
+
+                                                                                <div class="relative-sq">
+                                                                                    <input type="text"
+                                                                                           name="pickup_date"
+                                                                                           class="filter"
+                                                                                           value="{{$item -> pickup_date}}"
+                                                                                           required
+                                                                                           placeholder="date" disabled>
+                                                                                    <i class="icon icon-little-arrow filters-arrow"></i>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                            <div class="divided-column calendar-sq"
+                                                                                 id="rangeend">
+
+                                                                                <label class="placeholder">Check
+                                                                                    Out</label>
+
+                                                                                <input type="text" class="filter"
+                                                                                       disabled name="return_date"
+                                                                                       value="{{$item -> return_date}}"
+                                                                                       required
+                                                                                       placeholder="date">
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="div-c">
+                                                                            @foreach($PickupLocation as $item3)
+                                                                                @if($item3 -> id == $item -> id_pickup_location)
+                                                                                    <label>Pickup Location</label>
+                                                                                    <input type="text" disabled
+                                                                                           value="{{$item3 -> name}}">
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </div>
+
+                                                                        <div class="div-c inline-2">
+                                                                            <div class="divided-column">
+                                                                                <label>Vehical name:</label>
+                                                                                <input type="text" disabled
+                                                                                       value="{{$item2 -> name}}">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <label>Vehicle image</label>
+                                                                        <img
+                                                                            src="upload/image/vehicle_image/{{$item2 -> image}}"
+                                                                            class="image-sq" alt="">
+
+                                                                        <br><br>
+                                                                    @endif
+                                                                @endforeach
                                                             </div>
-                                                        </div>
+                                                            @if($item -> status == 0)
+                                                                <div class="actions">
+                                                                    <div class="div-c inline-2">
+                                                                        <div class="divided-column">
+                                                                            <a class="button-sq cancel-sq fullwidth-sq"
+                                                                               href="order/decline/{{$item -> id}}">Decline</a>
+                                                                        </div>
 
-                                                        <div class="rating-column">
-                                                            <p class="rating-label"><strong>Cleanliness</strong></p>
-                                                            <div class="basic-progressbar">
-                                                                <div class="inner" style="width:80%"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="reviews-search">
-                                                    <form action="#" class="">
-                                                        <input id="reviews-search" type="text"
-                                                               placeholder="Search reviews"
-                                                               value="" required="">
-                                                        <label><i class="icon icon-search"></i></label>
-                                                    </form>
-                                                </div>
-                                                <div class="reviews-feed">
-                                                    <div class="reviews-row">
-
-                                                        <div class="review-meta">
-                                                            <div class="avatar-sq verified-sq">
-                                                                <img src="assets/images/avatar/avatar_01.jpg" alt="">
-                                                            </div>
-                                                            <p class="name-sq">Danny Martinez</p>
-                                                        </div>
-
-                                                        <div class="comment-sq">
-                                                            <span class="date-sq">12 september 2017</span>
-
-                                                            <p>As the saying goes: “Hospitality is making your guests
-                                                                feel
-                                                                at home, even though you wish they were". So please
-                                                                treat
-                                                                the place and the building neighbours as you would do
-                                                                your
-                                                                own.</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="reviews-row">
-                                                        <div class="review-meta">
-                                                            <div class="avatar-sq verified-sq">
-                                                                <img src="assets/images/avatar/avatar_03.jpg" alt="">
-                                                            </div>
-                                                            <p class="name-sq">Nathaniel Brown</p>
-                                                        </div>
-                                                        <div class="comment-sq">
-                                                            <span class="date-sq">24 august 2017</span>
-
-                                                            <p>With your budget in mind, it is easy to plan a chartered
-                                                                yacht vacation. Companies often have a fleet of sailing
-                                                                vessels that can accommodate parties of various sizes.
-                                                                You
-                                                                may want to make it a more intimate trip with only close
-                                                                family. There are charters that can be rented for as few
-                                                                as
-                                                                two people.</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="reviews-row">
-                                                        <div class="review-meta">
-                                                            <div class="avatar-sq verified-sq">
-                                                                <img src="assets/images/avatar/avatar_02.jpg" alt="">
-                                                            </div>
-                                                            <p class="name-sq">Adele Burke</p>
-                                                        </div>
-                                                        <div class="comment-sq">
-                                                            <span class="date-sq">06 May 2017</span>
-
-                                                            <div class="ui accordion more-sq">
-                                                                <div class="title">
-                                                                    <a class="accordion-trigger more-trigger right-sq"
-                                                                       data-more="More" data-less="Less">
-                                                                        <i class="icon icon-arrow-down-122"></i>
-                                                                    </a>
-                                                                    <p>It is important to choose a hotel that makes you
-                                                                        feel
-                                                                        comfortable – contemporary or traditional
-                                                                        furnishings, local decor or international,
-                                                                        formal or
-                                                                        relaxed. The ideal hotel directory should let
-                                                                        you
-                                                                        know of the options available.
-                                                                    </p>
-
+                                                                        <div class="divided-column">
+                                                                            <a class="button-sq fullwidth-sq"
+                                                                               href="order/confirm/{{$item -> id}}">Confirm</a>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-
-                                                                <div class="content">
-                                                                    <p>If it matters that your hotel is, for example, on
-                                                                        the
-                                                                        beach, close to the theme park, or convenient
-                                                                        for
-                                                                        the airport, then location is paramount. Any
-                                                                        decent
-                                                                        directory should offer a location map of the
-                                                                        hotel
-                                                                        and its surroundings. There should be distance
-                                                                        charts to the airport offered as well as some
-                                                                        form
-                                                                        of interactive map.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-
+                                                            @endif
                                                         </div>
                                                     </div>
-
-
                                                 </div>
-
-                                                <br>
-                                                <br>
-                                                <br>
-
-
-                                            </div>
+                                            @endforeach
 
                                         </div>
                                     </div>

@@ -5,7 +5,8 @@
         <div class="dashboard-sticky with-avatar">
             <div class="dashboard-sticky-inner">
                 <div class="dashboard-details">
-                                    <span class="dashboard-avatar avatar-sq large-avatar-sq @if($user_login->verify_email == 1) verified-sq @endif">
+                                    <span
+                                        class="dashboard-avatar avatar-sq large-avatar-sq @if($user_login->verify_email == 1) verified-sq @endif">
                                         <img src="upload/image/user_image/{{$user_login -> image}}" alt="">
                                     </span>
 
@@ -20,10 +21,15 @@
                         <i class="icon icon-side-sticky-menu"></i>
                     </a>
                     <ul class="submenu">
-                        <li class="{{Request()->is('profile') ? "active" : ""}}"><a class="item" href="profile">About Me</a></li>
-                        <li class="{{Request()->is('profile/edit') ? "active" : ""}}"><a class="item" href="profile/edit">Edit Profile</a></li>
+                        <li class="{{Request()->is('profile') ? "active" : ""}}"><a class="item" href="profile">About
+                                Me</a></li>
+                        <li class="{{Request()->is('profile/edit') ? "active" : ""}}"><a class="item"
+                                                                                         href="profile/edit">Edit
+                                Profile</a></li>
                         @if($user_login -> id_role == 2 || $user_login -> id_role == 1)
-                            <li><a class="item" href="#products">Products</a></li>
+                            <li class="{{Request()->is('profile/view/order/all') || Request()->is('profile/view/order/pending') || Request()->is('profile/view/order/processing') || Request()->is('profile/view/order/completed') || Request()->is('profile/view/order/declined') ? "active" : ""}}"><a class="item" href="profile/view/order/all">Manage Orders</a></li>
+                        @else
+                            <li><a class="item" href="#products">View Orders</a></li>
                         @endif
                         <li><a class="item" href="#reviews">Reviews</a></li>
                     </ul>

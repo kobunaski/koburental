@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Booking;
+use App\PickupLocation;
 use App\Role;
 use App\User;
+use App\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -131,9 +134,13 @@ class UserController extends Controller
     {
         $id = Auth::user()->id;
         $User = User::find($id);
-        $array_month = array();
+        $UserAll = User::all();
+        $Booking = Booking::orderBy('created_at', 'desc')->take(6)->get();
+        $Vehicle = Vehicle::all();
+        $PickupLocation = PickupLocation::all();
         $array_month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        return view('client.profile.profile', ['User' => $User, 'array_month' => $array_month]);
+
+        return view('client.profile.profile', ['PickupLocation' => $PickupLocation, 'UserAll' => $UserAll, 'Vehicle' => $Vehicle, 'Booking' => $Booking, 'User' => $User, 'array_month' => $array_month]);
     }
 
     public function getEditProfileClient()
@@ -177,7 +184,7 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return back();
         } else {
-            return back() -> with('alert', 'success');
+            return back() -> with('alert', 'email or password is incorrect');
         }
     }
 
