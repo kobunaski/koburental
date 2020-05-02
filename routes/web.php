@@ -156,7 +156,7 @@ Route::group(['prefix' => 'vehicle'], function (){
     });
 });
 
-Route::group(['prefix' => 'order'], function(){
+Route::group(['prefix' => 'order', 'middleware' => 'staffValidation'], function(){
     Route::get('confirm/{id}', 'BookingController@confirmOrder');
     Route::get('decline/{id}', 'BookingController@declineOrder');
 });
