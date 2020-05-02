@@ -135,10 +135,14 @@ class UserController extends Controller
         $id = Auth::user()->id;
         $User = User::find($id);
         $UserAll = User::all();
-        $Booking = Booking::orderBy('created_at', 'desc')->take(6)->get();
         $Vehicle = Vehicle::all();
         $PickupLocation = PickupLocation::all();
         $array_month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2){
+            $Booking = Booking::orderBy('created_at', 'desc')->take(6)->get();
+        } else {
+            $Booking = Booking::where('id_user', '=', Auth::user()->id)->orderBy('created_at', 'desc')->take(6)->get();
+        }
 
         return view('client.profile.profile', ['PickupLocation' => $PickupLocation, 'UserAll' => $UserAll, 'Vehicle' => $Vehicle, 'Booking' => $Booking, 'User' => $User, 'array_month' => $array_month]);
     }

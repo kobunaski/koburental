@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\AdminValidationMiddleware;
+use App\Http\Middleware\CheckLoginMiddleware;
+use App\Http\Middleware\StaffValidationMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -47,6 +49,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'checkloginMiddleware' =>CheckLoginMiddleware::class,
+        'staffValidation' => StaffValidationMiddleware::class,
         'adminValidation' => AdminValidationMiddleware::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

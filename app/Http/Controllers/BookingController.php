@@ -76,18 +76,18 @@ class BookingController extends Controller
         $Vehicle = Vehicle::find($id);
         $Booking = new Booking;
 
-        $Booking -> id_user = Auth::user()->id;
-        $Booking -> id_staff = 0;
-        $Booking -> id_vehicle = $request -> id_vehicle;
-        $Booking -> id_pickup_location = $request -> id_pickup_location;
+        $Booking->id_user = Auth::user()->id;
+        $Booking->id_staff = 0;
+        $Booking->id_vehicle = $request->id_vehicle;
+        $Booking->id_pickup_location = $request->id_pickup_location;
 
-        $time = strtotime($request -> pickup_date);
+        $time = strtotime($request->pickup_date);
         $new_pickup_date = date('Y-m-d', $time);
-        $Booking -> pickup_date = Carbon::parse($new_pickup_date);
+        $Booking->pickup_date = Carbon::parse($new_pickup_date);
 
-        $time2 = strtotime($request -> return_date);
+        $time2 = strtotime($request->return_date);
         $new_return_date = date('Y-m-d', $time2);
-        $Booking -> return_date = Carbon::parse($new_return_date);
+        $Booking->return_date = Carbon::parse($new_return_date);
 
         if ($request->hasFile('driver_license')) {
             $file = $request->file('driver_license');
@@ -96,75 +96,116 @@ class BookingController extends Controller
             $Booking->driver_license = $image;
         }
 
-        $Booking -> status = 0;
+        $Booking->status = 0;
 
-        $Booking -> save();
+        $Booking->save();
 
-        return redirect('success')->with('vehicle_name', $Vehicle -> name);
+        return redirect('success')->with('vehicle_name', $Vehicle->name);
     }
 
-    public function confirmOrder($id){
+    public function confirmOrder($id)
+    {
         $Booking = Booking::find($id);
 
-        echo $Booking -> status = 1;
+        $Booking->status = 1;
+        $Booking->id_staff = Auth::user()->id;
 
-        $Booking -> save();
+        $Booking->save();
         return redirect('profile');
     }
 
-    public function declineOrder($id){
+    public function declineOrder($id)
+    {
         $Booking = Booking::find($id);
 
-        $Booking -> status = 2;
-        $Booking -> id_staff = Auth::user()->id;
+        $Booking->status = 2;
+        $Booking->id_staff = Auth::user()->id;
 
-        $Booking -> save();
+        $Booking->save();
         return redirect('profile');
     }
 
-    public function viewOrder(){
-        $Booking = Booking::orderBy('status', 'asc')->paginate(9);
-        $Vehicle = Vehicle::all();
-        $PickupLocation = PickupLocation::all();
-        $User = User::all();
-        return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+    public function viewOrder()
+    {
+        if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2) {
+            $Booking = Booking::orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        } else {
+            $Booking = Booking::where('id_user', '=', Auth::user()->id)->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        }
     }
 
-    public function viewOrderPending(){
-        $Booking = Booking::where('status', '=', '0')->orderBy('status', 'asc')->paginate(9);
-        $Vehicle = Vehicle::all();
-        $PickupLocation = PickupLocation::all();
-        $User = User::all();
-
-        return view('client.profile.view_order_pending', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+    public function viewOrderPending()
+    {
+        if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2) {
+            $Booking = Booking::where('status', '=', '0')->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        } else {
+            $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '0')->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        }
     }
 
-    public function viewOrderProcessing(){
-        $Booking = Booking::where('status', '=', '1')->orderBy('status', 'asc')->paginate(9);
-        $Vehicle = Vehicle::all();
-        $PickupLocation = PickupLocation::all();
-        $User = User::all();
+    public function viewOrderProcessing()
+    {
+        if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2) {
+            $Booking = Booking::where('status', '=', '1')->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        } else {
+            $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '1')->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        }}
 
-        return view('client.profile.view_order_processing', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
-    }
+    public function viewOrderCompleted()
+    {
+        if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2) {
+            $Booking = Booking::where('status', '=', '3')->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        } else {
+            $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '3')->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        }}
 
-    public function viewOrderCompleted(){
-        $Booking = Booking::where('status', '=', '3')->orderBy('status', 'asc')->paginate(9);
-        $Vehicle = Vehicle::all();
-        $PickupLocation = PickupLocation::all();
-        $User = User::all();
-
-        return view('client.profile.view_order_completed', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
-    }
-
-    public function viewOrderDeclined(){
-        $Booking = Booking::where('status', '=', '2')->orderBy('status', 'asc')->paginate(9);
-        $Vehicle = Vehicle::all();
-        $PickupLocation = PickupLocation::all();
-        $User = User::all();
-
-        return view('client.profile.view_order_declined', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
-    }
+    public function viewOrderDeclined()
+    {
+        if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2) {
+            $Booking = Booking::where('status', '=', '2')->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        } else {
+            $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '2')->orderBy('status', 'asc')->paginate(9);
+            $Vehicle = Vehicle::all();
+            $PickupLocation = PickupLocation::all();
+            $User = User::all();
+            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+        }}
 
     function time_limit($id, $new_pickup_date, $new_return_date)
     {

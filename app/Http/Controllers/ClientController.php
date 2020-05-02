@@ -58,4 +58,8 @@ class ClientController extends Controller
     public function errorMiddleware(){
         return view('client.error.errorpermission');
     }
+
+    public function errorLogin(){
+        return view('client.error.errorlogin');
+    }
 }

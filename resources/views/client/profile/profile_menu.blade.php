@@ -27,9 +27,11 @@
                                                                                          href="profile/edit">Edit
                                 Profile</a></li>
                         @if($user_login -> id_role == 2 || $user_login -> id_role == 1)
-                            <li class="{{Request()->is('profile/view/order/all') || Request()->is('profile/view/order/pending') || Request()->is('profile/view/order/processing') || Request()->is('profile/view/order/completed') || Request()->is('profile/view/order/declined') ? "active" : ""}}"><a class="item" href="profile/view/order/all">Manage Orders</a></li>
+                            <li class="{{Request()->is('profile/view/order/all') || Request()->is('profile/view/order/pending') || Request()->is('profile/view/order/processing') || Request()->is('profile/view/order/completed') || Request()->is('profile/view/order/declined') ? "active" : ""}}">
+                                <a class="item" href="profile/view/order/all">Manage Orders</a></li>
                         @else
-                            <li><a class="item" href="#products">View Orders</a></li>
+                            <li class="{{Request()->is('profile/view/order/all') || Request()->is('profile/view/order/pending') || Request()->is('profile/view/order/processing') || Request()->is('profile/view/order/completed') || Request()->is('profile/view/order/declined') ? "active" : ""}}">
+                                <a class="item" href="profile/view/order/all">View Orders</a></li>
                         @endif
                         <li><a class="item" href="#reviews">Reviews</a></li>
                     </ul>

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class StaffValidationMiddleware
+class CheckLoginMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,13 +17,9 @@ class StaffValidationMiddleware
     public function handle($request, Closure $next)
     {
         if (Auth::check()){
-            if (Auth::user() -> id_role == 2 || Auth::user() -> id_role == 1){
-                return $next($request);
-            } else {
-                return redirect('error');
-            }
+            return $next($request);
         } else {
-            return redirect('error');
+            return redirect('error/login');
         }
     }
 }

@@ -130,7 +130,7 @@ Route::get('success', 'BookingController@getSuccess');
 //Route::get('profile', 'UserController@viewProfileClient');
 //Route::post('profile/{id}', 'UserController@postProfileClient');
 
-Route::group(['prefix' => 'profile'], function (){
+Route::group(['prefix' => 'profile', 'middleware' => 'checkloginMiddleware'], function (){
     Route::get('/', 'UserController@viewProfileClient');
 
     Route::get('/edit', 'UserController@getEditProfileClient');
@@ -181,4 +181,10 @@ Route::group(['prefix' => 'logout'], function (){
     Route::get('/', 'UserController@getLogout');
 });
 
-Route::get('/error','ClientController@errorMiddleware');
+
+Route::group(['prefix' => 'error'], function (){
+    Route::get('/','ClientController@errorMiddleware');
+    Route::get('/login', 'ClientController@errorLogin');
+});
+
+
