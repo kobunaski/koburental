@@ -133,6 +133,8 @@ Route::get('success', 'BookingController@getSuccess');
 Route::group(['prefix' => 'profile', 'middleware' => 'checkloginMiddleware'], function (){
     Route::get('/', 'UserController@viewProfileClient');
 
+    Route::get('/verify-email/{id}', 'UserController@verifyEmail');
+
     Route::get('/edit', 'UserController@getEditProfileClient');
     Route::post('/edit/{id}', 'UserController@postEditProfileClient');
 

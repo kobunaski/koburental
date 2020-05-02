@@ -227,6 +227,20 @@ class UserController extends Controller
         }
     }
 
+    public function verifyEmail($id)
+    {
+        echo $verify_email = Auth::user() -> email;
+        echo $id = Auth::user() -> id;
+
+        Mail::send('mail.verify_mail', [
+            'id' => $id,
+        ], function ($message) use ($verify_email) {
+            $message->to($verify_email, 'Visitor')->subject('Verify your email');
+        });
+
+        return redirect('profile')->with('alert', 'success');
+    }
+
     public function getVerifyEmail($id)
     {
         $User = User::find($id);

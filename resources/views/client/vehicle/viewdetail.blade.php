@@ -158,7 +158,8 @@
                                     <div class="ui twelve wide mobile six wide computer column">
 
                                         <div class="property-checkout-container main-infos">
-                                            <form action="vehicle/booking/{{$Vehicle -> id}}" method="GET" autocomplete="off">
+                                            <form action="vehicle/booking/{{$Vehicle -> id}}" method="GET"
+                                                  autocomplete="off">
                                                 <div class="div-c">
                                                     <label>Pick up location</label>
                                                     <input type="text" placeholder=" ">
@@ -174,7 +175,9 @@
                                                         <label class="placeholder">Check in</label>
 
                                                         <div class="relative-sq">
-                                                            <input type="text" name="pickup_date" class="filter" value="{{session('pickup_date_error') ? session('pickup_date_error') : ''}}" required
+                                                            <input type="text" name="pickup_date" class="filter"
+                                                                   value="{{session('pickup_date_error') ? session('pickup_date_error') : ''}}"
+                                                                   required
                                                                    placeholder="date">
                                                             <i class="icon icon-little-arrow filters-arrow"></i>
                                                         </div>
@@ -185,7 +188,9 @@
 
                                                         <label class="placeholder">Check Out</label>
 
-                                                        <input type="text" class="filter" name="return_date"  value="{{session('return_date_error') ? session('return_date_error') : ''}}" required
+                                                        <input type="text" class="filter" name="return_date"
+                                                               value="{{session('return_date_error') ? session('return_date_error') : ''}}"
+                                                               required
                                                                placeholder="date">
 
                                                     </div>
@@ -247,9 +252,17 @@
                                                 </div>
 
                                                 @if(isset($user_login))
-                                                    <button type="submit"
-                                                            class="button-sq fullwidth-sq font-weight-bold-sq">Reserve your car
-                                                    </button>
+                                                    @if($user_login -> verify_email == 1)
+                                                        <button type="submit"
+                                                                class="button-sq fullwidth-sq font-weight-bold-sq">
+                                                            Reserve your car
+                                                        </button>
+                                                    @else
+                                                        <a href="profile"
+                                                           class="button-sq fullwidth-sq font-weight-bold-sq">
+                                                            <span>Verify your email to reserve</span>
+                                                        </a>
+                                                    @endif
                                                 @else
                                                     <a href="#"
                                                        class="button-sq fullwidth-sq font-weight-bold-sq modal-ui-trigger"
