@@ -152,7 +152,7 @@ Route::group(['prefix' => 'vehicle'], function (){
     Route::post('/feedback/{id}', 'FeedbackController@addFeedback');
     Route::get('/feedback/delete/{id}', 'FeedbackController@deleteFeedback');
 
-    Route::group(['prefix' => 'booking'], function (){
+    Route::group(['prefix' => 'booking', 'middleware' => 'checkloginMiddleware'], function (){
         Route::get('{id}', 'BookingController@detailConfirm');
         Route::post('{id}', 'BookingController@postConfirm');
     });

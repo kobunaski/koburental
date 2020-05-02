@@ -12,6 +12,7 @@ use App\VehicleType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class BookingController extends Controller
@@ -111,6 +112,18 @@ class BookingController extends Controller
         $Booking->id_staff = Auth::user()->id;
 
         $Booking->save();
+
+        $id_user = $Booking -> id_user;
+        $User = User::find($id_user);
+
+        $to_email = $User -> email;
+
+        Mail::send('mail.confirm_order', [
+            'id' => $Booking -> id,
+        ], function ($message) use ($to_email) {
+            $message->to($to_email, 'Visitor')->subject('Please complete your deposit');
+        });
+
         return redirect('profile');
     }
 

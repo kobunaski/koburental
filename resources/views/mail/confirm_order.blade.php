@@ -452,13 +452,7 @@
                         <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
                     </div>
                 </div>
-                <div class="header" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);" id="emb-email-header-container">
-                    <!--[if (mso)|(IE)]><table align="center" class="header" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width: 600px"><![endif]-->
-                    <div class="logo emb-logo-margin-box" style="font-size: 26px;line-height: 32px;Margin-top: 6px;Margin-bottom: 20px;color: #c3ced9;font-family: Roboto,Tahoma,sans-serif;Margin-left: 20px;Margin-right: 20px;" align="center">
-                        <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 217px;" src="images/logo-dark1.png" alt="" width="217" /></div>
-                    </div>
-                    <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-                </div>
+
             </div>
             <div>
                 <div class="layout one-col fixed-width stack" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;">
@@ -466,24 +460,20 @@
                         <!--[if (mso)|(IE)]><table align="center" cellpadding="0" cellspacing="0" role="presentation"><tr class="layout-fixed-width" style="background-color: #ffffff;"><td style="width: 600px" class="w560"><![endif]-->
                         <div class="column" style="text-align: left;color: #60666d;font-size: 14px;line-height: 21px;font-family: sans-serif;">
 
-                            <div style="font-size: 12px;font-style: normal;font-weight: normal;line-height: 19px;" align="center">
-                                <img style="border: 0;display: block;height: auto;width: 100%;max-width: 600px;" alt="" width="600" src="images/property_item_cars_09-9900000000079e3c.jpg" />
-                            </div>
-
-                            <div style="Margin-left: 20px;Margin-right: 20px;Margin-top: 20px;">
+                            <div style="Margin-left: 20px;Margin-right: 20px;Margin-top: 24px;">
                                 <div style="mso-line-height-rule: exactly;line-height: 10px;font-size: 1px;">&nbsp;</div>
                             </div>
 
                             <div style="Margin-left: 20px;Margin-right: 20px;">
                                 <div style="mso-line-height-rule: exactly;mso-text-raise: 11px;vertical-align: middle;">
-                                    <h2 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #43464a;font-size: 17px;line-height: 26px;">Hi there,</h2><p style="Margin-top: 16px;Margin-bottom: 20px;">Please verify your email by clicking on the verify button. Thank you for your registeration.</p>
+                                    <h2 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #43464a;font-size: 17px;line-height: 26px;">Hi there,</h2><p style="Margin-top: 16px;Margin-bottom: 0;text-align: left;">Your order has been confirm by the team of the KoBu rental. If you want to proceed the reservation, please complete the deposit in 24 hours from the moment this email was sent.</p><p style="Margin-top: 20px;Margin-bottom: 20px;text-align: left;">You can complete the payment by clicking on the button below.</p>
                                 </div>
                             </div>
 
                             <div style="Margin-left: 20px;Margin-right: 20px;">
                                 <div class="btn btn--flat btn--large" style="Margin-bottom: 20px;text-align: center;">
-                                    <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #ff5c5c;font-family: sans-serif;" href="http://localhost/finalproject2/public/email/verify/{{$id}}">Verify your email</a><![endif]>
-                                    <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="http://localhost/finalproject2/public/email/verify/%7B%7B$id%7D%7D" style="width:160px" arcsize="9%" fillcolor="#FF5C5C" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,11px,0px,11px"><center style="font-size:14px;line-height:24px;color:#FFFFFF;font-family:sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">Verify your email</center></v:textbox></v:roundrect><![endif]--></div>
+                                    <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #ff5c5c;font-family: sans-serif;" href="http://localhost/finalproject2/public/">Complete your payment</a><![endif]>
+                                    <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="http://localhost/finalproject2/public/" style="width:207px" arcsize="9%" fillcolor="#FF5C5C" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,11px,0px,11px"><center style="font-size:14px;line-height:24px;color:#FFFFFF;font-family:sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">Complete your payment</center></v:textbox></v:roundrect><![endif]--></div>
                             </div>
 
                             <div style="Margin-left: 20px;Margin-right: 20px;">
@@ -492,8 +482,8 @@
 
                             <div style="Margin-left: 20px;Margin-right: 20px;Margin-bottom: 24px;">
                                 <div style="mso-line-height-rule: exactly;mso-text-raise: 11px;vertical-align: middle;">
-                                    <p style="Margin-top: 0;Margin-bottom: 0;">If you are not registering on our website, please ignore this message, <br />
-                                        <strong>KoBu Car Rentals</strong></p>
+                                    <p style="Margin-top: 0;Margin-bottom: 0;">Thanks for using our service,<br />
+                                        <strong>Team KoBu Car Rentals</strong></p>
                                 </div>
                             </div>
 
@@ -509,11 +499,9 @@
                             <!--[if (mso)|(IE)]><table align="center" cellpadding="0" cellspacing="0" role="presentation"><tr class="layout-email-footer"><td style="width: 400px;" valign="top" class="w360"><![endif]-->
                             <div class="column wide" style="text-align: left;font-size: 12px;line-height: 19px;color: #b8b8b8;font-family: Ubuntu,sans-serif;Float: left;max-width: 400px;min-width: 320px; width: 320px;width: calc(8000% - 47600px);">
                                 <div style="Margin-left: 20px;Margin-right: 20px;Margin-top: 10px;Margin-bottom: 10px;">
-                                    <table class="email-footer__links" style="border-collapse: collapse;table-layout: fixed;" role="presentation" emb-web-links><tbody><tr role="navigation">
 
-                                        </tr></tbody></table>
-                                    <div style="font-size: 12px;line-height: 19px;Margin-top: 20px;">
-
+                                    <div style="font-size: 12px;line-height: 19px;">
+                                        <div>KoBu Car Rentals</div>
                                     </div>
                                     <div style="font-size: 12px;line-height: 19px;Margin-top: 18px;">
 
