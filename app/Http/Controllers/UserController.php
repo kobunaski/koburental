@@ -175,6 +175,13 @@ class UserController extends Controller
             $User->image = $image;
         }
 
+        if ($request->hasFile('driver_license')) {
+            $file = $request->file('driver_license');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/driver_license_image', $image);
+            $User->driver_license = $image;
+        }
+
         $User->save();
         return redirect('profile/edit') -> with('alert', 'Edit success');
     }

@@ -369,7 +369,8 @@
                         <div class="ui three wide computer six wide tablet twelve wide mobile column">
                             <div class="photo-upload-item">
                                 <div class="image-wrapper">
-                                    <img class="image-sq" id="preview_img" src="client_assets/assets/images/host/host_01.jpg" alt="">
+                                    <img class="image-sq" id="preview_img"
+                                         src="{{$user_login -> driver_license != 0 ? "upload/image/driver_license_image/".$user_login -> driver_license : "client_assets/assets/images/host/host_01.jpg"}}" alt="">
                                 </div>
 
                                 <textarea cols="30" rows="2" disabled=""
@@ -378,18 +379,22 @@
                             </div>
                         </div>
 
-                        <div class="ui three wide computer six wide tablet twelve wide mobile column">
-                            <div class="photo-upload-item" id="OpenImgUpload">
-                                <label for="file-input">
-                                    <a class="add-photo">
-                                        <i class="icon icon-add-wishlist"></i>
-                                        Add Photo
-                                    </a>
-                                </label>
-                                <input id="file-input" required name="driver_license" type="file" style="display: none;"
-                                       accept="image/gif,image/jpeg,image/jpg,image/png" onchange="loadPreview(this);"/>
+                        @if($user_login -> driver_license == 0)
+                            <div class="ui three wide computer six wide tablet twelve wide mobile column">
+                                <div class="photo-upload-item" id="OpenImgUpload">
+                                    <label for="file-input">
+                                        <a class="add-photo">
+                                            <i class="icon icon-add-wishlist"></i>
+                                            Add Photo
+                                        </a>
+                                    </label>
+                                    <input id="file-input" required name="driver_license" type="file"
+                                           style="display: none;"
+                                           accept="image/gif,image/jpeg,image/jpg,image/png"
+                                           onchange="loadPreview(this);"/>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
 
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>

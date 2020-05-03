@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
+use App\Feedback;
 use App\Manufacture;
 use App\PickupLocation;
 use App\User;
@@ -74,10 +75,18 @@ class BookingController extends Controller
 
     public function postConfirm(Request $request, $id)
     {
-        $User = User::find(Auth::user() -> id);
-        echo $User -> phone = $request -> phone;
-        echo $User -> address = $request -> address;
-        $User -> save();
+        $User = User::find(Auth::user()->id);
+        echo $User->phone = $request->phone;
+        echo $User->address = $request->address;
+
+        if ($request->hasFile('driver_license')) {
+            $file = $request->file('driver_license');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/driver_license_image', $image);
+            $User->driver_license = $image;
+        }
+
+        $User->save();
 
         $Vehicle = Vehicle::find($id);
         $Booking = new Booking;
@@ -95,13 +104,6 @@ class BookingController extends Controller
         $new_return_date = date('Y-m-d', $time2);
         $Booking->return_date = Carbon::parse($new_return_date);
 
-        if ($request->hasFile('driver_license')) {
-            $file = $request->file('driver_license');
-            $image = $file->getClientOriginalName();
-            $file->move('upload/image/driver_license_image', $image);
-            $Booking->driver_license = $image;
-        }
-
         $Booking->status = 0;
 
         $Booking->save();
@@ -118,13 +120,13 @@ class BookingController extends Controller
 
         $Booking->save();
 
-        $id_user = $Booking -> id_user;
+        $id_user = $Booking->id_user;
         $User = User::find($id_user);
 
-        $to_email = $User -> email;
+        $to_email = $User->email;
 
         Mail::send('mail.confirm_order', [
-            'id' => $Booking -> id,
+            'id' => $Booking->id,
         ], function ($message) use ($to_email) {
             $message->to($to_email, 'Visitor')->subject('Please complete your deposit');
         });
@@ -141,6 +143,27 @@ class BookingController extends Controller
 
         $Booking->save();
         return redirect('profile');
+    }
+
+    public function paymentOrder($id)
+    {
+        $Booking = Booking::find($id);
+        $PickupLocation = PickupLocation::find($Booking -> id_pickup_location);
+        $Vehicle = Vehicle::find($Booking -> id_vehicle);
+        $Feedback = Feedback::all();
+        $VehicleDetail = VehicleDetail::where('id_vehicle', '=', $Booking -> id_vehicle)->first();
+        foreach ($Feedback as $item) {
+            if ($Vehicle -> id == $item->id_vehicle) {
+                $rating[] = $item->rating;
+            }
+        }
+        if (isset($rating)) {
+            $average_rating = number_format(array_sum($rating) / count($rating), 1);
+        } else {
+            $average_rating = 0;
+        }
+        $total_price = number_format($Vehicle -> daily_price*(Carbon::parse($Booking -> return_date)->diffInDays(Carbon::parse($Booking -> pickup_date))), 2);
+        return view('client.payment.view', ['total_price' => $total_price, 'VehicleDetail' => $VehicleDetail, 'Booking' => $Booking, 'PickupLocation' => $PickupLocation, 'Vehicle' => $Vehicle, 'average_rating' => $average_rating]);
     }
 
     public function viewOrder()
@@ -191,7 +214,8 @@ class BookingController extends Controller
             $PickupLocation = PickupLocation::all();
             $User = User::all();
             return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
-        }}
+        }
+    }
 
     public function viewOrderCompleted()
     {
@@ -207,7 +231,8 @@ class BookingController extends Controller
             $PickupLocation = PickupLocation::all();
             $User = User::all();
             return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
-        }}
+        }
+    }
 
     public function viewOrderDeclined()
     {
@@ -223,7 +248,8 @@ class BookingController extends Controller
             $PickupLocation = PickupLocation::all();
             $User = User::all();
             return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
-        }}
+        }
+    }
 
     function time_limit($id, $new_pickup_date, $new_return_date)
     {

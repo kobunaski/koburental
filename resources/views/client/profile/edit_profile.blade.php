@@ -58,8 +58,8 @@
                                             <label for="file-input">
                                                 <a class="avatar-sq extreme-avatar-sq verified-sq upload-sq">
                                                     <img id="preview_img"
-                                                        src="{{$user_login -> image != '' ? "upload/image/user_image/".$user_login -> image : 'client_assets/assets/images/avatar/default_avatar.jpg'}}"
-                                                        alt="">
+                                                         src="{{$user_login -> image != '' ? "upload/image/user_image/".$user_login -> image : 'client_assets/assets/images/avatar/default_avatar.jpg'}}"
+                                                         alt="">
                                                 </a>
                                             </label>
                                             <input id="file-input" name="image" type="file"
@@ -203,6 +203,28 @@
                                     </div>
 
                                     <div
+                                        class="ui twelve wide tablet twelve wide computer six wide widescreen six wide large screen column">
+                                        <div class="div-c">
+                                            <div class="divided-column">
+                                                <label>Driver License</label>
+                                                <label for="driver_license_input">
+                                                    <div class="image-relative article-sample-box" style="width: 400px; height: 250px;">
+                                                        <div class="image-wrapper">
+                                                            <div class="image-inner">
+                                                                <img class="image-sq" id="preview_img_license" src="{{$user_login -> driver_license != 0 ? "upload/image/driver_license_image/".$user_login->driver_license : "client_assets/assets/images/avatar/default_avatar.jpg"}}" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                                <input id="driver_license_input" name="driver_license" type="file"
+                                                       style="display: none;"
+                                                       accept="image/gif,image/jpeg,image/jpg,image/png"
+                                                       onchange="loadPreviewLicense(this);"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
                                         class="ui twelve wide tablet twelve wide computer twelve wide widescreen twelve wide large screen column">
                                         <div class="div-c">
                                             <button class="button-sq" type="submit">
@@ -217,8 +239,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     @endif
 @endsection
@@ -235,124 +255,17 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        function loadPreviewLicense(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview_img_license').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 @endsection
-
-{{--<div--}}
-{{--class="ui twelve wide tablet nine wide computer nine wide widescreen nine wide large screen column"--}}
-{{--id="about-me">--}}
-{{--<div class="ui grid">--}}
-{{--<div class="row">--}}
-
-{{--<div--}}
-{{--class="ui twelve wide tablet twelve wide computer twelve wide widescreen twelve wide large screen column">--}}
-
-{{--<div class="white-section dashboard-description typo-section-sq">--}}
-
-{{--<form action="profile/edit/{{$User -> id}}" method="POST"--}}
-{{--enctype="multipart/form-data">--}}
-{{--<input type="hidden" name="_token" value="{{csrf_token()}}"/>--}}
-
-{{--<div class="ui grid">--}}
-{{--<div class="row">--}}
-
-{{--<div--}}
-{{--class="ui twelve wide tablet eight wide computer eight wide widescreen eight wide large screen column">--}}
-{{--<h3>Edit Your Profile</h3>--}}
-{{--</div>--}}
-{{--<div--}}
-{{--class="ui twelve wide tablet six wide computer six wide widescreen six wide large screen column">--}}
-
-{{--@if(session('alert'))--}}
-{{--<div class="alert alert-success">--}}
-{{--<span--}}
-{{--style="color: #FF5C5C;">{{session('alert')}}</span>--}}
-{{--</div>--}}
-{{--@endif--}}
-
-{{--<div class="div-c">--}}
-{{--<div class="divided-column">--}}
-{{--<label>First Name</label>--}}
-{{--<input type="text" name="name"--}}
-{{--placeholder="Please enter your name"--}}
-{{--value="{{$User -> name}}">--}}
-{{--</div>--}}
-
-{{--<div class="divided-column">--}}
-{{--<label>Vendor Name</label>--}}
-{{--<input type="text" placeholder=""--}}
-{{--value="{{$User -> name}}">--}}
-{{--</div>--}}
-{{--</div>--}}
-
-{{--<br>--}}
-{{--</div>--}}
-
-{{--<div--}}
-{{--class="ui twelve wide tablet twelve wide computer twelve wide widescreen twelve wide large screen column">--}}
-{{--<hr class="margin-null-sq">--}}
-{{--<br>--}}
-{{--</div>--}}
-
-{{--<div--}}
-{{--class="ui twelve wide tablet twelve wide computer six wide widescreen six wide large screen column">--}}
-{{--<div class="div-c">--}}
-{{--<div class="divided-column">--}}
-{{--<label>Location</label>--}}
-{{--<input type="text" name="address"--}}
-{{--placeholder="Enter your address"--}}
-{{--value="{{$User -> address}}">--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-
-{{--<div--}}
-{{--class="ui twelve wide tablet twelve wide computer six wide widescreen six wide large screen column">--}}
-{{--<div class="div-c">--}}
-{{--<div class="divided-column">--}}
-{{--<label>Phone</label>--}}
-{{--<input type="text"--}}
-{{--placeholder="Please enter your phone number"--}}
-{{--name="phone"--}}
-{{--value="{{$User -> phone}}">--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-
-{{--<div--}}
-{{--class="ui twelve wide tablet twelve wide computer six wide widescreen six wide large screen column">--}}
-{{--<div class="div-c">--}}
-{{--<div class="divided-column">--}}
-{{--<label>Gender</label>--}}
-{{--<select name="gender" class="dropdown">--}}
-{{--@if($User -> gender == 'f')--}}
-{{--<option value="f" selected>Female</option>--}}
-{{--<option value="m">Male</option>--}}
-{{--@else--}}
-{{--<option value="f">Female</option>--}}
-{{--<option value="m" selected>Male</option>--}}
-{{--@endif--}}
-{{--</select>--}}
-{{--</div>--}}
-
-{{--</div>--}}
-{{--</div>--}}
-
-{{--<div--}}
-{{--class="ui twelve wide tablet twelve wide computer twelve wide widescreen twelve wide large screen column">--}}
-{{--<div class="div-c">--}}
-{{--<button class="button-sq">--}}
-{{--<span>Confirm edit</span>--}}
-{{--</button>--}}
-{{--</div>--}}
-{{--<br>--}}
-{{--</div>--}}
-
-{{--</div>--}}
-{{--</div>--}}
-{{--</form>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
