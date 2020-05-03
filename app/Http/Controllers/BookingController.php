@@ -162,7 +162,7 @@ class BookingController extends Controller
         } else {
             $average_rating = 0;
         }
-        $total_price = number_format($Vehicle -> daily_price*(Carbon::parse($Booking -> return_date)->diffInDays(Carbon::parse($Booking -> pickup_date))), 2);
+        $total_price = $Vehicle -> daily_price*(Carbon::parse($Booking -> return_date)->diffInDays(Carbon::parse($Booking -> pickup_date)));
         return view('client.payment.view', ['total_price' => $total_price, 'VehicleDetail' => $VehicleDetail, 'Booking' => $Booking, 'PickupLocation' => $PickupLocation, 'Vehicle' => $Vehicle, 'average_rating' => $average_rating]);
     }
 

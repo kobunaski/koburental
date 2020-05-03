@@ -285,12 +285,37 @@
             </div>
         </div>
     </div>
+    @if(Session('payment-success'))
+        <!-- Modal trigger -->
+        <a class="button-sq see-through-sq small-sq modal-ui-trigger" data-trigger-for="payment-success" id="payment-success"></a>
+
+        <!-- Modal -->
+        <div class="ui modal" data-for="payment-success">
+
+            <i class="icon icon-close close-modal"></i>
+
+            <div class="header center">
+                <h4>Successful payment</h4>
+            </div>
+
+            <div class="content">
+                <p>Your payment has been accepted. Thank you for your trust in our website</p>
+            </div>
+        </div>
+    @endif
 @endsection
 @section('script')
     @if(count($errors) > 0 || Session('alert'))
         <script type="text/javascript">
             $("document").ready(function () {
                 $('#modal02').trigger('click');
+            });
+        </script>
+    @endif
+    @if(Session('payment-success'))
+        <script type="text/javascript">
+            $("document").ready(function () {
+                $('#payment-success').trigger('click');
             });
         </script>
     @endif

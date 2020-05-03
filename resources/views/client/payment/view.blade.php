@@ -1,11 +1,15 @@
 @extends('client.layout.index')
 
 @section('content')
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AQ6ByKSqZI_j5-puUMB_2jJEeimr6jqj1_5C1fY74kfnslpGfHreGzlzmkhgEom4L79E-gRr5RzZw2yc"
+        async> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+    </script>
     <div class="ui layout">
         <!-- grid -->
         <div class="ui grid container stackable centered">
+            <h1>Payment for order: {{$Booking -> id}}</h1>
             <div class="row">
-                <h1>Order payment</h1>
                 <div
                     class="ui twelve wide tablet twelve wide computer ten wide widescreen ten wide large screen column property-section-boxed">
 
@@ -111,34 +115,34 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="icons-column">
-                                                <i class="icon icon-ac"></i>
-                                                @if($VehicleDetail -> air_con == 1)
-                                                    A/C
-                                                @else
-                                                    No A/C
-                                                @endif
-                                            </div>
-                                            <div class="icons-column">
-                                                <i class="icon icon-gearbox"></i>
-                                                @switch($VehicleDetail -> gearbox)
-                                                    @case (1)
-                                                    A
-                                                    @break
-                                                    @case (2)
-                                                    A/M
-                                                    @break
-                                                    @case (3)
-                                                    DCT
-                                                    @break
-                                                    @case (4)
-                                                    M
-                                                    @break
-                                                @endswitch
-                                            </div>
-                                            <div class="icons-column">
-                                                <i class="icon icon-user-circle"></i> x {{$VehicleDetail->seat}}
-                                            </div>
+                                                    <div class="icons-column">
+                                                        <i class="icon icon-ac"></i>
+                                                        @if($VehicleDetail -> air_con == 1)
+                                                            A/C
+                                                        @else
+                                                            No A/C
+                                                        @endif
+                                                    </div>
+                                                    <div class="icons-column">
+                                                        <i class="icon icon-gearbox"></i>
+                                                        @switch($VehicleDetail -> gearbox)
+                                                            @case (1)
+                                                            A
+                                                            @break
+                                                            @case (2)
+                                                            A/M
+                                                            @break
+                                                            @case (3)
+                                                            DCT
+                                                            @break
+                                                            @case (4)
+                                                            M
+                                                            @break
+                                                        @endswitch
+                                                    </div>
+                                                    <div class="icons-column">
+                                                        <i class="icon icon-user-circle"></i> x {{$VehicleDetail->seat}}
+                                                    </div>
                                         </div>
 
                                         <p class="description-sq">
@@ -151,15 +155,19 @@
                                     </div>
 
                                     <!-- Right -->
-                                    <form action="">
-                                        <div class="ui twelve wide mobile six wide computer column">
-                                            <div class="property-checkout-container main-infos">
+                                    <div class="ui twelve wide mobile six wide computer column">
 
+                                        <div class="property-checkout-container main-infos">
+                                            <form action="vehicle/booking/{{$Vehicle -> id}}" method="GET"
+                                                  autocomplete="off">
                                                 <div class="div-c">
                                                     <label>Pick up location</label>
-                                                    <input type="text" placeholder=""
-                                                           value="{{$PickupLocation -> name}}" readonly>
+                                                    <input type="text" placeholder="" disabled value="{{$PickupLocation -> name}}">
                                                 </div>
+
+                                                @if(session('error'))
+                                                    <span style="color: #FF5C5C">{{session('error')}}</span>
+                                                @endif
 
                                                 <div class="div-c inline-2 inline-check-in">
 
@@ -167,10 +175,10 @@
                                                         <label class="placeholder">Check in</label>
 
                                                         <div class="relative-sq">
-                                                            <input type="text" class="filter" readonly
+                                                            <input type="text" disabled name="pickup_date" class="filter"
                                                                    value="{{$Booking -> pickup_date}}"
+                                                                   required
                                                                    placeholder="date">
-
                                                             <i class="icon icon-little-arrow filters-arrow"></i>
                                                         </div>
 
@@ -180,48 +188,46 @@
 
                                                         <label class="placeholder">Check Out</label>
 
-                                                        <input type="text" class="filter" readonly
+                                                        <input type="text" disabled class="filter" name="return_date"
                                                                value="{{$Booking -> return_date}}"
+                                                               required
                                                                placeholder="date">
 
                                                     </div>
                                                 </div>
 
                                                 <div class="div-c extras-sq">
-                                                    <label class="placeholder">Payment type</label>
+
+                                                    <label class="placeholder">Rent Price</label>
 
                                                     <div class="divided-column">
-                                                        <input type="radio" name="payment-type" id="paypal"
-                                                               value="paypal" required>
-                                                        <label for="paypal">Paypal</label>
+                                                        <input type="checkbox" id="checkbox2" checked disabled>
+                                                        <label for="checkbox2">Daily Rent Price</label>
+
+                                                        <span class="value-sq"
+                                                              style="color: #FF5C5C">${{$Vehicle -> daily_price}}</span>
                                                     </div>
 
-                                                    <div class="divided-column">
-                                                        <input type="radio" name="payment-type" id="visa" value="visa">
-                                                        <label for="visa">Visa</label>
-                                                    </div>
+                                                    <label class="placeholder">Payment types</label>
 
                                                     <div class="divided-column">
-                                                        <input type="radio" name="payment-type" id="momo" value="momo">
-                                                        <label for="momo">Momo</label>
+                                                        <div class="div-c">
+                                                            <div id="paypal-button-container"></div>
+                                                        </div>
                                                     </div>
+
                                                 </div>
-
 
                                                 <div class="div-c total-sq">
                                                     <div class="divided-column">
                                                         <label class="placeholder">Total</label>
-                                                        <span class="value-sq">${{$total_price}}</span>
+                                                        <span class="value-sq">${{number_format($total_price, 2)}}</span>
 
                                                     </div>
                                                 </div>
-
-                                                <button type="submit" class="button-sq fullwidth-sq font-weight-bold-sq"
-                                                        href="">Proceed to payment
-                                                </button>
-                                            </div>
+                                            </form>
                                         </div>
-                                    </form>
+                                    </div>
 
                                 </div>
                             </div>
@@ -237,24 +243,31 @@
 
 @section('script')
     <script>
-        $('#rangestart').calendar({
-            type: 'date',
-            endCalendar: $('#rangeend'),
-            //inline: true,
-            className: {
-                prevIcon: "icon icon-arrow-left-122",
-                nextIcon: "icon icon-arrow-right-122"
+        paypal.Buttons({
+            style: {
+                size: 'small',
+                shape: 'pill'
+            },
+            createOrder: function (data, actions) {
+                // This function sets up the details of the transaction, including the amount and line item details.
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{$total_price*10/100}}'
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                // This function captures the funds from the transaction.
+                <?
+                $BookingEdit = \App\Booking::find($Booking -> id);
+                $BookingEdit -> status = 3;
+                $BookingEdit -> save()
+                ?>
+                window.location.href = ('success');
             }
-        });
-
-        $('#rangeend').calendar({
-            type: 'date',
-            startCalendar: $('#rangestart'),
-            //inline: true,
-            className: {
-                prevIcon: "icon icon-arrow-left-122",
-                nextIcon: "icon icon-arrow-right-122"
-            }
-        });
+        }).render('#paypal-button-container');
+        //This function displays Smart Payment Buttons on your web page.
     </script>
 @endsection
