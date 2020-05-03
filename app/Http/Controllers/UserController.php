@@ -10,6 +10,7 @@ use App\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
@@ -169,6 +170,8 @@ class UserController extends Controller
             $file = $request->file('image');
             $image = $file->getClientOriginalName();
             $file->move('upload/image/user_image', $image);
+            $image_fit = Image::make('upload/image/user_image/'.$image) -> fit(957,957);
+            $image_fit -> save();
             $User->image = $image;
         }
 
