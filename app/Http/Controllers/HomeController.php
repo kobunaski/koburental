@@ -12,4 +12,8 @@ class HomeController extends Controller
         $User = User::all();
         return view('admin.home.home', ['User' => $User]);
     }
+
+    public function test(){
+        return view('test');
+    }
 }

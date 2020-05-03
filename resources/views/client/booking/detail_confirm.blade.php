@@ -367,14 +367,13 @@
                     <div class="row photo-upload">
 
                         <div class="ui three wide computer six wide tablet twelve wide mobile column">
-
                             <div class="photo-upload-item">
                                 <div class="image-wrapper">
-                                    <img class="image-sq" src="client_assets/assets/images/host/host_01.jpg" alt="">
+                                    <img class="image-sq" id="preview_img" src="client_assets/assets/images/host/host_01.jpg" alt="">
                                 </div>
 
                                 <textarea cols="30" rows="2" disabled=""
-                                          placeholder="Example of driver license image"></textarea>
+                                          placeholder="Driver license preview"></textarea>
 
                             </div>
                         </div>
@@ -387,14 +386,14 @@
                                         Add Photo
                                     </a>
                                 </label>
+                                <input id="file-input" required name="driver_license" type="file" style="display: none;"
+                                       accept="image/gif,image/jpeg,image/jpg,image/png" onchange="loadPreview(this);"/>
                             </div>
                         </div>
                     </div>
 
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
 
-                    <input id="file-input" required name="driver_license" type="file" style="display: none;"
-                           accept="image/gif,image/jpeg,image/jpg,image/png"/>
                     <input type="hidden" name="id_vehicle" value="{{$Vehicle -> id}}">
                     <input type="hidden" name="id_pickup_location" value="{{$Vehicle -> id_pickup_location}}">
                     <input type="hidden" name="pickup_date"
@@ -506,5 +505,19 @@
                 nextIcon: "icon icon-arrow-right-122"
             }
         });
+    </script>
+    <script>
+        function loadPreview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview_img').attr('src', e.target.result);
+                    // $('#preview_img_div').removeAttr('hidden');
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 @endsection

@@ -189,4 +189,6 @@ Route::group(['prefix' => 'error'], function (){
     Route::get('/login', 'ClientController@errorLogin');
 });
 
+Route::get('test', 'HomeController@test');
+
 
