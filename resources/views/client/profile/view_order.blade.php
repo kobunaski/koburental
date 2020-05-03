@@ -23,6 +23,9 @@
                                 $count = 0;
                                 ?>
                                 @foreach($Booking as $item)
+                                        <?
+                                        $count++;
+                                        ?>
                                     <div
                                         class="ui twelve wide mobile six wide tablet six wide computer four wide widescreen four wide large screen column">
                                         <div class="dashboard-order-boxes-sq">
@@ -72,7 +75,6 @@
                                                 </strong></p>
                                             <span class="dashboard-label-sq">Status</span>
                                             @if($item -> status == 0)
-                                                <?$count++?>
                                                 <p class="dashboard-content-sq dashboard-status-sq"
                                                    style="color: 	#FFA500">
                                                     <strong>
@@ -80,25 +82,28 @@
                                                     </strong>
                                                 </p>
                                             @elseif ($item -> status == 1)
-                                                <?$count++?>
+                                                <p class="dashboard-content-sq dashboard-status-sq processing-sq" style="color: 	#FFA500">
+                                                    <strong>
+                                                        Pending payment
+                                                    </strong>
+                                                </p>
+                                            @elseif ($item -> status == 2)
                                                 <p class="dashboard-content-sq dashboard-status-sq processing-sq">
                                                     <strong>
                                                         Processing
                                                     </strong>
                                                 </p>
-                                            @elseif ($item -> status == 2)
-                                                <?$count++?>
+                                            @elseif ($item -> status == 3)
+                                                <p class="dashboard-content-sq dashboard-status-sq completed-sq">
+                                                    <strong>
+                                                        Completed
+                                                    </strong>
+                                                </p>
+                                            @elseif ($item -> status == 4)
                                                 <p class="dashboard-content-sq dashboard-status-sq"
                                                    style="color: red">
                                                     <strong>
                                                         Declined
-                                                    </strong>
-                                                </p>
-                                            @elseif ($item -> status == 3)
-                                                <?$count++?>
-                                                <p class="dashboard-content-sq dashboard-status-sq complete-sq">
-                                                    <strong>
-                                                        Completed
                                                     </strong>
                                                 </p>
                                             @endif

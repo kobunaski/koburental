@@ -262,7 +262,7 @@
                 // This function captures the funds from the transaction.
                 <?
                 $BookingEdit = \App\Booking::find($Booking -> id);
-                $BookingEdit -> status = 3;
+                $BookingEdit -> status = 2;
                 $BookingEdit -> save()
                 ?>
                 window.location.href = ('success');

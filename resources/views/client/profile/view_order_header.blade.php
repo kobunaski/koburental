@@ -11,6 +11,9 @@
                     <li class="{{Request()->is('profile/view/order/pending') ? "active" : ""}}">
                         <a href="profile/view/order/pending">Pending</a>
                     </li>
+                    <li class="{{Request()->is('profile/view/order/pending-payment') ? "active" : ""}}">
+                        <a href="profile/view/order/pending-payment">Pending Payment</a>
+                    </li>
                     <li class="{{Request()->is('profile/view/order/processing') ? "active" : ""}}">
                         <a href="profile/view/order/processing">Processing</a>
                     </li>

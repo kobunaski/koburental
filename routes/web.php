@@ -140,6 +140,7 @@ Route::group(['prefix' => 'profile', 'middleware' => 'checkloginMiddleware'], fu
 
     Route::get('/view/order/all', 'BookingController@viewOrder');
     Route::get('/view/order/pending', 'BookingController@viewOrderPending');
+    Route::get('/view/order/pending-payment', 'BookingController@viewOrderPendingPayment');
     Route::get('/view/order/processing', 'BookingController@viewOrderProcessing');
     Route::get('/view/order/completed', 'BookingController@viewOrderCompleted');
     Route::get('/view/order/declined', 'BookingController@viewOrderDeclined');

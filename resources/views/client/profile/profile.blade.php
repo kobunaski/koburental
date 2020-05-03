@@ -178,12 +178,24 @@
                                                                 </strong>
                                                             </p>
                                                         @elseif ($item -> status == 1)
+                                                            <p class="dashboard-content-sq dashboard-status-sq processing-sq" style="color: 	#FFA500">
+                                                                <strong>
+                                                                    Pending payment
+                                                                </strong>
+                                                            </p>
+                                                        @elseif ($item -> status == 2)
                                                             <p class="dashboard-content-sq dashboard-status-sq processing-sq">
                                                                 <strong>
                                                                     Processing
                                                                 </strong>
                                                             </p>
-                                                        @elseif ($item -> status == 2)
+                                                        @elseif ($item -> status == 3)
+                                                            <p class="dashboard-content-sq dashboard-status-sq completed-sq">
+                                                                <strong>
+                                                                    Completed
+                                                                </strong>
+                                                            </p>
+                                                        @elseif ($item -> status == 4)
                                                             <p class="dashboard-content-sq dashboard-status-sq"
                                                                style="color: red">
                                                                 <strong>
