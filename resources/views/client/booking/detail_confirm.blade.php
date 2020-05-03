@@ -295,65 +295,119 @@
         @break
         @case(5)
         <div class="add-listing-content">
-            <div class="ui grid container">
-                <div class="row">
-                    <div
-                        class="ui twelve wide tablet twelve wide computer twelve wide widescreen twelve wide large screen column">
-                        <h3 class="complete-sq title-sq">Final confirmation</h3>
+            <form action="vehicle/booking/{{$Vehicle -> id}}" method="POST" enctype="multipart/form-data">
+                <div class="ui grid container">
+                    <div class="row">
+                        <div
+                            class="ui twelve wide tablet twelve wide computer twelve wide widescreen twelve wide large screen column">
+                            <h3 class="complete-sq title-sq">Final confirmation</h3>
+                        </div>
+
+                        <div
+                            class="ui twelve wide tablet eight wide computer eight wide widescreen eight wide large screen column">
+
+                            <br>
+
+                            <h4>User information</h4>
+
+                            <p class="description-sq">Please complete the following fields to confirm your
+                                reservation</p>
+                        </div>
+
                     </div>
 
-                    <div
-                        class="ui twelve wide tablet eight wide computer eight wide widescreen eight wide large screen column">
-
-                        <p class="description-sq">Please upload your driver license for security reasons. Press confirm to complete the reservation</p>
-
-                    </div>
-
-                </div>
-
-                <div class="row photo-upload">
-
-                    <div class="ui three wide computer six wide tablet twelve wide mobile column">
-
-                        <div class="photo-upload-item">
-                            <div class="image-wrapper">
-                                <img class="image-sq" src="client_assets/assets/images/host/host_01.jpg" alt="">
+                    <div class="row">
+                        <div class="ui eight wide computer twelve wide tablet column">
+                            <div class="div-c one-label">
+                                <div class="divided-column">
+                                    <label>Full name</label>
+                                    <input type="text" readonly
+                                           value="{{$user_login -> name}}" required="" placeholder="">
+                                </div>
                             </div>
 
-                            <textarea cols="30" rows="2" disabled=""
-                                      placeholder="Example of driver license image"></textarea>
+                            <div class="div-c inline-2">
+                                <div class="divided-column">
+                                    <label>Email: </label>
+                                    <input type="text" readonly value="{{$user_login -> email}}">
+                                </div>
+                                <div class="divided-column">
+                                    <label>Phone number: </label>
+                                    <input type="number" name="phone" value="{{$user_login -> phone}}" required>
+                                </div>
+                            </div>
+
+                            <div class="div-c">
+                                <div class="divided-column">
+                                    <label>Address</label>
+                                    <div class="info-wrapper inside-sq ">
+                                        <input type="text" name="address"
+                                               value="{{$user_login -> address}}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div
+                            class="ui twelve wide tablet eight wide computer eight wide widescreen eight wide large screen column">
+
+                            <h4>Driver license</h4>
+
+                            <p class="description-sq">Please upload your driver license for security reasons. Press
+                                confirm to complete the
+                                reservation</p>
 
                         </div>
                     </div>
 
-                    <div class="ui three wide computer six wide tablet twelve wide mobile column">
-                        <div class="photo-upload-item" id="OpenImgUpload">
-                            <label for="file-input">
-                                <a class="add-photo">
-                                    <i class="icon icon-add-wishlist"></i>
-                                    Add Photo
-                                </a>
-                            </label>
+                    <div class="row photo-upload">
+
+                        <div class="ui three wide computer six wide tablet twelve wide mobile column">
+
+                            <div class="photo-upload-item">
+                                <div class="image-wrapper">
+                                    <img class="image-sq" src="client_assets/assets/images/host/host_01.jpg" alt="">
+                                </div>
+
+                                <textarea cols="30" rows="2" disabled=""
+                                          placeholder="Example of driver license image"></textarea>
+
+                            </div>
+                        </div>
+
+                        <div class="ui three wide computer six wide tablet twelve wide mobile column">
+                            <div class="photo-upload-item" id="OpenImgUpload">
+                                <label for="file-input">
+                                    <a class="add-photo">
+                                        <i class="icon icon-add-wishlist"></i>
+                                        Add Photo
+                                    </a>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <form action="vehicle/booking/{{$Vehicle -> id}}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
 
                     <input id="file-input" required name="driver_license" type="file" style="display: none;"
                            accept="image/gif,image/jpeg,image/jpg,image/png"/>
                     <input type="hidden" name="id_vehicle" value="{{$Vehicle -> id}}">
                     <input type="hidden" name="id_pickup_location" value="{{$Vehicle -> id_pickup_location}}">
-                    <input type="hidden" name="pickup_date" value="{{\Illuminate\Support\Facades\Session::get('pickup_date')}}">
-                    <input type="hidden" name="return_date" value="{{\Illuminate\Support\Facades\Session::get('return_date')}}">
+                    <input type="hidden" name="pickup_date"
+                           value="{{\Illuminate\Support\Facades\Session::get('pickup_date')}}">
+                    <input type="hidden" name="return_date"
+                           value="{{\Illuminate\Support\Facades\Session::get('return_date')}}">
                     <br>
 
                     <button type="submit"
-                            class="button-sq fullwidth-sq font-weight-bold-sq">Confirm Car Reservation
+                            class="button-sq font-weight-bold-sq">Confirm Car Reservation
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
         @break
     @endswitch

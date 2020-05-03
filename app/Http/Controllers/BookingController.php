@@ -74,6 +74,11 @@ class BookingController extends Controller
 
     public function postConfirm(Request $request, $id)
     {
+        $User = User::find(Auth::user() -> id);
+        echo $User -> phone = $request -> phone;
+        echo $User -> address = $request -> address;
+        $User -> save();
+
         $Vehicle = Vehicle::find($id);
         $Booking = new Booking;
 
