@@ -46,11 +46,14 @@ class VehicleController extends Controller
         $PickupLocation = PickupLocation::all();
         $Feedback = Feedback::all();
         $VehicleDetail = VehicleDetail::all();
-        $VehicleAll = Vehicle::all();
-        $Booking = Booking::all();
 
         if ($id_pickup_location == 0 && $filter == 0) {
-            $Vehicle = Vehicle::paginate(6);
+            if ($pickup_date == '') {
+                $Vehicle = Vehicle::paginate(6);
+            } else {
+                $array_available_vehicle = $this->time_limit($pickup_date, $return_date);
+                $Vehicle = Vehicle::whereIn('id', $array_available_vehicle)->paginate(6);
+            }
         } else if ($id_pickup_location != 0 && $filter == 0) {
             if ($pickup_date == '') {
                 $Vehicle = Vehicle::where('id_pickup_location', '=', $id_pickup_location)->paginate(6);
@@ -505,9 +508,9 @@ class VehicleController extends Controller
         $new_return_date = date('Y-m-d', $time2);
 
         foreach ($Booking as $item) {
-            if ($new_pickup_date >= $item->pickup_day && $new_pickup_date <= $item->drop_day) {
+            if ($new_pickup_date >= $item->pickup_day && $new_pickup_date <= $item->return_date) {
                 $array_vehicle_pickup[] = $item->id_vehicle;
-            } else if ($new_return_date >= $item->pickup_day && $new_return_date <= $item->drop_day) {
+            } else if ($new_return_date >= $item->pickup_day && $new_return_date <= $item->return_date) {
                 $array_vehicle_return[] = $item->id_vehicle;
             }
         }

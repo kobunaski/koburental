@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('execute-payment', function (Request $request) {
+    $Booking = \App\Booking::find($request -> booking_ID);
+    $Booking -> status = 2;
+    $Booking -> save();
+});

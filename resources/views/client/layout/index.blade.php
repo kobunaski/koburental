@@ -6,6 +6,7 @@
     <meta name="author" content="SeventhQueen" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <base href="{{asset('')}}">
     <link rel="stylesheet" type="text/css" href="client_assets/assets/less/base.min.css">
     <link rel="stylesheet" type="text/css" href="client_assets/assets/less/header.min.css">

@@ -252,6 +252,23 @@
                                                         </div>
                                                     @endif
                                                 @endif
+                                                @if($item -> status == 1)
+                                                    @if($user_login -> id_role == 3 && $item -> id_user == $user_login -> id)
+                                                        <div class="actions">
+                                                            <div class="div-c inline-2">
+                                                                <div class="divided-column">
+                                                                    <a class="button-sq cancel-sq fullwidth-sq"
+                                                                       href="order/decline/{{$item -> id}}">Cancel order</a>
+                                                                </div>
+
+                                                                <div class="divided-column">
+                                                                    <a class="button-sq fullwidth-sq"
+                                                                       href="order/payment/{{$item -> id}}">Go to payment</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

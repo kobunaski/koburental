@@ -275,9 +275,9 @@ class BookingController extends Controller
         $count = 0;
 
         foreach ($Booking as $item) {
-            if ($new_pickup_date >= $item->pickup_day && $new_pickup_date <= $item->drop_day) {
+            if ($new_pickup_date >= $item->pickup_day && $new_pickup_date <= $item->return_date) {
                 $array_vehicle_pickup[] = $item->id_vehicle;
-            } else if ($new_return_date >= $item->pickup_day && $new_return_date <= $item->drop_day) {
+            } else if ($new_return_date >= $item->pickup_day && $new_return_date <= $item->return_date) {
                 $array_vehicle_return[] = $item->id_vehicle;
             }
         }

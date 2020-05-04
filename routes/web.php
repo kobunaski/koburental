@@ -165,7 +165,8 @@ Route::group(['prefix' => 'order', 'middleware' => 'staffValidation'], function(
 
 });
 
-Route::get('order/payment/{id}', 'BookingController@paymentOrder');
+Route::get('order/payment/{id}', 'PaymentController@paymentOrder');
+
 Route::get('payment/success', 'PaymentController@paymentOrderSuccess');
 
 Route::group(['prefix' => 'article'], function (){

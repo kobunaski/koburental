@@ -1,6 +1,7 @@
 @extends('client.layout.index')
 
 @section('content')
+    @if($Booking -> status == 1)
     <script
         src="https://www.paypal.com/sdk/js?client-id=AQ6ByKSqZI_j5-puUMB_2jJEeimr6jqj1_5C1fY74kfnslpGfHreGzlzmkhgEom4L79E-gRr5RzZw2yc"
         async> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
@@ -115,34 +116,34 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                                    <div class="icons-column">
-                                                        <i class="icon icon-ac"></i>
-                                                        @if($VehicleDetail -> air_con == 1)
-                                                            A/C
-                                                        @else
-                                                            No A/C
-                                                        @endif
-                                                    </div>
-                                                    <div class="icons-column">
-                                                        <i class="icon icon-gearbox"></i>
-                                                        @switch($VehicleDetail -> gearbox)
-                                                            @case (1)
-                                                            A
-                                                            @break
-                                                            @case (2)
-                                                            A/M
-                                                            @break
-                                                            @case (3)
-                                                            DCT
-                                                            @break
-                                                            @case (4)
-                                                            M
-                                                            @break
-                                                        @endswitch
-                                                    </div>
-                                                    <div class="icons-column">
-                                                        <i class="icon icon-user-circle"></i> x {{$VehicleDetail->seat}}
-                                                    </div>
+                                            <div class="icons-column">
+                                                <i class="icon icon-ac"></i>
+                                                @if($VehicleDetail -> air_con == 1)
+                                                    A/C
+                                                @else
+                                                    No A/C
+                                                @endif
+                                            </div>
+                                            <div class="icons-column">
+                                                <i class="icon icon-gearbox"></i>
+                                                @switch($VehicleDetail -> gearbox)
+                                                    @case (1)
+                                                    A
+                                                    @break
+                                                    @case (2)
+                                                    A/M
+                                                    @break
+                                                    @case (3)
+                                                    DCT
+                                                    @break
+                                                    @case (4)
+                                                    M
+                                                    @break
+                                                @endswitch
+                                            </div>
+                                            <div class="icons-column">
+                                                <i class="icon icon-user-circle"></i> x {{$VehicleDetail->seat}}
+                                            </div>
                                         </div>
 
                                         <p class="description-sq">
@@ -162,7 +163,8 @@
                                                   autocomplete="off">
                                                 <div class="div-c">
                                                     <label>Pick up location</label>
-                                                    <input type="text" placeholder="" disabled value="{{$PickupLocation -> name}}">
+                                                    <input type="text" placeholder="" disabled
+                                                           value="{{$PickupLocation -> name}}">
                                                 </div>
 
                                                 @if(session('error'))
@@ -175,7 +177,8 @@
                                                         <label class="placeholder">Check in</label>
 
                                                         <div class="relative-sq">
-                                                            <input type="text" disabled name="pickup_date" class="filter"
+                                                            <input type="text" disabled name="pickup_date"
+                                                                   class="filter"
                                                                    value="{{$Booking -> pickup_date}}"
                                                                    required
                                                                    placeholder="date">
@@ -221,7 +224,8 @@
                                                 <div class="div-c total-sq">
                                                     <div class="divided-column">
                                                         <label class="placeholder">Total</label>
-                                                        <span class="value-sq">${{number_format($total_price, 2)}}</span>
+                                                        <span
+                                                            class="value-sq">${{number_format($total_price, 2)}}</span>
 
                                                     </div>
                                                 </div>
@@ -239,17 +243,15 @@
             </div>
         </div>
     </div>
+        @else
+        PAGE EXPIRE
+    @endif
 @endsection
 
 @section('script')
     <script>
         paypal.Buttons({
-            style: {
-                size: 'small',
-                shape: 'pill'
-            },
             createOrder: function (data, actions) {
-                // This function sets up the details of the transaction, including the amount and line item details.
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
@@ -259,15 +261,29 @@
                 });
             },
             onApprove: function (data, actions) {
-                // This function captures the funds from the transaction.
-                <?
-                $BookingEdit = \App\Booking::find($Booking -> id);
-                $BookingEdit -> status = 2;
-                $BookingEdit -> save()
-                ?>
-                window.location.href = ('success');
+                return actions.order.capture().then(function (details) {
+                    // alert('Transaction completed by ' + details.payer.name.given_name);
+                    // Call your server to save the transaction
+                    return fetch('api/execute-payment', {
+                        method: 'post',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            orderID: data.orderID,
+                            booking_ID: '{{$Booking -> id}}'
+                        })
+                    }).then(status)
+                        .then(function (response) {
+                            // redirect to the completed page if paid
+                            window.location.href = 'payment/success';
+                        })
+                        .catch(function (error) {
+                            // redirect to failed page if internal error occurs
+                            window.location.href = '/pay-failed?reason=internalFailure';
+                        });
+                });
             }
         }).render('#paypal-button-container');
-        //This function displays Smart Payment Buttons on your web page.
     </script>
 @endsection
