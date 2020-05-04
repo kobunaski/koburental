@@ -63,6 +63,8 @@ class UserController extends Controller
             $file = $request->file('image');
             $image = $file->getClientOriginalName();
             $file->move('upload/image/user_image', $image);
+            $image_fit = Image::make('upload/image/user_image/'.$image) -> fit(957,957);
+            $image_fit -> save();
             $User->image = $image;
         }
 
@@ -115,6 +117,8 @@ class UserController extends Controller
             $file = $request->file('image');
             $image = $file->getClientOriginalName();
             $file->move('upload/image/user_image', $image);
+            $image_fit = Image::make('upload/image/user_image/'.$image) -> fit(957,957);
+            $image_fit -> save();
             $User->image = $image;
         }
 

@@ -107,11 +107,11 @@
                                 {!! $errors->first('daily_price', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
 
-                            <img src="upload/image/user_image/{{$Vehicle -> image}}" alt="" style="width: 200px;height: auto">
+                            <img src="upload/image/vehicle_image/{{$Vehicle -> image}}" id="preview_img"  alt="" style="width: 200px;height: auto">
 
                             <div class="form-group">
                                 <div class="custom-file">
-                                    <input type="file" name="image" class="custom-file-input" id="inputGroupFile03">
+                                    <input type="file" name="image" onchange="loadPreview(this);" class="custom-file-input" id="inputGroupFile03">
                                     <label class="custom-file-label" for="inputGroupFile03">Choose the image profile</label>
                                 </div>
                             </div>
@@ -133,5 +133,17 @@
 @endsection
 
 @section('script')
+    <script>
+        function loadPreview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#preview_img').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 @endsection

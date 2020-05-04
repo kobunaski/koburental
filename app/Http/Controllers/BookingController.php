@@ -21,7 +21,11 @@ class BookingController extends Controller
     //
     public function view()
     {
-        return view('admin.booking.view');
+        $Booking = Booking::all();
+        $Vehicle = Vehicle::all();
+        $User = User::all();
+        $PickupLocation = PickupLocation::all();
+        return view('admin.booking.view', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'User' => $User, 'PickupLocation' => $PickupLocation]);
     }
 
     public function getSuccess()

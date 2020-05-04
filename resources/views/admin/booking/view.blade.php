@@ -58,31 +58,88 @@
                             <table id="zero_config" class="table table-striped table-bordered no-wrap">
                                 <thead>
                                 <tr>
-                                    <th>Vehicle name</th>
-                                    <th>Content</th>
-                                    <th>User email</th>
-                                    <th>Rating</th>
+                                    <th>Id</th>
+                                    <th>Renter Name</th>
+                                    <th>Staff Name</th>
+                                    <th>Id - Vehicle name</th>
+                                    <th>Pickup Date</th>
+                                    <th>Return Date</th>
+                                    <th>Pickup Location</th>
+                                    <th>Booking Status</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($Feedback as $item)
+                                @foreach($Booking as $item)
                                     <tr>
                                         <td>
-                                            @foreach($Vehicle as $item2)
-                                                @if($item -> id_vehicle == $item2 -> id)
+                                            {{$item -> id}}
+                                        </td>
+                                        <td>
+                                            @foreach($User as $item2)
+                                                @if($item2 -> id == $item -> id_user)
                                                     {{$item2 -> name}}
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td>{{$item -> content}}</td>
                                         <td>
                                             @foreach($User as $item2)
-                                                @if($item -> id_user == $item2 -> id)
-                                                    {{$item2 -> email}}
+                                                @if($item2 -> id == $item -> id_staff)
+                                                    {{$item2 -> name}}
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td>{{$item -> rating}}</td>
+                                        <td>
+                                            @foreach($Vehicle as $item2)
+                                                @if($item2 -> id == $item -> id_vehicle)
+                                                    {{$item2 -> name}}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>{{$item -> pickup_date}}</td>
+                                        <td>{{$item -> return_date}}</td>
+                                        <td>
+                                            @foreach($PickupLocation as $item2)
+                                                @if($item2 -> id == $item -> id_pickup_location)
+                                                    {{$item2 -> name}}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        @switch($item -> status)
+                                            @case(0)
+                                            <td class="text-warning">
+                                                Pending
+                                            </td>
+                                            @break
+                                            @case(1)
+                                            <td class="text-warning">
+                                                Pending payment
+                                            </td>
+                                            @break
+                                            @case(2)
+                                            <td class="text-primary">
+                                                Processing
+                                            </td>
+                                            @break
+                                            @case(3)
+                                            <td class="text-success">
+                                                Completed
+                                            </td>
+                                            @break
+                                            @case(4)
+                                            <td class="text-danger">
+                                                Declined
+                                            </td>
+                                            @break
+                                        @endswitch
+                                        <td>
+                                            @if($item -> status == 0)
+                                                <a href="order/decline/{{$Booking -> id}}">Decline</a>
+                                                <a href="order/confirm/{{$Booking -> id}}">Confirm</a>
+                                                @else
+                                                Wait for customer
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

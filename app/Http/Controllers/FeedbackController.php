@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Feedback;
+use App\User;
+use App\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +14,9 @@ class FeedbackController extends Controller
     public function view()
     {
         $Feedback = Feedback::all();
-        return view('admin.feedback.view', ['Feedback' => $Feedback]);
+        $Vehicle = Vehicle::all();
+        $User = User::all();
+        return view('admin.feedback.view', ['Feedback' => $Feedback, 'Vehicle' => $Vehicle, 'User' => $User, ]);
     }
 
     public function addFeedback(Request $request, $id)

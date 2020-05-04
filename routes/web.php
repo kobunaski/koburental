@@ -113,6 +113,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminValidation'], function 
     Route::group(['prefix' => 'feedback'], function(){
         Route::get('view', 'FeedbackController@view');
     });
+
+    Route::group(['prefix' => 'booking'], function(){
+        Route::get('view', 'BookingController@view');
+    });
 });
 
 Route::get('/home', 'ClientController@view');

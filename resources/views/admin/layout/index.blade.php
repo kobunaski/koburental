@@ -92,9 +92,7 @@
 <script src="admin_assets/dist/js/sidebarmenu.js"></script>
 <!--Custom JavaScript -->
 <script src="admin_assets/dist/js/custom.min.js"></script>
-@yield('script')
-
-
 <div class="jvectormap-tip"></div>
+@yield('script')
 </body>
 </html>
