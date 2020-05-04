@@ -166,7 +166,7 @@ Route::group(['prefix' => 'order', 'middleware' => 'staffValidation'], function(
 });
 
 Route::get('order/payment/{id}', 'BookingController@paymentOrder');
-Route::get('success', 'PaymentController@paymentOrderSuccess');
+Route::get('payment/success', 'PaymentController@paymentOrderSuccess');
 
 Route::group(['prefix' => 'article'], function (){
     Route::get('/', 'ArticleController@viewClient');

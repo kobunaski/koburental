@@ -332,6 +332,7 @@
                                                                 @endforeach
                                                             </div>
                                                             @if($item -> status == 0)
+                                                                @if($user_login -> role != 3)
                                                                 <div class="actions">
                                                                     <div class="div-c inline-2">
                                                                         <div class="divided-column">
@@ -345,6 +346,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                @endif
                                                             @endif
                                                         </div>
                                                     </div>

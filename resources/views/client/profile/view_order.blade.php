@@ -23,9 +23,9 @@
                                 $count = 0;
                                 ?>
                                 @foreach($Booking as $item)
-                                        <?
-                                        $count++;
-                                        ?>
+                                    <?
+                                    $count++;
+                                    ?>
                                     <div
                                         class="ui twelve wide mobile six wide tablet six wide computer four wide widescreen four wide large screen column">
                                         <div class="dashboard-order-boxes-sq">
@@ -82,7 +82,8 @@
                                                     </strong>
                                                 </p>
                                             @elseif ($item -> status == 1)
-                                                <p class="dashboard-content-sq dashboard-status-sq processing-sq" style="color: 	#FFA500">
+                                                <p class="dashboard-content-sq dashboard-status-sq processing-sq"
+                                                   style="color: 	#FFA500">
                                                     <strong>
                                                         Pending payment
                                                     </strong>
@@ -235,19 +236,21 @@
                                                     @endforeach
                                                 </div>
                                                 @if($item -> status == 0)
-                                                    <div class="actions">
-                                                        <div class="div-c inline-2">
-                                                            <div class="divided-column">
-                                                                <a class="button-sq cancel-sq fullwidth-sq"
-                                                                   href="order/decline/{{$item -> id}}">Decline</a>
-                                                            </div>
+                                                    @if($user_login -> id_role != 3)
+                                                        <div class="actions">
+                                                            <div class="div-c inline-2">
+                                                                <div class="divided-column">
+                                                                    <a class="button-sq cancel-sq fullwidth-sq"
+                                                                       href="order/decline/{{$item -> id}}">Decline</a>
+                                                                </div>
 
-                                                            <div class="divided-column">
-                                                                <a class="button-sq fullwidth-sq"
-                                                                   href="order/confirm/{{$item -> id}}">Confirm</a>
+                                                                <div class="divided-column">
+                                                                    <a class="button-sq fullwidth-sq"
+                                                                       href="order/confirm/{{$item -> id}}">Confirm</a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
