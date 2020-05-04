@@ -97,12 +97,39 @@
                                 {!! $errors->first('daily_price', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
 
-                            <img src="client_assets/assets/images/avatar/default_avatar.jpg" id="preview_img" alt="" style="width: 200px;height: auto">
+                            <img src="client_assets/assets/images/avatar/default_avatar.jpg" hidden id="preview_img" alt="" style="width: 200px;height: auto">
 
                             <div class="form-group">
                                 <div class="custom-file">
-                                    <input type="file" onchange="loadPreview(this);" name="image" class="custom-file-input" id="inputGroupFile03">
-                                    <label class="custom-file-label" for="inputGroupFile03">Choose the image for vehicle</label>
+                                    <input type="file" onchange="loadPreview(this);" name="image" class="custom-file-input" id="inputGroupFile01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Choose the image 1 for vehicle</label>
+                                </div>
+                            </div>
+
+                            <img src="client_assets/assets/images/avatar/default_avatar.jpg" hidden id="preview_img2" alt="" style="width: 200px;height: auto">
+
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" onchange="loadPreview2(this);" name="image2" class="custom-file-input" id="inputGroupFile02">
+                                    <label class="custom-file-label" for="inputGroupFile03">Choose the image 2 for vehicle</label>
+                                </div>
+                            </div>
+
+                            <img src="client_assets/assets/images/avatar/default_avatar.jpg" hidden id="preview_img3" alt="" style="width: 200px;height: auto">
+
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" onchange="loadPreview3(this);" name="image3" class="custom-file-input" id="inputGroupFile03">
+                                    <label class="custom-file-label" for="inputGroupFile03">Choose the image 3 for vehicle</label>
+                                </div>
+                            </div>
+
+                            <img src="client_assets/assets/images/avatar/default_avatar.jpg" hidden id="preview_img4" alt="" style="width: 200px;height: auto">
+
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" onchange="loadPreview4(this);" hidden name="image4" class="custom-file-input" id="inputGroupFile04">
+                                    <label class="custom-file-label" for="inputGroupFile04">Choose the image 4 for vehicle</label>
                                 </div>
                             </div>
 
@@ -130,6 +157,43 @@
 
                 reader.onload = function (e) {
                     $('#preview_img').attr('src', e.target.result);
+                    $('#preview_img').removeAttr('hidden');
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function loadPreview2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview_img2').attr('src', e.target.result);
+                    $('#preview_img2').removeAttr('hidden');
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function loadPreview3(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview_img3').attr('src', e.target.result);
+                    $('#preview_img3').removeAttr('hidden');
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function loadPreview4(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview_img4').attr('src', e.target.result);
+                    $('#preview_img4').removeAttr('hidden');
                 };
 
                 reader.readAsDataURL(input.files[0]);

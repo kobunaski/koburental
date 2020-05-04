@@ -150,6 +150,27 @@ class VehicleController extends Controller
             $Vehicle->image = $image;
         }
 
+        if ($request->hasFile('image2')) {
+            $file = $request->file('image2');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/vehicle_image', $image);
+            $Vehicle->image2 = $image;
+        }
+
+        if ($request->hasFile('image3')) {
+            $file = $request->file('image3');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/vehicle_image', $image);
+            $Vehicle->image3 = $image;
+        }
+
+        if ($request->hasFile('image4')) {
+            $file = $request->file('image4');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/vehicle_image', $image);
+            $Vehicle->image4 = $image;
+        }
+
         $Vehicle->save();
 
         return redirect('admin/vehicle/view')->with('alert', 'Added new vehicle');
@@ -190,6 +211,27 @@ class VehicleController extends Controller
             $image = $file->getClientOriginalName();
             $file->move('upload/image/vehicle_image', $image);
             $Vehicle->image = $image;
+        }
+
+        if ($request->hasFile('image2')) {
+            $file = $request->file('image2');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/vehicle_image', $image);
+            $Vehicle->image2 = $image;
+        }
+
+        if ($request->hasFile('image3')) {
+            $file = $request->file('image3');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/vehicle_image', $image);
+            $Vehicle->image3 = $image;
+        }
+
+        if ($request->hasFile('image4')) {
+            $file = $request->file('image4');
+            $image = $file->getClientOriginalName();
+            $file->move('upload/image/vehicle_image', $image);
+            $Vehicle->image4 = $image;
         }
 
         $Vehicle->save();

@@ -51,7 +51,7 @@
                                                     <div class="image-wrapper">
                                                         <div class="image-inner">
                                                             <img class="image-sq slick-img"
-                                                                 src="client_assets/assets/images/property/property_big_01.jpg"
+                                                                 src="upload/image/vehicle_image/{{$Vehicle -> image2}}"
                                                                  alt="" data-gallery="gallery" data-caption="Car 02">
                                                         </div>
                                                     </div>
@@ -64,7 +64,7 @@
                                                     <div class="image-wrapper">
                                                         <div class="image-inner">
                                                             <img class="image-sq slick-img"
-                                                                 src="client_assets/assets/images/property/property_big_02.jpg"
+                                                                 src="upload/image/vehicle_image/{{$Vehicle -> image3}}"
                                                                  alt="" data-gallery="gallery" data-caption="Car 03">
                                                         </div>
                                                     </div>
@@ -77,7 +77,7 @@
                                                     <div class="image-wrapper">
                                                         <div class="image-inner">
                                                             <img class="image-sq slick-img"
-                                                                 src="client_assets/assets/images/property/property_big_03.jpg"
+                                                                 src="upload/image/vehicle_image/{{$Vehicle -> image4}}"
                                                                  alt="" data-gallery="gallery" data-caption="Car 04">
                                                         </div>
                                                     </div>
