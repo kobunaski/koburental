@@ -257,7 +257,7 @@
 
                                                                         <label>Driver License</label>
                                                                         <img
-                                                                            src="upload/image/driver_license_image/{{$item -> driver_license}}"
+                                                                            src="upload/image/driver_license_image/{{$item2 -> driver_license}}"
                                                                             class="image-sq" alt=""
                                                                             style="width: 300px;height: auto">
 

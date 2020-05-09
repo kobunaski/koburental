@@ -39,17 +39,23 @@ class BookingController extends Controller
         $VehicleDetail = VehicleDetail::where('id_vehicle', '=', $id)->first();
         $VehicleType = VehicleType::where('id', '=', $Vehicle->id_model)->first();
         $Manufacture = Manufacture::where('id', '=', $VehicleType->id_manufacture)->first();
+
+        //This is the confirmation steps
         $step = $request->step;
 
+        //take the pickup date from the user's request
         $pickup_date = $request->pickup_date;
         $time = strtotime($pickup_date);
         $new_pickup_date = date('Y-m-d', $time);
 
+        //take the return date from the user's request
         $return_date = $request->return_date;
         $time2 = strtotime($return_date);
         $new_return_date = date('Y-m-d', $time2);
 
         if ($step == 0) {
+            //use the time limit function to check if the vehicle is
+            //available or unavailable
             if ($this->time_limit($id, $new_pickup_date, $new_return_date) == true) {
                 Session::put('pickup_date', $new_pickup_date);
                 Session::put('return_date', $new_return_date);
@@ -61,11 +67,18 @@ class BookingController extends Controller
                     'Manufacture' => $Manufacture,
                     'VehicleType' => $VehicleType]);
             } else {
-                return back()->with(['error' => 'In this date, this vehicle is not available', 'pickup_date_error' => $pickup_date, 'return_date_error' => $return_date]);
+                return back()->with([
+                    'error' => 'In this date, this vehicle is not available',
+                    'pickup_date_error' => $pickup_date,
+                    'return_date_error' => $return_date
+                ]);
             }
         } else if ($step > 0) {
 
-            $days = Carbon::parse(Session::get('return_date'))->diffInDays(Carbon::parse(Session::get('pickup_date')));
+            //get the days difference between the pickup date
+            //and the return date
+            $days = Carbon::parse(Session::get('return_date'))
+                ->diffInDays(Carbon::parse(Session::get('pickup_date')));
 
             return view('client.booking.detail_confirm', [
                 'days' => $days,
@@ -80,9 +93,10 @@ class BookingController extends Controller
     public function postConfirm(Request $request, $id)
     {
         $User = User::find(Auth::user()->id);
-        echo $User->phone = $request->phone;
-        echo $User->address = $request->address;
+        $User->phone = $request->phone;
+        $User->address = $request->address;
 
+        //Save the driver license image to the users
         if ($request->hasFile('driver_license')) {
             $file = $request->file('driver_license');
             $image = $file->getClientOriginalName();
@@ -90,9 +104,13 @@ class BookingController extends Controller
             $User->driver_license = $image;
         }
 
+        //save the record to the user database.
         $User->save();
 
         $Vehicle = Vehicle::find($id);
+
+        //Create a new booking and add the information from the input
+        //to the database.
         $Booking = new Booking;
 
         $Booking->id_user = Auth::user()->id;
@@ -100,6 +118,7 @@ class BookingController extends Controller
         $Booking->id_vehicle = $request->id_vehicle;
         $Booking->id_pickup_location = $request->id_pickup_location;
 
+        //parse to the right time format
         $time = strtotime($request->pickup_date);
         $new_pickup_date = date('Y-m-d', $time);
         $Booking->pickup_date = Carbon::parse($new_pickup_date);
@@ -279,10 +298,12 @@ class BookingController extends Controller
         $count = 0;
 
         foreach ($Booking as $item) {
-            if ($new_pickup_date >= $item->pickup_day && $new_pickup_date <= $item->return_date) {
-                $array_vehicle_pickup[] = $item->id_vehicle;
-            } else if ($new_return_date >= $item->pickup_day && $new_return_date <= $item->return_date) {
-                $array_vehicle_return[] = $item->id_vehicle;
+            if ($item -> id_vehicle == $id){
+                if ($new_pickup_date >= $item->pickup_date && $new_pickup_date <= $item->return_date) {
+                    $array_vehicle_pickup[] = $item->id_vehicle;
+                } else if ($new_return_date >= $item->pickup_date && $new_return_date <= $item->return_date) {
+                    $array_vehicle_return[] = $item->id_vehicle;
+                }
             }
         }
 

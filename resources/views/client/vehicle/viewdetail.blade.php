@@ -162,7 +162,13 @@
                                                   autocomplete="off">
                                                 <div class="div-c">
                                                     <label>Pick up location</label>
-                                                    <input type="text" placeholder=" ">
+                                                    <input type="text" placeholder=" "
+                                                    @foreach($PickupLocation as $item)
+                                                        @if($item -> id == $Vehicle -> id_pickup_location)
+                                                            value="{{$item -> name}}" disabled
+                                                            @endif
+                                                        @endforeach
+                                                    >
                                                 </div>
 
                                                 @if(session('error'))
@@ -224,29 +230,12 @@
                                                         <span class="value-sq">$13</span>
                                                     </div>
 
-                                                    <div class="divided-column">
-                                                        <input type="checkbox" id="checkbox4">
-                                                        <label for="checkbox4">Neque consequa es nterdum erat consequa
-                                                            es
-                                                            nterdum erat</label>
-
-                                                        <span class="value-sq">$10</span>
-                                                    </div>
-
-                                                    <div class="divided-column">
-                                                        <input type="checkbox" id="checkbox5">
-                                                        <label for="checkbox5">Phasellus sed neque consequa es nterdum
-                                                            erat</label>
-
-                                                        <span class="value-sq">$10</span>
-                                                    </div>
-
                                                 </div>
 
                                                 <div class="div-c total-sq">
                                                     <div class="divided-column">
                                                         <label class="placeholder">Total</label>
-                                                        <span class="value-sq">$200</span>
+                                                        <span class="value-sq">${{$Vehicle -> daily_price}}</span>
 
                                                     </div>
                                                 </div>

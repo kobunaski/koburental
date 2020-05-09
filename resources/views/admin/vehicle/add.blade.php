@@ -101,8 +101,9 @@
 
                             <div class="form-group">
                                 <div class="custom-file">
-                                    <input type="file" onchange="loadPreview(this);" name="image" class="custom-file-input" id="inputGroupFile01">
+                                    <input type="file" onchange="loadPreview(this);" name="image" class="custom-file-input {{ $errors->has('image') ? 'is-invalid' : ''}}" id="inputGroupFile01">
                                     <label class="custom-file-label" for="inputGroupFile01">Choose the image 1 for vehicle</label>
+                                    {!! $errors->first('image', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
 
@@ -110,8 +111,9 @@
 
                             <div class="form-group">
                                 <div class="custom-file">
-                                    <input type="file" onchange="loadPreview2(this);" name="image2" class="custom-file-input" id="inputGroupFile02">
+                                    <input type="file" onchange="loadPreview2(this);" name="image2" class="custom-file-input {{ $errors->has('image2') ? 'is-invalid' : ''}}" id="inputGroupFile02">
                                     <label class="custom-file-label" for="inputGroupFile03">Choose the image 2 for vehicle</label>
+                                    {!! $errors->first('image2', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
 
@@ -119,8 +121,9 @@
 
                             <div class="form-group">
                                 <div class="custom-file">
-                                    <input type="file" onchange="loadPreview3(this);" name="image3" class="custom-file-input" id="inputGroupFile03">
+                                    <input type="file" onchange="loadPreview3(this);" name="image3" class="custom-file-input {{ $errors->has('image3') ? 'is-invalid' : ''}}" id="inputGroupFile03">
                                     <label class="custom-file-label" for="inputGroupFile03">Choose the image 3 for vehicle</label>
+                                    {!! $errors->first('image3', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
 
@@ -128,8 +131,9 @@
 
                             <div class="form-group">
                                 <div class="custom-file">
-                                    <input type="file" onchange="loadPreview4(this);" hidden name="image4" class="custom-file-input" id="inputGroupFile04">
+                                    <input type="file" onchange="loadPreview4(this);" hidden name="image4" class="custom-file-input {{ $errors->has('image4') ? 'is-invalid' : ''}}" id="inputGroupFile04">
                                     <label class="custom-file-label" for="inputGroupFile04">Choose the image 4 for vehicle</label>
+                                    {!! $errors->first('image4', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
 

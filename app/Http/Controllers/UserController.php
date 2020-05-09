@@ -222,6 +222,7 @@ class UserController extends Controller
         $User->email = $request->email;
         $User->password = bcrypt($request->password);
         $User->id_role = 3;
+        $User->driver_license = '';
 
         $User -> verify_email = 0;
 

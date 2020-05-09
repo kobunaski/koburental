@@ -42,8 +42,8 @@
             <div class="row">
                 <div class="ui twelve wide mobile eight wide computer column">
                     <a href="" class="footer-logo">
-                        <img src="client_assets/assets/images/logo-mycar-transparent.png" srcset="client_assets/assets/images/logo-mycar-transparent.png 1x, client_assets/assets/images/logo-mycar-transparent@2x.png 2x" alt="mycar logo" >
-                        © SeventhQueen 2018                   </a>
+                        <img src="client_assets/assets/images/logo-client.png" srcset="client_assets/assets/images/logo-client.png 1x, client_assets/assets/images/logo-client.png 2x" alt="mycar logo" >
+                        © KoBu Car Rentals 2020                   </a>
                 </div>
                 <div class="ui twelve wide mobile four wide computer column">
                     <ul class="social-links-sq list-style-inline-sq list-default-sq">
