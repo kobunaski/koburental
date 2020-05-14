@@ -349,16 +349,38 @@
                                                                       method="POST">
                                                                     <input type="hidden" name="_token"
                                                                            value="{{csrf_token()}}"/>
-                                                                    <div class="div-c">
-                                                                        <div id="mycalendar{{$item->id}}"
-                                                                             class="calendar-sq">
-                                                                            <label>Pick your new return date</label>
-                                                                            <input type="text" name="return_date"
+
+                                                                    <div class="div-c inline-2 inline-check-in">
+                                                                        <div class="divided-column calendar-sq"
+                                                                             id="rangestart{{$item->id}}">
+                                                                            <label class="placeholder">Check
+                                                                                in</label>
+
+                                                                            <div class="relative-sq">
+                                                                                <input type="text"
+                                                                                       class="filter"
+                                                                                       value="{{$item -> pickup_date}}"
+                                                                                       required
+                                                                                       disabled
+                                                                                       placeholder="date">
+                                                                                <i class="icon icon-little-arrow filters-arrow"></i>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="divided-column calendar-sq"
+                                                                             id="rangeend{{$item->id}}">
+
+                                                                            <label class="placeholder">Check
+                                                                                Out</label>
+
+                                                                            <input type="text" class="filter"
+                                                                                   name="return_date"
                                                                                    value="{{$item -> return_date}}"
                                                                                    required
-                                                                                   placeholder="enter date">
+                                                                                   placeholder="date">
                                                                         </div>
                                                                     </div>
+
                                                                     <div class="div-c inline-2">
                                                                         <div class="divided-column">
                                                                             <div
@@ -431,8 +453,20 @@
 @section('script')
     <script>
         @foreach($Booking as $item)
-        $("#mycalendar{{$item->id}}").calendar({
-            type: "date",
+        $('#rangestart{{$item->id}}').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend{{$item->id}}'),
+            //inline: true,
+            className: {
+                prevIcon: "icon icon-arrow-left-122",
+                nextIcon: "icon icon-arrow-right-122"
+            }
+        });
+
+        $('#rangeend{{$item->id}}').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart{{$item->id}}'),
+            //inline: true,
             className: {
                 prevIcon: "icon icon-arrow-left-122",
                 nextIcon: "icon icon-arrow-right-122"
