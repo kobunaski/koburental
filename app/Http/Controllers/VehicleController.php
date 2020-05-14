@@ -132,6 +132,7 @@ class VehicleController extends Controller
         $Manufacture = Manufacture::all();
         $PickupLocation = PickupLocation::all();
         $Feedback = Feedback::all();
+        $Booking = Booking::all();
         foreach ($Feedback as $item) {
             if ($id == $item->id_vehicle) {
                 $rating[] = $item->rating;
@@ -147,7 +148,16 @@ class VehicleController extends Controller
 
         $Vehicle->save();
 
-        return view('client.vehicle.viewdetail', ['average_rating' => $average_rating, 'User' => $User, 'Vehicle' => $Vehicle, 'VehicleDetail' => $VehicleDetail, 'VehicleType' => $VehicleType, 'Manufacture' => $Manufacture, 'PickupLocation' => $PickupLocation, 'Feedback' => $Feedback]);
+        return view('client.vehicle.viewdetail', [
+            'average_rating' => $average_rating,
+            'User' => $User, 'Vehicle' => $Vehicle,
+            'VehicleDetail' => $VehicleDetail,
+            'VehicleType' => $VehicleType,
+            'Manufacture' => $Manufacture,
+            'PickupLocation' => $PickupLocation,
+            'Feedback' => $Feedback,
+            'Booking' => $Booking
+        ]);
     }
 
     public function getAdd()

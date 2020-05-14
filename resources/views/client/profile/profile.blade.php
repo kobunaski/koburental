@@ -317,8 +317,7 @@
                                                                         <div class="div-c inline-2">
                                                                             <div class="divided-column">
                                                                                 <label>Vehical name:</label>
-                                                                                <input type="text" disabled
-                                                                                       value="{{$item2 -> name}}">
+                                                                                <a href="vehicle/detail/{{$item2 -> id}}">{{$item2 -> name}}</a>
                                                                             </div>
                                                                         </div>
 

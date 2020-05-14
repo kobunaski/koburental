@@ -163,10 +163,10 @@
                                                 <div class="div-c">
                                                     <label>Pick up location</label>
                                                     <input type="text" placeholder=" "
-                                                    @foreach($PickupLocation as $item)
-                                                        @if($item -> id == $Vehicle -> id_pickup_location)
-                                                            value="{{$item -> name}}" disabled
-                                                            @endif
+                                                           @foreach($PickupLocation as $item)
+                                                           @if($item -> id == $Vehicle -> id_pickup_location)
+                                                           value="{{$item -> name}}" disabled
+                                                        @endif
                                                         @endforeach
                                                     >
                                                 </div>
@@ -413,37 +413,51 @@
                         <div class="reviews-row">
 
                             @if(isset($user_login))
-                                <div class="review-meta">
-                                    <div
-                                        class="avatar-sq @if($user_login->verify_email == 1) verified-sq @endif my-avatar-sq">
-                                        <img src="upload/image/user_image/{{$user_login -> image}}" alt="">
-                                    </div>
-                                    <p class="name-sq">Me</p>
-                                </div>
+                                <?
+                                $allow_feedback = 0;
+                                foreach ($Booking as $item) {
+                                    if ($item->id_vehicle == $Vehicle->id && $item->status == 3 && $item->id_user == $user_login->id) {
+                                        $allow_feedback++;
+                                    }
+                                }
+                                ?>
 
-                                <div class="comment-sq">
-                                    <form action="vehicle/feedback/{{$Vehicle -> id}}" method="POST">
-                                        {{--<label for="rangeVal">Your rating:</label>--}}
-                                        {{--<input type ="range" max="10" min="1"--}}
-                                        {{--oninput="document.getElementById('rangeValLabel').innerHTML = this.value;"--}}
-                                        {{--step="1" name="rangeVal" id="rangeVal" value="5">--}}
-                                        {{--<em id="rangeValLabel" class="icon icon-star-2"></em>--}}
+                                @if($allow_feedback > 0)
+                                        <div class="review-meta">
+                                            <div
+                                                class="avatar-sq @if($user_login->verify_email == 1) verified-sq @endif my-avatar-sq">
+                                                <img src="upload/image/user_image/{{$user_login -> image}}" alt="">
+                                            </div>
+                                            <p class="name-sq">Me</p>
+                                        </div>
+                                        <div class="comment-sq">
+                                            <form action="vehicle/feedback/{{$Vehicle -> id}}" method="POST">
+                                                {{--<label for="rangeVal">Your rating:</label>--}}
+                                                {{--<input type ="range" max="10" min="1"--}}
+                                                {{--oninput="document.getElementById('rangeValLabel').innerHTML = this.value;"--}}
+                                                {{--step="1" name="rangeVal" id="rangeVal" value="5">--}}
+                                                {{--<em id="rangeValLabel" class="icon icon-star-2"></em>--}}
 
 
-                                        <input type="number" placeholder="Rate the vehicle from 1 to 10" min="1"
-                                               max="10" name="rating">
+                                                <input type="number" placeholder="Rate the vehicle from 1 to 10" min="1"
+                                                       max="10" name="rating">
 
-                                        <br>
-                                        <br>
+                                                <br>
+                                                <br>
 
-                                        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                                        <textarea class="comment-textarea" name="feedback_content" cols="30" rows="5"
-                                                  placeholder="Comment here" required></textarea>
-                                        <br>
-                                        <br>
-                                        <button type="submit" class="button-sq float-right-sq">Post comment</button>
-                                    </form>
-                                </div>
+                                                <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                                                <textarea class="comment-textarea" name="feedback_content" cols="30" rows="5"
+                                                          placeholder="Comment here" required></textarea>
+                                                <br>
+                                                <br>
+                                                <button type="submit" class="button-sq float-right-sq">Post comment</button>
+                                            </form>
+                                        </div>
+                                    @else
+                                        <div class="reviews-row">
+                                            You haven't rent this vehicle yet in order to add comment
+                                        </div>
+                                @endif
                             @else
                                 <div class="reviews-row">
                                     Please &nbsp; <a href="#" class="item modal-ui-trigger" data-trigger-for="modal02"
