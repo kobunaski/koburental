@@ -98,34 +98,29 @@
 
                             <div class="divided-column">
                                 <input type="checkbox"
-                                       id="checkbox4" {{$VehicleDetail -> air_con == 1 ? "checked" : ""}}>
+                                       id="checkbox4" {{$VehicleDetail -> air_con == 1 ? "checked" : ""}} disabled>
                                 <label for="checkbox4">A/C</label>
                             </div>
 
                             <div class="divided-column">
                                 <input type="checkbox"
-                                       id="checkbox5" {{$VehicleDetail -> bluetooth == 1 ? "checked" : ""}}>
+                                       id="checkbox5" {{$VehicleDetail -> bluetooth == 1 ? "checked" : ""}} disabled>
                                 <label for="checkbox5">Bluetooth</label>
                             </div>
 
                             <div class="divided-column">
-                                <input type="checkbox" id="checkbox6">
+                                <input type="checkbox" id="checkbox6" disabled>
                                 <label for="checkbox6">Heated Seats</label>
                             </div>
 
                             <div class="divided-column">
-                                <input type="checkbox" id="checkbox7">
-                                <label for="checkbox7">Child Seat</label>
-                            </div>
-
-                            <div class="divided-column">
-                                <input type="checkbox" id="checkbox8">
+                                <input type="checkbox" id="checkbox8" disabled>
                                 <label for="checkbox8">Displays</label>
                             </div>
 
                             <div class="divided-column">
-                                <input type="checkbox" id="checkbox8">
-                                <label for="checkbox8">HiFi</label>
+                                <input type="checkbox" id="checkbox9" disabled>
+                                <label for="checkbox7">HiFi</label>
                             </div>
 
                         </div>
@@ -163,7 +158,7 @@
 
                                 <div class="relative-sq">
                                     <input type="text" class="filter"
-                                           value="{{\Illuminate\Support\Facades\Session::get('pickup_date')}}" required
+                                           value="{{\Illuminate\Support\Facades\Session::get('pickup_date')}}" disabled
                                            placeholder="date">
 
                                     <i class="icon icon-little-arrow filters-arrow"></i>
@@ -176,7 +171,7 @@
                                 <label class="placeholder">Check Out</label>
 
                                 <input type="text" class="filter"
-                                       value="{{\Illuminate\Support\Facades\Session::get('return_date')}}" required
+                                       value="{{\Illuminate\Support\Facades\Session::get('return_date')}}" disabled
                                        placeholder="date">
 
                             </div>

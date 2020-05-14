@@ -14,20 +14,15 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             <div class="div-c">
 
-                @if(count($errors) > 0)
-                    @foreach($errors->all() as $er)
-                        {{$er}}<br>
-                    @endforeach<br><br>
-                @endif
-                @if(Session('alert'))
-                    {{Session('alert')}}
+                @if(Session('loginError'))
+                    {{Session('loginError')}}
                 @endif
 
                 <div class="divided-column">
-                    <input type="text" placeholder="E-mail Address" name="email">
+                    <input type="email" placeholder="E-mail Address" name="email" required>
                 </div>
                 <div class="divided-column">
-                    <input type="password" placeholder="Password" name="password">
+                    <input type="password" placeholder="Password" name="password" required>
                 </div>
             </div>
 

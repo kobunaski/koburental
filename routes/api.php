@@ -37,4 +37,12 @@ Route::post('execute-payment', function (Request $request) {
     ], function ($message) use ($to_email) {
         $message->to($to_email, 'Visitor')->subject('Thank you for your payment');
     });
+
+    $Payment = new \App\Payment;
+
+    $Payment -> return_date = $Booking -> return_date;
+    $Payment -> id_booking = $Booking -> id;
+    $Payment -> total_price = $request -> total_price;
+
+    $Payment -> save();
 });

@@ -64,6 +64,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminValidation'], function 
         Route::get('delete/{id}', 'PaymenttypeController@getDelete');
     });
 
+    Route::group(['prefix' => 'payment'], function(){
+        Route::get('view', 'PaymentController@view');
+    });
+
     Route::group(['prefix' => 'pickup_location'], function(){
         Route::get('view', 'PickupLocationController@view');
 
@@ -166,10 +170,11 @@ Route::group(['prefix' => 'vehicle'], function (){
 Route::group(['prefix' => 'order', 'middleware' => 'staffValidation'], function(){
     Route::get('confirm/{id}', 'BookingController@confirmOrder');
     Route::get('decline/{id}', 'BookingController@declineOrder');
-
+    Route::get('complete/{id}', 'BookingController@completeOrder');
 });
 
 Route::get('order/payment/{id}', 'PaymentController@paymentOrder');
+Route::post('order/extend/{id}', 'BookingController@extendOrder');
 
 Route::get('payment/success', 'PaymentController@paymentOrderSuccess');
 

@@ -42,31 +42,51 @@
                                                 </strong>
                                             </p>
 
-                                            <span class="dashboard-label-sq">Reserved by</span>
-                                            <div class="dashboard-content-sq">
-
-                                                <p class="flex-grow-true">
-                                                    @foreach($User as $item2)
-                                                        @if($item2 -> id == $item -> id_user)
-                                                            {{$item2 -> name}}
-                                                        @endif
-                                                    @endforeach
-                                                </p>
-                                                <div class="avatar-sq tiny-avatar-sq verified-sq">
-                                                    @foreach($User as $item2)
-                                                        @if($item2 -> id == $item -> id_user)
-                                                            <img
-                                                                src="upload/image/user_image/{{$item2->image}}"
-                                                                alt="">
-                                                        @endif
-                                                    @endforeach
+                                            @if($item -> id_staff ==0)
+                                                <span class="dashboard-label-sq">Reserved by</span>
+                                                <div class="dashboard-content-sq">
+                                                    <p class="flex-grow-true">
+                                                        @foreach($User as $item2)
+                                                            @if($item2 -> id == $item -> id_user)
+                                                                {{$item2 -> name}}
+                                                            @endif
+                                                        @endforeach
+                                                    </p>
+                                                    <div class="avatar-sq tiny-avatar-sq verified-sq">
+                                                        @foreach($User as $item2)
+                                                            @if($item2 -> id == $item -> id_user)
+                                                                <img
+                                                                    src="upload/image/user_image/{{$item2->image}}"
+                                                                    alt="">
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
                                                 </div>
-
-                                            </div>
+                                            @else
+                                                <span class="dashboard-label-sq">Processed by</span>
+                                                <div class="dashboard-content-sq">
+                                                    <p class="flex-grow-true">
+                                                        @foreach($User as $item2)
+                                                            @if($item2 -> id == $item -> id_staff)
+                                                                {{$item2 -> name}}
+                                                            @endif
+                                                        @endforeach
+                                                    </p>
+                                                    <div class="avatar-sq tiny-avatar-sq verified-sq">
+                                                        @foreach($User as $item2)
+                                                            @if($item2 -> id == $item -> id_staff)
+                                                                <img
+                                                                    src="upload/image/user_image/{{$item2->image}}"
+                                                                    alt="">
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endif
 
                                             <span class="dashboard-label-sq">Total</span>
                                             <p class="dashboard-content-sq">
-                                                <strong>&euro;
+                                                <strong>&dollar;
                                                     @foreach($Vehicle as $item2)
                                                         @if($item2 -> id == $item -> id_vehicle)
                                                             {{number_format($item2 -> daily_price*(\Carbon\Carbon::parse($item -> return_date)->diffInDays(\Carbon\Carbon::parse($item -> pickup_date))), 2)}}
@@ -119,7 +139,34 @@
                                                 <div class="header center">
                                                     <br>
                                                     <h4>Process order: {{$item -> id}}</h4>
+
+                                                    @if($item -> id_staff != 0)
+                                                        @foreach($User as $item2)
+                                                            @if($item2 -> id == $item -> id_staff)
+                                                                Processed by: {{$item2 -> name}}
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                 </div>
+
+                                                @if($item -> status == 2)
+                                                    @foreach($Payment as $item2)
+                                                        @if($item2 -> id_booking == $item -> id)
+                                                            @if($item2 -> return_date < $item -> return_date)
+                                                                <div class="header center">
+                                                                    <h5>This order has extended their date</h5>
+                                                                    <span>Fee that are not paid: &dollar;
+                                                                        @foreach($Vehicle as $item3)
+                                                                            @if($item3 -> id == $item -> id_vehicle)
+                                                                                {{$item3 -> daily_price*(\Carbon\Carbon::parse($item -> return_date)->diffInDays(\Carbon\Carbon::parse($item -> pickup_date))) - $item2 -> total_price}}
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </span>
+                                                                </div>
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                                @endif
 
                                                 <div class="content">
                                                     <h4>Order Detail</h4>
@@ -151,12 +198,6 @@
                                                                     <label>Phone number</label>
                                                                     <input type="text" disabled
                                                                            value="{{$item2 -> phone}}">
-                                                                </div>
-
-                                                                <div class="divided-column">
-                                                                    <label>Email</label>
-                                                                    <input type="text" disabled
-                                                                           value="{{$item2 -> email}}">
                                                                 </div>
                                                             </div>
 
@@ -221,8 +262,7 @@
                                                             <div class="div-c inline-2">
                                                                 <div class="divided-column">
                                                                     <label>Vehical name:</label>
-                                                                    <input type="text" disabled
-                                                                           value="{{$item2 -> name}}">
+                                                                    <a href="vehicle/detail/{{$item2 -> id}}">{{$item2 -> name}}</a>
                                                                 </div>
                                                             </div>
 
@@ -258,12 +298,92 @@
                                                             <div class="div-c inline-2">
                                                                 <div class="divided-column">
                                                                     <a class="button-sq cancel-sq fullwidth-sq"
-                                                                       href="order/decline/{{$item -> id}}">Cancel order</a>
+                                                                       href="order/decline/{{$item -> id}}">Cancel
+                                                                        order</a>
                                                                 </div>
 
                                                                 <div class="divided-column">
                                                                     <a class="button-sq fullwidth-sq"
-                                                                       href="order/payment/{{$item -> id}}">Go to payment</a>
+                                                                       href="order/payment/{{$item -> id}}">Go to
+                                                                        payment</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @elseif($user_login -> id_role != 3 && $item -> id_staff == $user_login -> id)
+                                                        <div class="actions">
+                                                            <div class="div-c">
+                                                                <div class="divided-column">
+                                                                    <a class="button-sq cancel-sq fullwidth-sq"
+                                                                       href="order/decline/{{$item -> id}}">Cancel
+                                                                        order</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endif
+                                                @if($item -> status == 2)
+                                                    @if($user_login -> id_role == 3 && $item -> id_user == $user_login -> id)
+                                                        <div class="actions">
+                                                            <div class="div-c">
+                                                                <div class="divided-column">
+                                                                    <a class="button-sq fullwidth-sq  modal-ui-trigger"
+                                                                       data-trigger-for="extend{{$item->id}}"
+                                                                       id="extend{{$item->id}}">Extend
+                                                                        order</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ui modal" data-for="extend{{$item->id}}">
+
+                                                            <i class="icon icon-close close-modal"></i>
+
+                                                            <div class="header center">
+                                                                <h4>Extend rental date</h4>
+                                                                @if(Session('no-extend'))
+                                                                    <span style="color: #FF5C5C">Somebody has booked this vehicle on this date</span>
+                                                                @endif
+                                                            </div>
+
+                                                            <div class="content">
+                                                                <form action="order/extend/{{$item -> id}}"
+                                                                      method="POST">
+                                                                    <input type="hidden" name="_token"
+                                                                           value="{{csrf_token()}}"/>
+                                                                    <div class="div-c">
+                                                                        <div id="mycalendar{{$item->id}}"
+                                                                             class="calendar-sq">
+                                                                            <label>Pick your new return date</label>
+                                                                            <input type="text" name="return_date"
+                                                                                   value="{{$item -> return_date}}"
+                                                                                   required
+                                                                                   placeholder="enter date">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="div-c inline-2">
+                                                                        <div class="divided-column">
+                                                                            <div
+                                                                                class="button-sq cancel-sq fullwidth-sq">
+                                                                                Cancel
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="divided-column">
+                                                                            <button type="submit"
+                                                                                    class="button-sq fullwidth-sq">
+                                                                                Extend
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    @elseif($user_login -> id_role != 3 && $item -> id_staff == $user_login -> id)
+                                                        <div class="actions">
+                                                            <div class="div-c">
+                                                                <div class="divided-column">
+                                                                    <a class="button-sq fullwidth-sq"
+                                                                       href="order/complete/{{$item -> id}}">Complete
+                                                                        order</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -289,8 +409,49 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
+
+        @if(Session('success-extend'))
+            <a class="button-sq see-through-sq small-sq modal-ui-trigger" id="success-extend"
+               data-trigger-for="success-extend"></a>
+
+            <!-- Modal -->
+            <div class="ui modal" data-for="success-extend">
+
+                <i class="icon icon-close close-modal"></i>
+
+                <div class="header center">
+                    <h4>{{Session('success-extend')}}</h4>
+                </div>
+            </div>
+        @endif
+    @endif
+@endsection
+
+@section('script')
+    <script>
+        @foreach($Booking as $item)
+        $("#mycalendar{{$item->id}}").calendar({
+            type: "date",
+            className: {
+                prevIcon: "icon icon-arrow-left-122",
+                nextIcon: "icon icon-arrow-right-122"
+            }
+        });
+        @endforeach
+    </script>
+    @if(Session('no-extend'))
+        <script type="text/javascript">
+            $("document").ready(function () {
+                $('#extend{{Session('no-extend')}}').trigger('click');
+            });
+        </script>
+    @endif
+    @if(Session('success-extend'))
+        <script type="text/javascript">
+            $("document").ready(function () {
+                $('#success-extend').trigger('click');
+            });
+        </script>
     @endif
 @endsection

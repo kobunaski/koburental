@@ -37,11 +37,11 @@
                     </ul>
                 </div>
 
-                <a class="dashboard-contact button-sq font-weight-bold-sq modal-ui-trigger"
-                   data-trigger-for="contact" href="">
-                    <i class="icon icon-messenger"></i>
-                    <span>Contact</span>
-                </a>
+                {{--<a class="dashboard-contact button-sq font-weight-bold-sq modal-ui-trigger"--}}
+                   {{--data-trigger-for="contact" href="">--}}
+                    {{--<i class="icon icon-messenger"></i>--}}
+                    {{--<span>Contact</span>--}}
+                {{--</a>--}}
             </div>
 
         </div>

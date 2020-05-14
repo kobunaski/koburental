@@ -58,55 +58,55 @@
 
         <div class="div-c">
             <div class="divided-column">
-                <input type="text" placeholder="Full Name" name="name">
+                <input type="text" placeholder="Full Name" name="name" required>
             </div>
         </div>
 
         <div class="div-c">
             <div class="divided-column">
-                <input type="text" placeholder="E-mail Adress" name="email">
+                <input type="email" placeholder="E-mail Adress" name="email" required>
             </div>
             <div class="divided-column">
-                <input type="text" placeholder="Password" name="password">
+                <input type="password" placeholder="Password" name="password" required>
             </div>
             <div class="divided-column">
-                <input type="text" placeholder="Please confirm your password" name="password_confirm">
+                <input type="password" placeholder="Please confirm your password" name="password_confirm" required>
             </div>
         </div>
 
-        <div class="div-c inline-3 one-label">
-            <label>Birthday</label>
-            <div class="divided-column">
-                <select name="dropdown"  class="dropdown">
-                    <option value="1">01</option>
-                    <option value="2">02</option>
-                    <option value="3">03</option>
-                    <option value="4">04</option>
-                    <option value="5">05</option>
-                    <option value="6">...</option>
-                </select>
-            </div>
-            <div class="divided-column">
-                <select name="dropdown"  class="dropdown">
-                    <option value="1">Jan</option>
-                    <option value="2">Feb</option>
-                    <option value="3">Mar</option>
-                    <option value="4">Apr</option>
-                    <option value="5">May</option>
-                    <option value="6">...</option>
-                </select>
-            </div>
-            <div class="divided-column">
-                <select name="dropdown"  class="dropdown">
-                    <option value="1">1985</option>
-                    <option value="2">1986</option>
-                    <option value="3">1987</option>
-                    <option value="4">1988</option>
-                    <option value="5">1989</option>
-                    <option value="6">...</option>
-                </select>
-            </div>
-        </div>
+        {{--<div class="div-c inline-3 one-label">--}}
+            {{--<label>Birthday</label>--}}
+            {{--<div class="divided-column">--}}
+                {{--<select name="dropdown"  class="dropdown">--}}
+                    {{--<option value="1">01</option>--}}
+                    {{--<option value="2">02</option>--}}
+                    {{--<option value="3">03</option>--}}
+                    {{--<option value="4">04</option>--}}
+                    {{--<option value="5">05</option>--}}
+                    {{--<option value="6">...</option>--}}
+                {{--</select>--}}
+            {{--</div>--}}
+            {{--<div class="divided-column">--}}
+                {{--<select name="dropdown"  class="dropdown">--}}
+                    {{--<option value="1">Jan</option>--}}
+                    {{--<option value="2">Feb</option>--}}
+                    {{--<option value="3">Mar</option>--}}
+                    {{--<option value="4">Apr</option>--}}
+                    {{--<option value="5">May</option>--}}
+                    {{--<option value="6">...</option>--}}
+                {{--</select>--}}
+            {{--</div>--}}
+            {{--<div class="divided-column">--}}
+                {{--<select name="dropdown"  class="dropdown">--}}
+                    {{--<option value="1">1985</option>--}}
+                    {{--<option value="2">1986</option>--}}
+                    {{--<option value="3">1987</option>--}}
+                    {{--<option value="4">1988</option>--}}
+                    {{--<option value="5">1989</option>--}}
+                    {{--<option value="6">...</option>--}}
+                {{--</select>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
         <button class="button-sq fullwidth-sq">Sign Up</button>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur faucibus magna vel ex semper, in pharetra justo pulvinar. </p>

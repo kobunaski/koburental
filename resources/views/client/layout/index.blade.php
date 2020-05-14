@@ -113,6 +113,20 @@ Default Header with a White Background & Dark text.
 
 <script src="client_assets/assets/library/header.js"></script>
 <script src="client_assets/assets/library/functions.js"></script>
+@if(Session('loginError'))
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $('#modal02').trigger('click');
+        });
+    </script>
+@endif
+@if(Session('payment-success'))
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $('#payment-success').trigger('click');
+        });
+    </script>
+@endif
 @yield('script')
 </body>
 

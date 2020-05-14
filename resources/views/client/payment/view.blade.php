@@ -255,7 +255,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '{{$total_price*10/100}}'
+                            value: '{{$total_price}}'
                         }
                     }]
                 });
@@ -271,7 +271,8 @@
                         },
                         body: JSON.stringify({
                             orderID: data.orderID,
-                            booking_ID: '{{$Booking -> id}}'
+                            booking_ID: '{{$Booking -> id}}',
+                            total_price: '{{$total_price}}'
                         })
                     }).then(status)
                         .then(function (response) {

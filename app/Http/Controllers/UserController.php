@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
+use App\Payment;
 use App\PickupLocation;
 use App\Role;
 use App\User;
@@ -34,7 +35,7 @@ class UserController extends Controller
             'email' => 'required',
             'password' => 'required',
             'address' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|digits:10',
             'gender' => 'required',
             'role' => 'required',
             'date_of_birth' => 'required',
@@ -44,6 +45,7 @@ class UserController extends Controller
             'password.required' => 'password field can\'t be empty',
             'address.required' => 'address field can\'t be empty',
             'phone.required' => 'phone field can\'t be empty',
+            'phone.digits' => 'phone number needs to be 10 digits or less',
             'gender.required' => 'gender field can\'t be empty',
             'role.required' => 'role field can\'t be empty',
             'date_of_birth.required' => 'date of birth field can\'t be empty',
@@ -87,7 +89,7 @@ class UserController extends Controller
             'email' => 'required',
             'password' => 'required',
             'address' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|digits:10',
             'gender' => 'required',
             'role' => 'required',
             'date_of_birth' => 'required',
@@ -97,6 +99,7 @@ class UserController extends Controller
             'password.required' => 'password field can\'t be empty',
             'address.required' => 'address field can\'t be empty',
             'phone.required' => 'phone field can\'t be empty',
+            'phone.digits' => 'phone number needs to be 10 digits or less',
             'gender.required' => 'gender field can\'t be empty',
             'role.required' => 'role field can\'t be empty',
             'date_of_birth.required' => 'date of birth field can\'t be empty',
@@ -137,11 +140,10 @@ class UserController extends Controller
 
     public function viewProfileClient()
     {
-        $id = Auth::user()->id;
-        $User = User::find($id);
-        $UserAll = User::all();
+        $User = User::all();
         $Vehicle = Vehicle::all();
         $PickupLocation = PickupLocation::all();
+        $Payment = Payment::all();
         $array_month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2){
             $Booking = Booking::orderBy('created_at', 'desc')->take(6)->get();
@@ -149,7 +151,7 @@ class UserController extends Controller
             $Booking = Booking::where('id_user', '=', Auth::user()->id)->orderBy('created_at', 'desc')->take(6)->get();
         }
 
-        return view('client.profile.profile', ['PickupLocation' => $PickupLocation, 'UserAll' => $UserAll, 'Vehicle' => $Vehicle, 'Booking' => $Booking, 'User' => $User, 'array_month' => $array_month]);
+        return view('client.profile.profile', ['Payment' => $Payment, 'PickupLocation' => $PickupLocation, 'Vehicle' => $Vehicle, 'Booking' => $Booking, 'User' => $User, 'array_month' => $array_month]);
     }
 
     public function getEditProfileClient()
@@ -192,17 +194,10 @@ class UserController extends Controller
 
     public function postLogin(Request $request)
     {
-        $this->validate($request, [
-            'email' => 'required',
-            'password' => 'required'
-        ], [
-
-        ]);
-
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return back();
         } else {
-            return back() -> with('alert', 'email or password is incorrect');
+            return back() -> with('loginError', 'email or password is incorrect');
         }
     }
 

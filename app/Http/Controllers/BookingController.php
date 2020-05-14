@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Booking;
 use App\Feedback;
 use App\Manufacture;
+use App\Payment;
 use App\PickupLocation;
 use App\User;
 use App\Vehicle;
@@ -168,15 +169,49 @@ class BookingController extends Controller
         return redirect('profile');
     }
 
+    public function completeOrder($id)
+    {
+        $Booking = Booking::find($id);
+
+        $Booking->status = 3;
+
+        $Booking->save();
+        return redirect()->back();
+    }
+
+    public function extendOrder(Request $request, $id)
+    {
+        $Booking = Booking::find($id);
+
+        $Booking->return_date;
+
+        $id_vehicle = $Booking->id_vehicle;
+
+        $return_date = $request->return_date;
+        $time2 = strtotime($return_date);
+        $new_return_date = date('Y-m-d', $time2);
+
+        if ($this->time_limit_extend($id, $id_vehicle, $new_return_date) == true) {
+            $Booking -> return_date = Carbon::parse($new_return_date);
+            $Booking -> save();
+
+            return redirect()->back()->with('success-extend', 'You have successfully extend the order');
+        } else {
+            return redirect()->back()->with('no-extend', $id);
+        }
+
+
+    }
+
     public function paymentOrder($id)
     {
         $Booking = Booking::find($id);
-        $PickupLocation = PickupLocation::find($Booking -> id_pickup_location);
-        $Vehicle = Vehicle::find($Booking -> id_vehicle);
+        $PickupLocation = PickupLocation::find($Booking->id_pickup_location);
+        $Vehicle = Vehicle::find($Booking->id_vehicle);
         $Feedback = Feedback::all();
-        $VehicleDetail = VehicleDetail::where('id_vehicle', '=', $Booking -> id_vehicle)->first();
+        $VehicleDetail = VehicleDetail::where('id_vehicle', '=', $Booking->id_vehicle)->first();
         foreach ($Feedback as $item) {
-            if ($Vehicle -> id == $item->id_vehicle) {
+            if ($Vehicle->id == $item->id_vehicle) {
                 $rating[] = $item->rating;
             }
         }
@@ -185,7 +220,7 @@ class BookingController extends Controller
         } else {
             $average_rating = 0;
         }
-        $total_price = $Vehicle -> daily_price*(Carbon::parse($Booking -> return_date)->diffInDays(Carbon::parse($Booking -> pickup_date)));
+        $total_price = $Vehicle->daily_price * (Carbon::parse($Booking->return_date)->diffInDays(Carbon::parse($Booking->pickup_date)));
         return view('client.payment.view', ['total_price' => $total_price, 'VehicleDetail' => $VehicleDetail, 'Booking' => $Booking, 'PickupLocation' => $PickupLocation, 'Vehicle' => $Vehicle, 'average_rating' => $average_rating]);
     }
 
@@ -196,13 +231,27 @@ class BookingController extends Controller
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         } else {
             $Booking = Booking::where('id_user', '=', Auth::user()->id)->orderBy('status', 'asc')->paginate(9);
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         }
     }
 
@@ -213,13 +262,27 @@ class BookingController extends Controller
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         } else {
             $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '0')->orderBy('status', 'asc')->paginate(9);
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         }
     }
 
@@ -230,13 +293,27 @@ class BookingController extends Controller
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         } else {
             $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '1')->orderBy('status', 'asc')->paginate(9);
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         }
     }
 
@@ -247,13 +324,27 @@ class BookingController extends Controller
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         } else {
             $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '2')->orderBy('status', 'asc')->paginate(9);
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         }
     }
 
@@ -264,13 +355,27 @@ class BookingController extends Controller
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         } else {
             $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '3')->orderBy('status', 'asc')->paginate(9);
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         }
     }
 
@@ -281,13 +386,27 @@ class BookingController extends Controller
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         } else {
             $Booking = Booking::where('id_user', '=', Auth::user()->id)->where('status', '=', '4')->orderBy('status', 'asc')->paginate(9);
             $Vehicle = Vehicle::all();
             $PickupLocation = PickupLocation::all();
             $User = User::all();
-            return view('client.profile.view_order', ['Booking' => $Booking, 'Vehicle' => $Vehicle, 'PickupLocation' => $PickupLocation, 'User' => $User]);
+            $Payment = Payment::all();
+            return view('client.profile.view_order', [
+                'Booking' => $Booking,
+                'Vehicle' => $Vehicle,
+                'PickupLocation' => $PickupLocation,
+                'User' => $User,
+                'Payment' => $Payment
+            ]);
         }
     }
 
@@ -298,7 +417,7 @@ class BookingController extends Controller
         $count = 0;
 
         foreach ($Booking as $item) {
-            if ($item -> id_vehicle == $id){
+            if ($item->id_vehicle == $id) {
                 if ($new_pickup_date >= $item->pickup_date && $new_pickup_date <= $item->return_date) {
                     $array_vehicle_pickup[] = $item->id_vehicle;
                 } else if ($new_return_date >= $item->pickup_date && $new_return_date <= $item->return_date) {
@@ -342,6 +461,29 @@ class BookingController extends Controller
             return true;
         } else {
             return false;
+        }
+    }
+
+    function time_limit_extend($id, $id_vehicle, $new_return_date)
+    {
+        $Booking = Booking::all();
+        $VehicleAll = Vehicle::all();
+        $count = 0;
+
+        foreach ($Booking as $item) {
+            if ($item->id_vehicle == $id_vehicle) {
+                if ($new_return_date >= $item->pickup_date && $new_return_date <= $item->return_date) {
+                    $array_vehicle_return[] = $item->id_vehicle;
+                } else if ($new_return_date >= $item->return_date && $item -> status != 3 && $item -> status != 4 && $item -> id != $id){
+                    $array_vehicle_return[] = $item->id_vehicle;
+                }
+            }
+        }
+
+        if (isset($array_vehicle_return)) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

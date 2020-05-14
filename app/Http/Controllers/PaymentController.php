@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\Feedback;
+use App\Payment;
 use App\PickupLocation;
 use App\Vehicle;
 use App\VehicleDetail;
@@ -14,6 +15,11 @@ use Symfony\Component\Console\Input\Input;
 
 class PaymentController extends Controller
 {
+    public function view(){
+        $Payment= Payment::all();
+        return view('admin.payment.view', ['Payment' => $Payment]);
+    }
+
     public function paymentOrderConfirm(Request $request)
     {
         $id = $request->input('id');
